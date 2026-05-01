@@ -31,9 +31,7 @@ header: [
 
 == Mandant
 
-#question("Qui est le mandant ?")
-#objectif("Permettre au lecteur d'entrer pleinement dans le contexte et de situer précisément la problématique.")
-#contenu-attendu("1/2 page. Description du contexte professionnel (taille et organisation de l’entreprise/du service, activité, rôle du la mandant, situation du marché, etc.) en lien direct avec le sujet.")
+
 
 Antistatique est une agence web lausannoise spécialisée dans la conception, le développement et la maintenance de produits digitaux. L'équipe, composée de quatre designers et six développeurs, livre une vingtaine de projets par an, majoritairement pour des organisations publiques et parapubliques telles que l'Université de Lausanne, la Ville de Vernier ou la Cinémathèque suisse. Une part plus restreinte de l'activité concerne des mandats privés (stratégie de marque, campagnes marketing, développement sur mesure).
 
@@ -76,7 +74,8 @@ Début mai 2026, l'agence compte :
 - 1 
 Cette liste est non exhaustive et représente environ 80% de l'activité. Le problème est double : d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieurs....? Aujourd'hui, l'agence gère les différentes tailles d'images comme suit : Des tailles fixes sont définies dans le code (3:2, 4:3, etc) ainsi que des formats (jpg, webp). Lorsqu'un client upload une image, un script s'exécute et génère les différentes tailles d'images. Ces images sont stockées chez l'hébergeur. Les développeurs front-end utilisent la balise Picture @HTMLPictureElement2026 avec dans l'ordre : 
 1. Une image dans un format léger (avif ou webp) avec des règles CSS pour choisir la version
-Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien
+
+Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien. Il y a un script qui définit des ratios d'image présents dans la page et les différentes largeurs.
 
 ```html
 <picture>
