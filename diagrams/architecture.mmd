@@ -1,0 +1,27 @@
+graph LR
+    User["Utilisateur final"]
+    
+    subgraph Clients
+        Client1["Client 1<br>WordPress + S3"]
+        Client2["Client 2<br>PrestaShop + Local"]
+    end
+
+    Nginx["Serveur Nginx<br>Cache et Proxy"]
+    ImgProxy["imgproxy<br>Traitement images"]
+
+    subgraph Stockage
+        S3["Bucket S3<br>AWS ou MinIO"]
+        LocalStorage["Dossier /uploads/"]
+    end
+
+    User -->|1. Requete page<br>2. Reponse HTML| Client1
+    User -->|1. Requete page<br>2. Reponse HTML| Client2
+
+    Client1 -->|Upload medias| S3
+    Client2 -->|Upload medias| LocalStorage
+
+    User -->|3. Requete image<br>HIT: Reponse directe<br>MISS: Relais proxy| Nginx
+    Nginx -->|4. Si MISS relais| ImgProxy
+    
+    ImgProxy -->|5a. Fetch originale<br>6a. Reponse originale| S3
+    ImgProxy -->|5b. Fetch originale<br>6b. Reponse originale| LocalStorage
