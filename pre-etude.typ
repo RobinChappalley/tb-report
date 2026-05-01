@@ -1,4 +1,5 @@
 #import "styles.typ": *
+#import "@preview/oxdraw:0.1.0" : *
 
 #page-titre()
 
@@ -22,39 +23,121 @@ header: [
   ]
   
 )
+
+
 #show: doc => conf(doc)
 
 //Début du rapport
 
-== Antistatique
+== Mandant
 
-Antistatique est une agence web basée à Lausanne. Elle propose différents services, du design de sites web jusqu'au développement web et à la maintenance. TODO----- son approche unique est.... Avec une équipe de 4 designers et 6 développeurs, l'agence réalise X projets par année,principalement pour des organisation publiques ou parapubliques, comme l'université de Lausanne, la Ville de Vernier ou la cinémathèque Suisse. Elle accompagne aussi des entreprises privées pour de la stratégie de marque, des campagnes marketing et du développement web sur mesure.
+#question("Qui est le mandant ?")
+#objectif("Permettre au lecteur d'entrer pleinement dans le contexte et de situer précisément la problématique.")
+#contenu-attendu("1/2 page. Description du contexte professionnel (taille et organisation de l’entreprise/du service, activité, rôle du la mandant, situation du marché, etc.) en lien direct avec le sujet.")
 
+Antistatique est une agence web lausannoise spécialisée dans la conception, le développement et la maintenance de produits digitaux. L'équipe, composée de quatre designers et six développeurs, livre une vingtaine de projets par an, majoritairement pour des organisations publiques et parapubliques telles que l'Université de Lausanne, la Ville de Vernier ou la Cinémathèque suisse. Une part plus restreinte de l'activité concerne des mandats privés (stratégie de marque, campagnes marketing, développement sur mesure).
+
+Cette typologie de clientèle implique une diversité importante de stacks techniques et d'infrastructures d'hébergement, chaque mandat reposant sur les contraintes propres au commanditaire. Pour travailler malgré cette hétérogénéité, l'équipe s'appuie sur les standards du web, qui constituent un socle commun à tous les projets, et entretient une veille technique active. 
+
+
+
+/* #oxdraw(
+  read("diagrams/architecture.mmd"), 
+  background: "#f0f8ff",
+  overrides: (
+    node_styles: (
+      User: (fill: "#ffff99", stroke: "#333333", text: "#000000"),
+      Client1: (fill: "#ff99ff", stroke: "#333333", text: "#000000"),
+      Client2: (fill: "#ff99ff", stroke: "#333333", text: "#000000"),
+      Nginx: (fill: "#ffb347", stroke: "#333333", text: "#000000"),
+      ImgProxy: (fill: "#9999ff", stroke: "#333333", text: "#000000"),
+      S3: (fill: "#99ff99", stroke: "#333333", text: "#000000"),
+      LocalStorage: (fill: "#99ff99", stroke: "#333333", text: "#000000"),
+      note1: (fill: "#eeeeee", stroke: "#333333", text: "#000000")
+    )
+  )
+) */
 
 
 //Mettre l'accent sur la culture d'entreprise, les valeurs et l'approche unique 
 
 
 
-#objectif("Permettre au lecteur d'entrer pleinement dans le contexte et de situer précisément la problématique.")
-#contenu-attendu("1/2 page. Description du contexte professionnel (taille et organisation de l’entreprise/du service, activité, rôle du la mandant, situation du marché, etc.) en lien direct avec le sujet.")
 
 
 == Problématique
+#question("Comment le mandant présente-t-il sa problématique dans son contexte?")
+#objectif("Expliquer la problématique du mandant de manière structurée et contextualisée. Montrer en quoi les compétences en ingénierie des médias sont a priori pertinentes pour y répondre.")
+#contenu-attendu("1 page. Résumé de la situation actuelle et des développements demandés par le mandant. À quel besoin devra répondre ce projet ? Quelles compétences seront nécessaires et pourquoi?")
+Début mai 2026, l'agence compte :
+- X projets sur vercel, qui utilise vercel images pour resize
+- X projets chez infomaniak qui utilise ....
+- X projets chez ... qui utilise
+- 1 
+Cette liste est non exhaustive et représente environ 80% de l'activité. Le problème est double : d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieurs....? Aujourd'hui, l'agence gère les différentes tailles d'images comme suit : Des tailles fixes sont définies dans le code (3:2, 4:3, etc) ainsi que des formats (jpg, webp). Lorsqu'un client upload une image, un script s'exécute et génère les différentes tailles d'images. Ces images sont stockées chez l'hébergeur. Les développeurs front-end utilisent la balise Picture @HTMLPictureElement2026 avec dans l'ordre : 
+1. Une image dans un format léger (avif ou webp) avec des règles CSS pour choisir la version
+Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien
 
+```html
+<picture>
+ <source type="image/webp" 
+srcset="https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_256x154/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=cxoRUVZH 256w,
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_384x230/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=BBNjNnkT 384w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_690x414/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=nAipFH2_ 690w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=vHHT8gqI 750w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_828x497/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=bLlh56QY 828w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1080x648/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=WE0s6VXz 1080w,
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1400x840/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=GIDqcKq- 1400w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1920x1152/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=fhzMzAm0 1920w,
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_2048x1229/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=rQCkwrSh 2048w,
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_3840x2304/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=VD7_Jvai 3840w"
+sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)">
+  <source type="image/jpg" 
+srcset="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_256x154/public/2026-04/pexels-szafran-32028869.jpg?itok=z6eaPvTh 256w,
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_384x230/public/2026-04/pexels-szafran-32028869.jpg?itok=cTiVZoQS 384w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_690x414/public/2026-04/pexels-szafran-32028869.jpg?itok=tuQf6bTj 690w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg?itok=S1R2qZnN 750w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_828x497/public/2026-04/pexels-szafran-32028869.jpg?itok=FYkyOZlF 828w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1080x648/public/2026-04/pexels-szafran-32028869.jpg?itok=O-lcvyzb 1080w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1400x840/public/2026-04/pexels-szafran-32028869.jpg?itok=zp6U1OOz 1400w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1920x1152/public/2026-04/pexels-szafran-32028869.jpg?itok=Ennm_aoY 1920w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_2048x1229/public/2026-04/pexels-szafran-32028869.jpg?itok=HVGzTVsG 2048w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_3840x2304/public/2026-04/pexels-szafran-32028869.jpg?itok=7jCS1LeC 3840w" 
+ sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)">
+  <img alt="champ de céréales" src="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg?itok=S1R2qZnN" 
+  sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)" loading="eager" fetchpriority="high" class="object-cover object-center size-full">
+</picture>
+```
 == Recherches
+#question("Quelles sources ai-je identifiées pour comprendre la problématique? En quoi sont-elles pertinentes?")
+#objectif("Exposer synthétiquement les recherches menées pour analyser la problématique")
+#contenu-attendu("1-2 pages. Description de ce que vous avez appris, provenant de différentes sources, et qui vous a permis de mieux comprendre la problématique, de la contextualiser par rapport à l’écosystème de votre mandant et de la transformer en besoins")
 
-== Recherches
 
 == Besoins
+#question("Qu’ai-je appris de l’analyse des sources identifiées? Quels liens ai-je établis entre plusieurs sources pour en tirer des conclusions utiles sur les besoins du mandant?")
+#objectif("Exposer synthétiquement la traduction de la problématique en besoins clairs, précis et structurés. Montrer les liens entre la recherche documentaire, l’analyse et les besoins.")
+#contenu-attendu("1-2 pages. Liste des besoins et argumentaire expliquant en quoi l’analyse menée à partir de vos recherches documentaires a permis de définir cette liste.")
 
 == Objectifs et livrables
+#question("Comment mon travail est-il organisé? ")
+#objectif("Formuler clairement et synthétiquement les objectifs de développement, les tâches et les livrables associés, ainsi que la manière dont ces éléments s’articulent dans un planning crédible.")
+#contenu-attendu("1-2 pages. Objectifs découpés en tâches et en livrables. Description synthétique des livrables. Planning crédible, dont on décrira les principales étapes directement dans le rapport, avec une version complète en annexe.")
 
 == Compétences
+#question("Quelle est la valeur ajoutée pour le mandant de mon travail?")
+#objectif("Démontrer la valeur ajoutée que votre travail apportera au mandant: la nature des tâches, leur complexité et leur diversité, en lien avec les compétences multidisciplinaires de l’ingénierie des médias.")
+#contenu-attendu("1 page. Argumentaire permettant de comprendre en quoi votre travail apporte de la valeur ajoutée et quelle est cette valeur (technique, conceptuelle, analytique, marketing, autre)? Quel est le degré de mobilisation de vos compétences en ingénierie des médias?")
 
 == Risques
+#question("Quels sont les facteurs de risque du projet? Comment les prévenir et les atténuer s’ils surviennent ? ")
+#objectif("Proposer une matrice des risques (risque, mesure de prévention, mesure de correction, degré) cohérente et pertinente en fonction du contexte du TB et du mandant")
+#contenu-attendu("1 page Matrice des risques et commentaire court sur les points nécessitant davantage d’explications (Selon les contextes, certains risques ne sont pas évidents et doivent être expliqués).")
 
 == Conclusion
+#question("1-2 pages. En prenant du recul, qu’ai-je appris? Que ferai-je différemment? Quelles sont les limites de mon approche et du contexte dans lequel s’est déroulée cette pré-étude?")
+#objectif("Démontrer des capacités d’analyse de son propre travail, des choix pris et de son évolution professionnelle.")
+#contenu-attendu("Une première partie présente les principaux éléments découverts (analyse) et résume brièvement les limites, les défis et les choix effectués. Une deuxième partie, plus personnelle, rend compte, de manière réflexive, du déroulement de la pré-étude.")
 
 
 
@@ -63,3 +146,5 @@ Antistatique est une agence web basée à Lausanne. Elle propose différents ser
 #pagebreak()
 
 #bibliography("travail-bachelor.bib")
+
+
