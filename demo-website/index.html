@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comprendre picture et sizes</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    
+    
+</head>
+<body>
+
+    <!-- POPUP AVERTISSEMENT CACHE -->
+    <div id="welcome-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h2>⚠️ Avant de commencer</h2>
+            <p>Le navigateur est très intelligent : s'il télécharge une grande image, <strong>il la gardera en cache</strong> et refusera de télécharger une version plus petite pour économiser vos données.</p>
+            <ul>
+                <li>Ouvrez cette page en <strong>Navigation Privée</strong>.</li>
+                <li>Fermez l'inspecteur, puis <strong>réduisez la fenêtre de votre navigateur au maximum</strong> avant de fermer ce message.</li>
+                <li>Agrandissez lentement la fenêtre pour voir les fichiers plus lourds se télécharger en direct.</li>
+            </ul>
+            <button id="btn-start" class="btn-primary">J'ai compris, c'est parti !</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-text">
+            <h1>Playground: &lt;picture&gt; et sizes</h1>
+            <p>Redimensionnez la <strong>fenêtre de votre navigateur</strong> pour déclencher les media queries.</p>
+        </div>
+        <div class="window-size-badge">
+            Fenêtre : <span id="badge-window-width">0</span>px
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- GAUCHE : DÉMO -->
+        <div class="playground">
+            <div class="image-wrapper">
+                <picture id="demo-picture">
+                    <!-- Format AVIF -->
+                    <source 
+                        id="src-avif"
+                        type="image/avif"
+                        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                        srcset="
+                            images/landscape-avif-500.avif 500w,
+                            images/landscape-avif-1000.avif 1000w,
+                            images/landscape-avif-3000.avif 3000w,
+                            images/landscape-avif-6000.avif 6000w
+                        "
+                    >
+                    <!-- Format WebP -->
+                    <source
+                        id="src-webp"
+                        type="image/webp"
+                        sizes="(max-width: 600px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                        srcset="
+                            images/people-webp-500.webp 500w,
+                            images/people-webp-1000.webp 1000w,
+                            images/people-webp-3000.webp 3000w,
+                            images/people-webp-6000.webp 6000w
+                        "
+                    >
+                    <!-- Image par défaut -->
+                    <img 
+                        id="demo-img"
+                        class="demo-image"
+                        src="images/landscape.jpg" 
+                        alt="Demo responsive"
+                    >
+                </picture>
+            </div>
+        </div>
+
+        <!-- DROITE : INFOS -->
+        <div class="sidebar">
+
+            <div class="panel-section">
+                <h2>Simulateur de support navigateur</h2>
+                <div class="browser-simulator">
+                    <button class="toggle-btn active" id="btn-avif">Moderne (AVIF)</button>
+                    <button class="toggle-btn" id="btn-webp">Moyen (WebP seul)</button>
+                    <button class="toggle-btn" id="btn-jpeg">Dinosaure (IE11)</button>
+                </div>
+            </div>
+            
+            <div class="panel-section" style="flex: 1;">
+                <h2>Code HTML évalué</h2>
+                <div class="code-block" id="code-display">
+&lt;<span class="keyword">picture</span>&gt;
+<span id="code-avif">  &lt;<span class="keyword">source</span> <span class="attr">type</span>=<span class="string">"image/avif"</span>
+          <span class="attr">sizes</span>=<span class="string">"</span>
+<span class="size-condition" id="cond-0">            (max-width: 600px) 100vw,  <span class="comment">&lt;!-- Mobile --&gt;</span><span class="active-tag">← ACTIF</span></span><span class="size-condition" id="cond-1">            (max-width: 1200px) 80vw,  <span class="comment">&lt;!-- Tablette --&gt;</span><span class="active-tag">← ACTIF</span></span><span class="size-condition" id="cond-2">            1200px                     <span class="comment">&lt;!-- Desktop --&gt;</span><span class="active-tag">← ACTIF</span></span><span class="string">          "</span>
+          <span class="attr">srcset</span>=<span class="string">"... 500w, 1000w, 3000w, 6000w"</span>&gt;
+</span>
+<span id="code-webp">  &lt;<span class="keyword">source</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> 
+          <span class="attr">sizes</span>=<span class="string">"... idem ..."</span>
+          <span class="attr">srcset</span>=<span class="string">"... 500w, 1000w, 3000w, 6000w"</span>&gt;
+</span>
+  <span class="comment">&lt;!-- Fallback JPEG --&gt;</span>
+  &lt;<span class="keyword">img</span> <span class="attr">src</span>=<span class="string">"images/landscape.jpg"</span>&gt;
+&lt;/<span class="keyword">picture</span>&gt;
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h2>Résultat en direct</h2>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <span class="stat-label">Taille calculée via la règle "sizes" active</span>
+                        <span class="stat-value accent"><span id="val-calculated">0</span> px</span>
+                    </div>
+                    <div class="stat-card" style="border-left: 3px solid var(--success);">
+                        <div style="display:flex; flex-direction: column; gap: 0.25rem;">
+                            <span class="stat-label">Fichier effectivement téléchargé</span>
+                            <span class="stat-value success" id="val-current-src" style="font-size: 0.95rem;">...</span>
+                        </div>
+                        <div style="display:flex; flex-direction: column; text-align: right; gap: 0.25rem;">
+                            <span class="stat-label">Poids du fichier</span>
+                            <span class="stat-value" id="val-file-size" style="color: #fcd34d;">-- KB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
