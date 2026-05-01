@@ -1,2 +1,4 @@
 *.pdf
 *.bib
+node_modules
+dist
