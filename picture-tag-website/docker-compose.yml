@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  picture-tag-website:
+    image: ghcr.io/robinchappalley/picture-tag-website:latest
+    container_name: picture-tag-website
+    restart: always
+    networks:
+      - web-network
+
+# On connecte ce conteneur au réseau externe géré par le proxy
+networks:
+  web-network:
+    external: true
