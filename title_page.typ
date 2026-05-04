@@ -1,8 +1,9 @@
 // variables
 
 
-#let subtitle = "Rapport de pré-étude"
-#let title = "TBD"
+#let doc-type = "Rapport de pré-étude"
+#let title = "Standardiser la gestion des images dans les projets web d'une agence"
+#let subtitle = "Étude et conception d'une solution commune, indépendante des technologies utilisées"
 #let author = (name: "Robin Chappalley", student-number: "")
 
 #let project-type = "Travail de Bachelor (TB)"
@@ -73,6 +74,8 @@
   #v(2em)
   #line(length: 100%, stroke: 0.4mm)
   #v(.5em)
+  #text(size: 16pt)[#doc-type]\
+  #v(1em)
   #text(size: 24pt, weight: "bold")[#title]\
   #v(0.5em)
   #text(size: 14pt)[#smallcaps[#subtitle]]
@@ -100,5 +103,5 @@
   )
   #v(1fr)
   
-  #text(size: 12pt)[#city, le #date.display("[day] [month] [year]")]
+  #text(size: 12pt)[#city, le #date.display("[day]-[month]-[year]")]
 ]

@@ -10,7 +10,7 @@
   margin: (x: 1.8cm, y: 1.5cm),
   numbering: "1 of 1",
   number-align: center + top,
-footer : context{ "HEIG-VD – COMEM  – Rapport de pré-étude - Avril 26" + " " + counter(page).display();
+footer : context{ "HEIG-VD – COMEM  – " + doc-type + " - Avril 26" + " " + counter(page).display();
 
 },
 header: [

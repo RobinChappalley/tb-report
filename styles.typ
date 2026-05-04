@@ -8,8 +8,9 @@
 // VARIABLES GLOBALES (à adapter par projet)
 // ------------------------------------------------------------
 
-#let subtitle = "Rapport de pré-étude"
-#let title = "TBD"
+#let doc-type = "Rapport de pré-étude"
+#let title = "Standardiser la gestion des images dans les projets web d'une agence"
+#let subtitle = "Étude et conception d'une solution indépendante des technologies utilisées"
 #let author = (name: "Robin Chappalley", student-number: "")
 
 #let project-type = "Travail de Bachelor (TB)"
@@ -48,7 +49,7 @@
     footer: context [
       #set text(size: 9pt, fill: gray)
       #h(1fr)
-      HEIG-VD – COMEM – Rapport de pré-étude
+      HEIG-VD – COMEM – #doc-type
       #h(1fr)
       #counter(page).display()
     ],
@@ -111,6 +112,7 @@
 #let page-titre(
   titre: title,
   sous-titre: subtitle,
+  type-doc: doc-type,
   auteur: author,
   superviseurs: supervisors,
   type-projet: project-type,
@@ -130,6 +132,8 @@
     #v(2em)
     #line(length: 100%, stroke: 0.4mm)
     #v(.5em)
+    #text(size: 16pt)[#type-doc]\
+    #v(1em)
     #text(size: 24pt, weight: "bold")[#titre]\
     #v(0.5em)
     #text(size: 14pt)[#smallcaps[#sous-titre]]
