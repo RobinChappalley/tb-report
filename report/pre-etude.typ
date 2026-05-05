@@ -18,7 +18,7 @@ header: [
       columns: (1fr, 1fr),
       align: (left, right),
       gutter: 0pt,
-      grid.cell(image("images/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 3cm)),
+      grid.cell(image("./images/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 3cm)),
     )
   ]
   
@@ -35,7 +35,7 @@ header: [
 
 Antistatique est une agence web lausannoise spécialisée dans la conception, le développement et la maintenance de produits digitaux. L'équipe, composée de quatre designers et six développeurs, livre une vingtaine de projets par an, majoritairement pour des organisations publiques et parapubliques telles que l'Université de Lausanne, la Ville de Vernier ou la Cinémathèque suisse. Une part plus restreinte de l'activité concerne des mandats privés (stratégie de marque, campagnes marketing, développement sur mesure).
 
-Cette typologie de clientèle implique une diversité importante de stacks techniques et d'infrastructures d'hébergement, chaque mandat reposant sur les contraintes propres au commanditaire. Pour travailler malgré cette hétérogénéité, l'équipe s'appuie sur les standards du web, qui constituent un socle commun à tous les projets, et entretient une veille technique active. 
+Cette typologie de clientèle implique une diversité importante de stacks techniques et d'infrastructures d'hébergement, chaque mandat reposant sur les contraintes propres au commanditaire. Pour travailler malgré cette hétérogénéité, l'équipe s'appuie sur les standards du web, qui constituent un socle commun à tous les projets, et entretient une veille technique active. blabla
 
 
 
