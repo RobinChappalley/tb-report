@@ -16,6 +16,9 @@ RUN npm run build
 # Étape 2 : Distribution via Nginx (Image ultra légère)
 FROM nginx:alpine
 
+# Ajouter le type MIME manquant pour le format AVIF
+RUN echo "types { image/avif avif; }" > /etc/nginx/conf.d/avif.conf
+
 # Copie le dossier 'dist' généré par Vite vers le dossier public de Nginx
 COPY --from=builder /app/dist /usr/share/nginx/html
 
