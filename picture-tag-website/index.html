@@ -26,7 +26,7 @@
     <header>
         <div class="header-text">
             <h1>Playground: &lt;picture&gt; et sizes</h1>
-            <p>Redimensionnez la <strong>fenêtre de votre navigateur</strong> pour déclencher les media queries.</p>
+            <p>Redimensionnez la <strong>fenêtre de votre navigateur</strong> pour déclencher les media queries. <a href="https://github.com/RobinChappalley/tb-report/tree/main/picture-tag-website" target="_blank" style="color: #60a5fa; text-decoration: none; margin-left: 10px;">Voir le code sur GitHub ↗</a></p>
         </div>
         <div class="window-size-badge">
             Fenêtre : <span id="badge-window-width">0</span>px
@@ -85,25 +85,6 @@
                 </div>
             </div>
             
-            <div class="panel-section" style="flex: 1;">
-                <h2>Code HTML évalué</h2>
-                <div class="code-block" id="code-display">
-&lt;<span class="keyword">picture</span>&gt;
-<span id="code-avif">  &lt;<span class="keyword">source</span> <span class="attr">type</span>=<span class="string">"image/avif"</span>
-          <span class="attr">sizes</span>=<span class="string">"</span>
-<span class="size-condition" id="cond-0">            (max-width: 600px) 100vw,  <span class="comment">&lt;!-- Mobile --&gt;</span><span class="active-tag">← ACTIF</span></span><span class="size-condition" id="cond-1">            (max-width: 1200px) 80vw,  <span class="comment">&lt;!-- Tablette --&gt;</span><span class="active-tag">← ACTIF</span></span><span class="size-condition" id="cond-2">            1200px                     <span class="comment">&lt;!-- Desktop --&gt;</span><span class="active-tag">← ACTIF</span></span><span class="string">          "</span>
-          <span class="attr">srcset</span>=<span class="string">"... 500w, 1000w, 3000w, 6000w"</span>&gt;
-</span>
-<span id="code-webp">  &lt;<span class="keyword">source</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> 
-          <span class="attr">sizes</span>=<span class="string">"... idem ..."</span>
-          <span class="attr">srcset</span>=<span class="string">"... 500w, 1000w, 3000w, 6000w"</span>&gt;
-</span>
-  <span class="comment">&lt;!-- Fallback JPEG --&gt;</span>
-  &lt;<span class="keyword">img</span> <span class="attr">src</span>=<span class="string">"images/landscape.jpg"</span>&gt;
-&lt;/<span class="keyword">picture</span>&gt;
-                </div>
-            </div>
-
             <div class="panel-section">
                 <h2>Résultat en direct</h2>
                 <div class="stat-grid">
@@ -121,6 +102,25 @@
                             <span class="stat-value" id="val-file-size" style="color: #fcd34d;">-- KB</span>
                         </div>
                     </div>
+                </div>
+            </div>
+            
+            <div class="panel-section" style="flex: 1;">
+                <h2>Code HTML évalué</h2>
+                <div class="code-block" id="code-display">
+&lt;<span class="keyword">picture</span>&gt;
+<span id="code-avif">  &lt;<span class="keyword">source</span> <span class="attr">type</span>=<span class="string">"image/avif"</span>
+          <span class="attr">sizes</span>=<span class="string">"</span>
+<span class="size-condition" id="cond-0">            (max-width: 600px) 100vw,  <span class="comment">&lt;!-- Mobile --&gt;</span><span class="active-tag">← ACTIF</span></span><span class="size-condition" id="cond-1">            (max-width: 1200px) 80vw,  <span class="comment">&lt;!-- Tablette --&gt;</span><span class="active-tag">← ACTIF</span></span><span class="size-condition" id="cond-2">            1200px                     <span class="comment">&lt;!-- Desktop --&gt;</span><span class="active-tag">← ACTIF</span></span><span class="string">          "</span>
+          <span class="attr">srcset</span>=<span class="string">"... 500w, 1000w, 3000w, 6000w"</span>&gt;
+</span>
+<span id="code-webp">  &lt;<span class="keyword">source</span> <span class="attr">type</span>=<span class="string">"image/webp"</span> 
+          <span class="attr">sizes</span>=<span class="string">"... idem ..."</span>
+          <span class="attr">srcset</span>=<span class="string">"... 500w, 1000w, 3000w, 6000w"</span>&gt;
+</span>
+  <span class="comment">&lt;!-- Fallback JPEG --&gt;</span>
+  &lt;<span class="keyword">img</span> <span class="attr">src</span>=<span class="string">"images/landscape.jpg"</span>&gt;
+&lt;/<span class="keyword">picture</span>&gt;
                 </div>
             </div>
 
