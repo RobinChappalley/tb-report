@@ -35,7 +35,7 @@ header: [
 
 Antistatique est une agence web lausannoise spécialisée dans la conception, le développement et la maintenance de produits digitaux. L'équipe, composée de quatre designers et six développeurs, livre une vingtaine de projets par an, majoritairement pour des organisations publiques et parapubliques telles que l'Université de Lausanne, la Ville de Vernier ou la Cinémathèque suisse. Une part plus restreinte de l'activité concerne des mandats privés (stratégie de marque, campagnes marketing, développement sur mesure).
 
-Cette typologie de clientèle implique une diversité importante de stacks techniques et d'infrastructures d'hébergement, chaque mandat reposant sur les contraintes propres au commanditaire. Pour travailler malgré cette hétérogénéité, l'équipe s'appuie sur les standards du web, qui constituent un socle commun à tous les projets, et entretient une veille technique active. blabla
+Cette typologie de clientèle implique une diversité importante de stacks techniques et d'infrastructures d'hébergement, chaque mandat reposant sur les contraintes propres au commanditaire. Pour travailler malgré cette hétérogénéité, l'équipe s'appuie sur les standards du web, qui constituent un socle commun à tous les projets, et entretient une veille technique active.
 
 
 
@@ -70,9 +70,9 @@ Cette typologie de clientèle implique une diversité importante de stacks techn
 Début mai 2026, l'agence compte :
 - X projets sur vercel, qui utilise vercel images pour resize
 - X projets chez infomaniak qui utilise ....
-- X projets chez ... qui utilise
+- X projets chez ... qui utilise 
 - 1 
-Cette liste est non exhaustive et représente environ 80% de l'activité. Le problème est double : d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieurs....? Aujourd'hui, l'agence gère les différentes tailles d'images comme suit : Des tailles fixes sont définies dans le code (3:2, 4:3, etc) ainsi que des formats (jpg, webp). Lorsqu'un client upload une image, un script s'exécute et génère les différentes tailles d'images. Ces images sont stockées chez l'hébergeur. Les développeurs front-end utilisent la balise Picture @HTMLPictureElement2026 avec dans l'ordre : 
+Cette liste est non exhaustive et représente environ 80% de l'activité. Le problème est double: d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieurs....? Aujourd'hui, l'agence gère les différentes tailles d'images comme suit : Des tailles fixes sont définies dans le code (3:2, 4:3, etc) ainsi que des formats (jpg, webp). Lorsqu'un client upload une image, un script s'exécute et génère les différentes tailles d'images. Ces images sont stockées chez l'hébergeur. Les développeurs front-end utilisent la balise Picture @HTMLPictureElement2026 avec dans l'ordre : 
 1. Une image dans un format léger (avif ou webp) avec des règles CSS pour choisir la version
 
 Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien. Il y a un script qui définit des ratios d'image présents dans la page et les différentes largeurs.
@@ -107,31 +107,74 @@ srcset="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_256x154/public
   sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)" loading="eager" fetchpriority="high" class="object-cover object-center size-full">
 </picture>
 ```
+
+#pagebreak()
+
 == Recherches
+2 points : 
+- Importance d'avoir des images optimisées 
+- Importance d'avoir un processus standardisé 
+
+L'intérêt de ce travail s'appuie sur deux points différents : 
+1. D'une part,l'importance pour une agence web d'offrir à ses clients une solutions pour avoir des images optimisées, indépendamment de leur choix d'hébergement
+
+
+Sources communes du web: Doc MDN, https://web.dev/.
+
+Pertinentes car très souvent mises à jour. Source faites par les gens qui font des navigateurs, élément qui est responsable du rendu des images
+
 #question("Quelles sources ai-je identifiées pour comprendre la problématique? En quoi sont-elles pertinentes?")
 #objectif("Exposer synthétiquement les recherches menées pour analyser la problématique")
 #contenu-attendu("1-2 pages. Description de ce que vous avez appris, provenant de différentes sources, et qui vous a permis de mieux comprendre la problématique, de la contextualiser par rapport à l’écosystème de votre mandant et de la transformer en besoins")
 
-
+#pagebreak()
 == Besoins
 #question("Qu’ai-je appris de l’analyse des sources identifiées? Quels liens ai-je établis entre plusieurs sources pour en tirer des conclusions utiles sur les besoins du mandant?")
 #objectif("Exposer synthétiquement la traduction de la problématique en besoins clairs, précis et structurés. Montrer les liens entre la recherche documentaire, l’analyse et les besoins.")
 #contenu-attendu("1-2 pages. Liste des besoins et argumentaire expliquant en quoi l’analyse menée à partir de vos recherches documentaires a permis de définir cette liste.")
+#pagebreak()
 
 == Objectifs et livrables
+Documentation sur comment utiliser, comment ça a été déployé et comment le mettre en place sur d'autres sites.
 #question("Comment mon travail est-il organisé? ")
+#table([
+
+- semaine 1: 
+- semaine 2:
+- semaine 3:
+- semaine 4: 
+- semaine 5:
+- semaine 6:
+])
 #objectif("Formuler clairement et synthétiquement les objectifs de développement, les tâches et les livrables associés, ainsi que la manière dont ces éléments s’articulent dans un planning crédible.")
 #contenu-attendu("1-2 pages. Objectifs découpés en tâches et en livrables. Description synthétique des livrables. Planning crédible, dont on décrira les principales étapes directement dans le rapport, avec une version complète en annexe.")
+#pagebreak()
 
 == Compétences
+
+=== Valeur ajoutée :
+- Facilite l'onboarding de nouveau employés
+- Permet à Antistatique de devenir indépendant des PAAS et de leurs changements de prix, de politique ou autre.
+
+
+=== Compétences mobilisées :
+- Technologie web
+- Gestion de projet et du changement (adoption par les équipes)
+- Développement d'application
+- Intégration d'un service tiers au sein d'un processus existant
+
 #question("Quelle est la valeur ajoutée pour le mandant de mon travail?")
 #objectif("Démontrer la valeur ajoutée que votre travail apportera au mandant: la nature des tâches, leur complexité et leur diversité, en lien avec les compétences multidisciplinaires de l’ingénierie des médias.")
 #contenu-attendu("1 page. Argumentaire permettant de comprendre en quoi votre travail apporte de la valeur ajoutée et quelle est cette valeur (technique, conceptuelle, analytique, marketing, autre)? Quel est le degré de mobilisation de vos compétences en ingénierie des médias?")
+#pagebreak()
 
 == Risques
+
+Attention à "protéger" l'endpoint, sinon les gens vont se mettre à l'utiliser pour faire tout et n'importe quoi (créer une UI pour ajouter les sites autorisés ?)
 #question("Quels sont les facteurs de risque du projet? Comment les prévenir et les atténuer s’ils surviennent ? ")
 #objectif("Proposer une matrice des risques (risque, mesure de prévention, mesure de correction, degré) cohérente et pertinente en fonction du contexte du TB et du mandant")
 #contenu-attendu("1 page Matrice des risques et commentaire court sur les points nécessitant davantage d’explications (Selon les contextes, certains risques ne sont pas évidents et doivent être expliqués).")
+#pagebreak()
 
 == Conclusion
 #question("1-2 pages. En prenant du recul, qu’ai-je appris? Que ferai-je différemment? Quelles sont les limites de mon approche et du contexte dans lequel s’est déroulée cette pré-étude?")
