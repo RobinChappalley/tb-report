@@ -68,7 +68,7 @@ Cette typologie de clientèle implique une diversité importante de stacks techn
 #objectif("Expliquer la problématique du mandant de manière structurée et contextualisée. Montrer en quoi les compétences en ingénierie des médias sont a priori pertinentes pour y répondre.")
 #contenu-attendu("1 page. Résumé de la situation actuelle et des développements demandés par le mandant. À quel besoin devra répondre ce projet ? Quelles compétences seront nécessaires et pourquoi?")
 Début mai 2026, l'agence compte :
-- X projets sur vercel, qui utilise vercel images pour resize
+- 5 projets next sur Vercel, qui utilisent le redimensionnement natif de Vercel. Sur l'année dernière, 2,406 milions de redimensionnements d'images ont été effectués
 - X projets chez infomaniak qui utilise ....
 - X projets chez ... qui utilise 
 - 1 
@@ -119,13 +119,17 @@ srcset="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_256x154/public
 #pagebreak()
 
 == Recherches
+
+Dans le monde du web, il y a peu de littérature scientifique qui définit qu'une manière de faire est meilleure qu'une autre. Le développeur qui décide d'implémenter une solution plutôt qu'une autre fait des choix, en fonction de différentes contraintes, qu'il pondère pour choisir la solution la plus adaptée. 
+
+
+
+
+
+
 2 points : 
 - Importance d'avoir des images optimisées 
 - Importance d'avoir un processus standardisé 
-
-L'intérêt de ce travail s'appuie sur deux points différents : 
-1. D'une part,l'importance pour une agence web d'offrir à ses clients une solutions pour avoir des images optimisées, indépendamment de leur choix d'hébergement
-
 
 Sources communes du web: Doc MDN, https://web.dev/.
 
@@ -137,6 +141,12 @@ Pertinentes car très souvent mises à jour. Source faites par les gens qui font
 
 #pagebreak()
 == Besoins
+Dans le cas d'Antistatique, il y a deux contraintes. 
+- Être aussi indépendant que possible des fournisseurs, en maintenant le même niveau de disponibilité qu'actuellement.
+- Avoir un produit qui s'adapte à toutes les stacks technologiques, actuelles et futures.
+
+
+
 #question("Qu’ai-je appris de l’analyse des sources identifiées? Quels liens ai-je établis entre plusieurs sources pour en tirer des conclusions utiles sur les besoins du mandant?")
 #objectif("Exposer synthétiquement la traduction de la problématique en besoins clairs, précis et structurés. Montrer les liens entre la recherche documentaire, l’analyse et les besoins.")
 #contenu-attendu("1-2 pages. Liste des besoins et argumentaire expliquant en quoi l’analyse menée à partir de vos recherches documentaires a permis de définir cette liste.")
