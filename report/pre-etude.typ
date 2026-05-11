@@ -72,7 +72,15 @@ Début mai 2026, l'agence compte :
 - X projets chez infomaniak qui utilise ....
 - X projets chez ... qui utilise 
 - 1 
-Cette liste est non exhaustive et représente environ 80% de l'activité. Le problème est double: d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieurs....? Aujourd'hui, l'agence gère les différentes tailles d'images comme suit : Des tailles fixes sont définies dans le code (3:2, 4:3, etc) ainsi que des formats (jpg, webp). Lorsqu'un client upload une image, un script s'exécute et génère les différentes tailles d'images. Ces images sont stockées chez l'hébergeur. Les développeurs front-end utilisent la balise Picture @HTMLPictureElement2026 avec dans l'ordre : 
+Cette liste est non exhaustive et représente environ 80% de l'activité. Le problème est double: 
+
+1.  Pour optmiser les performances et améliorer les SEO de ses clients, l'agence procède de plusieurs manières pour que l'image servie à l'utilisateur final soit la plus légère et dans un format accepté par son navigateur. Cette non-standardisation génère du travail supplémentaire, écrire de la documentation et adapter le workflow à chaque client/stack technologique. Antistatique n'a pas de moyen efficace pour valider que les formats générés sont réellement utilisés.
+
+2.  Les solutions clés en main utilisées par l'agence la rend dépendante à des fournisseurs tiers. Ces fournisseurs facturent habituellement la bande passante et le nombre de requêtes traitées, ce qui rend les coûts d'hébergement difficiles à maîtriser. Bien qu'aujourd'hui les montants en jeu représentent quelques dizaines de francs par mois, avoir la totale maîtrise des coûts de la gestion des images peut être présenté comme un avantage concurentiel par Antistatique.
+
+
+
+d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieurs....? Aujourd'hui, l'agence gère les différentes tailles d'images comme suit : Des tailles fixes sont définies dans le code (3:2, 4:3, etc) ainsi que des formats (jpg, webp). Lorsqu'un client upload une image, un script s'exécute et génère les différentes tailles d'images. Ces images sont stockées chez l'hébergeur. Les développeurs front-end utilisent la balise Picture @HTMLPictureElement2026 avec dans l'ordre : 
 1. Une image dans un format léger (avif ou webp) avec des règles CSS pour choisir la version
 
 Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien. Il y a un script qui définit des ratios d'image présents dans la page et les différentes largeurs.
