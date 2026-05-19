@@ -83,6 +83,9 @@
     ),
   )
 
+  // Remplacement de "Liste" par "Code" pour les figures de code
+  show figure.where(kind: raw): set figure(supplement: [Code])
+
   doc
 }
 
