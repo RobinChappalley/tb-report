@@ -25,7 +25,7 @@ header: [
 )
 
 #let appendix(body) = {
-  set heading(numbering: "A", supplement: [Annexe])
+  set heading(numbering: "1", supplement: [Annexe])
   counter(heading).update(0)
   body
 }
@@ -91,7 +91,7 @@ d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieu
 
 Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien. Il y a un script qui définit des ratios d'image présents dans la page et les différentes largeurs.
 
-par exemple : @pictureTag
+par exemple : @appendix-pictureTag
 
 
 
@@ -186,11 +186,11 @@ Attention à "protéger" l'endpoint, sinon les gens vont se mettre à l'utiliser
 
 #pagebreak()
 
-#outline(target: heading.where(supplement: [Annexe]), title: [Annexes])
+#outline(target: figure.where(kind: "annexe"), title: [Annexes])
 
 #show: appendix
 
-== Code avec la balise picture <pictureTag>
+
 
 #figure(
 ```html
@@ -223,7 +223,9 @@ srcset="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_256x154/public
   sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)" loading="eager" fetchpriority="high" class="object-cover object-center size-full">
 </picture>
 ```,
-caption: "Un exemple de code avec la balise picture")
+caption: "Un exemple de code avec la balise picture", supplement: [Annexe], kind: "annexe")<appendix-pictureTag>
+
+
 
 
 #bibliography("travail-bachelor.bib")
