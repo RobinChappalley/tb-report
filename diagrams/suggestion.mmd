@@ -1,0 +1,43 @@
+graph TD
+    %% Définition des styles
+    classDef client fill:#f9f9f9,stroke:#333,stroke-width:2px;
+    classDef app fill:#e2f0d9,stroke:#548235,stroke-width:2px,color:#000;
+    classDef infra fill:#ddebf7,stroke:#2e75b6,stroke-width:2px,color:#000;
+    classDef storage fill:#fff2cc,stroke:#d6b656,stroke-width:2px,color:#000;
+
+    Navigateur((Navigateur Web<br>Utilisateur)):::client
+
+    %% ÉTAPE 1 : GÉNÉRATION DU HTML
+    subgraph Etape 1 : Génération du HTML
+        Next["📦 Frameworks (Next/Nuxt)<br>Loader Custom génère:<br><i>photo.jpg?width=800</i>"]:::app
+        WP["🖋️ CMS (WordPress/Drupal)<br>Comportement Natif génère:<br><i>photo-800x600.jpg</i>"]:::app
+    end
+
+    Navigateur -. "1. Demande la page web" .-> Next
+    Navigateur -. "1. Demande la page web" .-> WP
+    Next -. "2. Retourne le HTML" .-> Navigateur
+    WP -. "2. Retourne le HTML" .-> Navigateur
+
+    %% ÉTAPE 2 : REQUÊTE ET OPTIMISATION DE L'IMAGE
+    subgraph Etape 2 : Infrastructure d'Optimisation
+        Nginx{"⚙️ Reverse Proxy (Nginx)"}:::infra
+        Regex["🔍 Règle Magique (Regex)<br>Traduit -800x600 en ?width=800"]:::infra
+        Cache[("🗄️ Cache Nginx<br>Stocke les images générées")]:::infra
+        Imgproxy["🚀 Imgproxy<br>Redimensionne & convertit (AVIF/WebP)"]:::infra
+    end
+
+    Stockage[("📁 Serveur d'Origine (ou S3)<br>Stocke 'photo.jpg' en Haute Définition")]:::storage
+
+    %% Flux de l'image
+    Navigateur == "3. Requête l'image URL" === Nginx
+    
+    Nginx -- "Si URL CMS (Regex)" --> Regex
+    Regex --> Cache
+    Nginx -- "Si URL Framework" --> Cache
+    
+    Cache -- "Si non présente (Miss)" --> Imgproxy
+    Imgproxy -- "Télécharge l'original" --> Stockage
+    Stockage -- "Retourne l'original HD" --> Imgproxy
+    
+    Imgproxy -- "Traite l'image à la volée" --> Cache
+    Cache == "4. Sert l'image optimisée" === Navigateur

@@ -24,7 +24,13 @@ header: [
   
 )
 
+#let appendix(body) = {
+  set heading(numbering: "A", supplement: [Annexe])
+  counter(heading).update(0)
+  body
+}
 
+#set heading(numbering: "1.")
 #show: doc => conf(doc)
 
 //Début du rapport
@@ -85,36 +91,11 @@ d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieu
 
 Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien. Il y a un script qui définit des ratios d'image présents dans la page et les différentes largeurs.
 
-```html
-<picture>
- <source type="image/webp" 
-srcset="https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_256x154/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=cxoRUVZH 256w,
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_384x230/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=BBNjNnkT 384w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_690x414/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=nAipFH2_ 690w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=vHHT8gqI 750w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_828x497/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=bLlh56QY 828w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1080x648/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=WE0s6VXz 1080w,
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1400x840/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=GIDqcKq- 1400w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1920x1152/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=fhzMzAm0 1920w,
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_2048x1229/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=rQCkwrSh 2048w,
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_3840x2304/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=VD7_Jvai 3840w"
-sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)">
-  <source type="image/jpg" 
-srcset="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_256x154/public/2026-04/pexels-szafran-32028869.jpg?itok=z6eaPvTh 256w,
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_384x230/public/2026-04/pexels-szafran-32028869.jpg?itok=cTiVZoQS 384w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_690x414/public/2026-04/pexels-szafran-32028869.jpg?itok=tuQf6bTj 690w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg?itok=S1R2qZnN 750w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_828x497/public/2026-04/pexels-szafran-32028869.jpg?itok=FYkyOZlF 828w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1080x648/public/2026-04/pexels-szafran-32028869.jpg?itok=O-lcvyzb 1080w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1400x840/public/2026-04/pexels-szafran-32028869.jpg?itok=zp6U1OOz 1400w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1920x1152/public/2026-04/pexels-szafran-32028869.jpg?itok=Ennm_aoY 1920w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_2048x1229/public/2026-04/pexels-szafran-32028869.jpg?itok=HVGzTVsG 2048w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_3840x2304/public/2026-04/pexels-szafran-32028869.jpg?itok=7jCS1LeC 3840w" 
- sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)">
-  <img alt="champ de céréales" src="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg?itok=S1R2qZnN" 
-  sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)" loading="eager" fetchpriority="high" class="object-cover object-center size-full">
-</picture>
-```
+par exemple : @pictureTag
+
+
+
+
 
 #pagebreak()
 
@@ -204,6 +185,46 @@ Attention à "protéger" l'endpoint, sinon les gens vont se mettre à l'utiliser
 
 
 #pagebreak()
+
+#outline(target: heading.where(supplement: [Annexe]), title: [Annexes])
+
+#show: appendix
+
+== Code avec la balise picture <pictureTag>
+
+#figure(
+```html
+<picture>
+ <source type="image/webp" 
+srcset="https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_256x154/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=cxoRUVZH 256w,
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_384x230/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=BBNjNnkT 384w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_690x414/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=nAipFH2_ 690w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=vHHT8gqI 750w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_828x497/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=bLlh56QY 828w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1080x648/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=WE0s6VXz 1080w,
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1400x840/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=GIDqcKq- 1400w, 
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1920x1152/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=fhzMzAm0 1920w,
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_2048x1229/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=rQCkwrSh 2048w,
+https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_3840x2304/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=VD7_Jvai 3840w"
+sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)">
+  <source type="image/jpg" 
+srcset="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_256x154/public/2026-04/pexels-szafran-32028869.jpg?itok=z6eaPvTh 256w,
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_384x230/public/2026-04/pexels-szafran-32028869.jpg?itok=cTiVZoQS 384w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_690x414/public/2026-04/pexels-szafran-32028869.jpg?itok=tuQf6bTj 690w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg?itok=S1R2qZnN 750w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_828x497/public/2026-04/pexels-szafran-32028869.jpg?itok=FYkyOZlF 828w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1080x648/public/2026-04/pexels-szafran-32028869.jpg?itok=O-lcvyzb 1080w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1400x840/public/2026-04/pexels-szafran-32028869.jpg?itok=zp6U1OOz 1400w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1920x1152/public/2026-04/pexels-szafran-32028869.jpg?itok=Ennm_aoY 1920w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_2048x1229/public/2026-04/pexels-szafran-32028869.jpg?itok=HVGzTVsG 2048w, 
+ https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_3840x2304/public/2026-04/pexels-szafran-32028869.jpg?itok=7jCS1LeC 3840w" 
+ sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)">
+  <img alt="champ de céréales" src="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg?itok=S1R2qZnN" 
+  sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)" loading="eager" fetchpriority="high" class="object-cover object-center size-full">
+</picture>
+```,
+caption: "Un exemple de code avec la balise picture")
+
 
 #bibliography("travail-bachelor.bib")
 
