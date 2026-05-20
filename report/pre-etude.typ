@@ -73,12 +73,20 @@ Cette typologie de clientèle implique une diversité importante de stacks techn
 #question("Comment le mandant présente-t-il sa problématique dans son contexte?")
 #objectif("Expliquer la problématique du mandant de manière structurée et contextualisée. Montrer en quoi les compétences en ingénierie des médias sont a priori pertinentes pour y répondre.")
 #contenu-attendu("1 page. Résumé de la situation actuelle et des développements demandés par le mandant. À quel besoin devra répondre ce projet ? Quelles compétences seront nécessaires et pourquoi?")
-Début mai 2026, l'agence compte :
-- 5 projets next sur Vercel, qui utilisent le redimensionnement natif de Vercel. Sur l'année dernière, 2,406 milions de redimensionnements d'images ont été effectués
-- X projets chez infomaniak qui utilise ....
-- X projets chez ... qui utilise 
-- 1 
-Cette liste est non exhaustive et représente environ 80% de l'activité. Le problème est double: 
+Aujourd'hui, Antistatique est capable de livrer des images optimisées (format et poids) aux utilisateur finaux de ses clients. Le processus pour y parvenir varie selon la stack technologique et repose sur des tâches répétitives et fastidieuses.
+
+L'agence exprime un besoin de standardiser la gestion des images. Bien que le processus actuel soit satisfaisant pour les clients et utilisateurs finaux, ce n'est pas une solution satisfaisante pour les développeurs. Sur chaque projet, le développeur front-end et le backend doivent se mettre d'accord sur comment gérer la livraison d'images adaptées à l'utilisateur final. Antistatique souhaite que cette responsabilité soit déleguée à une brique logicielle tierce, indépendante de la technologie utilisée.
+
+Malgré la séparation des responsabilités, l'agence a besoin que la solution choisie n'altère ni l'expérience de développement de ses employés, ni l'expérience de rédaction de ses clients. Autrement dit, quand un client upload une image, il doit pouvoir continuer à le faire de la même manière, sans devoir apprendre à utiliser un nouvel outil. De même, les développeurs doivent pouvoir continuer à utiliser les outils et les processus qu'ils utilisent aujourd'hui pour intégrer les images dans les pages web.
+
+Concernant l'hébergement, Antistatique souhaite que la solution s'adapte à n'importe quel type d'hébergment. La majorité de ses clients utilise l'hébergement mutualisé d'Infomaniak; dans ce cas, les images se trouvent sur le le serveur du site web (@appendix-infomaniak-web-hosting), mais la solution doit pouvoir s'adapter en fonction d'où les images se trouvent.
+
+
+Dans ce contexte, les compétences de l'ingénieur de médias sont utiles pour proposer une solution technique adaptée aux besoins de l'entreprise, puisqu'il comprend les enjeux techniques, mais aussi les aspects liés à l'expérience développeur/rédacteur. Il s'agira aussi d'accompagner le changement et l'adoption de cette solution par les équipes de développement.
+
+
+#pagebreak()
+
 
 1.  Pour optmiser les performances et améliorer les SEO de ses clients, l'agence procède de plusieurs manières pour que l'image servie à l'utilisateur final soit la plus légère et dans un format accepté par son navigateur. Cette non-standardisation génère du travail supplémentaire, écrire de la documentation et adapter le workflow à chaque client/stack technologique. Antistatique n'a pas de moyen efficace pour valider que les formats générés sont réellement utilisés.
 
@@ -190,6 +198,9 @@ Attention à "protéger" l'endpoint, sinon les gens vont se mettre à l'utiliser
 
 #show: appendix
 
+#figure(
+  image("./images/infomaniak-web-hosting.png", width: 12cm),
+  caption: "Capture d'écran d'Infomaniak sur l'hébergement web mutualisé", supplement: [Annexe], kind: "annexe")<appendix-infomaniak-web-hosting>
 
 
 #figure(
@@ -224,7 +235,6 @@ srcset="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_256x154/public
 </picture>
 ```,
 caption: "Un exemple de code avec la balise picture", supplement: [Annexe], kind: "annexe")<appendix-pictureTag>
-
 
 
 
