@@ -89,45 +89,61 @@ Dans ce contexte, les compétences de l'ingénieur de médias sont utiles pour p
 
 
 == Recherches
-Les recherches menées permettent de comprendre pourquoi Antistatique essaie de régler ce problème et d'amener des pistes de solutions.
-
-La documentation de MDN sur les formats d'image avance que plus de 51% de la bande passante utilisée pour le web est consacrée au téléchargement d'images @MultimediaImagesLearn2026. L'intérêt pour les entreprises de réduire la taille des images est donc évident, que ce soit pour réduire les coûts d'hébergement ou pour améliorer les performances de leurs sites web. De plus, les moteurs de recherche prennent en compte la performance d'un site web dans leur algorithme de référencement, ce qui rend l'optimisation des images importante pour le SEO @BonnesPratiquesSEO. Le fait que la balise picture soit supportée par tous les navigateurs depuis 2016 témoigne de l'importance de ce sujet pour les acteurs du web @HTMLPictureElement2026.
-
-// La manière dont Antistatique résoud le problème de l'optimisation des images aujourd'hui est très manuelle et 
-
-Une des grandes métrique en développement logiciel est le couplage. @CouplingCohesionSoftware. Avec le processus actuel, la transformation des images et leur livraison à l'utilisateur final sont intimement liés à la technologie utilisée (Wordpress, Drupal, etc). Découpler l'architecture de gestion des images et la technologie utilisée permettrait à Antistatique d'être plus fexible et de s'adapter plus facilement aux évolutions technologiques @ganapathyDiscoverBenefitsDecoupled2023. Liip, l'une des grandes agences web suisse, a lancé un service (Rokka) pour répondre à ce besoin et découpler la gestion des images de la technologie utilisée @switzerlandRokkaWebImages. Cela prouve qu'il existe une demande concrète pour ce type de service au sein du marché des agences web suisses.
-
-
-
-
-Il existe des bonnes pratiques en matière de standardisation de processus qu'Antistatique pourrait appliquer pour résoudre ce problème
-
-
-
-
-2 points : 
-- Importance d'avoir des images optimisées 
-- Importance d'avoir un processus standardisé 
-
-Sources communes du web: Doc MDN, https://web.dev/.
-
-Pertinentes car très souvent mises à jour. Source faites par les gens qui font des navigateurs, élément qui est responsable du rendu des images
-
 #question("Quelles sources ai-je identifiées pour comprendre la problématique? En quoi sont-elles pertinentes?")
 #objectif("Exposer synthétiquement les recherches menées pour analyser la problématique")
 #contenu-attendu("1-2 pages. Description de ce que vous avez appris, provenant de différentes sources, et qui vous a permis de mieux comprendre la problématique, de la contextualiser par rapport à l’écosystème de votre mandant et de la transformer en besoins")
 
+Les recherches menées permettent de comprendre pourquoi Antistatique essaie de régler ce problème et d'amener des pistes de solutions.
+
+La documentation de MDN sur les formats d'image avance que plus de 51% de la bande passante utilisée pour le web est consacrée au téléchargement d'images @MultimediaImagesLearn2026. L'intérêt pour les entreprises de réduire la taille des images est donc évident, que ce soit pour réduire les coûts d'hébergement ou pour améliorer les performances de leurs sites web. De plus, les moteurs de recherche prennent en compte la performance d'un site web dans leur algorithme de référencement, ce qui rend l'optimisation des images importante pour le SEO @BonnesPratiquesSEO.  Le support universel de la balise <picture> par les navigateurs depuis 2016 confirme l'importance d'une gestion adaptative des médias @HTMLPictureElement2026.
+
+// La manière dont Antistatique résoud le problème de l'optimisation des images aujourd'hui est très manuelle et 
+
+Pourtant, le processus actuel d'Antistatique souffre d'un couplage fort @CouplingCohesionSoftware : la transformation et la distribution des images dépendent intrinsèquement de la technologie choisie pour chaque projet (WordPress, Drupal, etc.). Découpler la gestion des images de la stack technique offrirait à l'agence une meilleure flexibilité face aux évolutions technologiques @ganapathyDiscoverBenefitsDecoupled2023. Liip, l'une des grandes agences web suisse, a lancé un service (Rokka) pour répondre à ce besoin et découpler la gestion des images de la technologie utilisée @switzerlandRokkaWebImages. Cela prouve qu'il existe une demande concrète pour ce type de service au sein du marché des agences web suisses.
+
+
+Enfin, bien que le temps de configuration de ces outils par projet semble faible (1h pour intégrer le module dans Drupal selon un développeur), cette approche génère une dette technique. Dans l'ingénierie logicielle, ce type de configuration manuelle répétitive s'apparente au Toil,  @GoogleSREWhat comme une tâche sans valeur ajoutée durable. Avant de pouvoir automatiser un processus, il faut d'abord le standardiser @davenportProcessInnovationReengineering20xx. Définir une méthode unique pour toute l'agence permettrait de garantir une qualité d'image constante sur tous les sites, tout en évitant que la configuration ne dépende des habitudes techniques de chaque développeur.
+
+
 #pagebreak()
 == Besoins
-Dans le cas d'Antistatique, il y a deux contraintes. 
-- Être aussi indépendant que possible des fournisseurs, en maintenant le même niveau de disponibilité qu'actuellement.
-- Avoir un produit qui s'adapte à toutes les stacks technologiques, actuelles et futures.
-
-
 
 #question("Qu’ai-je appris de l’analyse des sources identifiées? Quels liens ai-je établis entre plusieurs sources pour en tirer des conclusions utiles sur les besoins du mandant?")
 #objectif("Exposer synthétiquement la traduction de la problématique en besoins clairs, précis et structurés. Montrer les liens entre la recherche documentaire, l’analyse et les besoins.")
 #contenu-attendu("1-2 pages. Liste des besoins et argumentaire expliquant en quoi l’analyse menée à partir de vos recherches documentaires a permis de définir cette liste.")
+== Besoins identifiés
+
+L’analyse de la problématique met en évidence deux contraintes principales pour Antistatique. La première concerne la dépendance aux services tiers : l’agence souhaite conserver la maîtrise de la solution, de ses coûts et de son déploiement. La seconde concerne la diversité technique de ses projets : les sites maintenus par l’agence reposent sur des CMS, frameworks et hébergements différents.
+
+Ces contraintes conduisent à définir les besoins suivants.
+
+=== 1. Interopérabilité avec les stacks existantes et futures
+
+La solution doit pouvoir être utilisée indépendamment du CMS, du framework front-end ou de l’hébergement du projet. Ce besoin découle directement de la diversité des environnements techniques utilisés par l’agence. Une solution trop liée à une technologie précise déplacerait le problème au lieu de le résoudre : elle nécessiterait des adaptations spécifiques à chaque projet.
+
+=== 2. Centralisation de la logique d’optimisation
+
+Le traitement des images doit être centralisé afin d’éviter que chaque projet doive réimplémenter ses propres règles de compression, de redimensionnement et de conversion de formats. Ce besoin répond à un enjeu de maintenance : lorsqu’une règle évolue ou qu’un nouveau format devient pertinent, la mise à jour doit pouvoir être effectuée à un seul endroit plutôt que dans chaque codebase.
+
+=== 3. Maîtrise du déploiement et des coûts
+
+La solution ne doit pas enfermer l’agence dans un écosystème propriétaire fermé. Elle doit pouvoir être déployée sur une infrastructure cloud standard, avec des coûts compréhensibles et prévisibles. Ce besoin est important pour permettre à l’agence de conserver une marge de décision sur l’hébergement, l’évolution de la solution et son modèle d’exploitation.
+
+=== 4. Disponibilité et robustesse
+
+Comme la solution interviendrait dans la chaîne de livraison des images, elle ne doit pas introduire un point de défaillance critique. En cas d’indisponibilité du service d’optimisation, les images doivent rester accessibles, même sans traitement optimisé. Ce besoin est essentiel pour éviter qu’un problème sur la solution impacte fortement l’affichage des sites clients.
+
+=== 5. Faible charge d’intégration pour les développeurs
+
+La solution doit limiter au maximum le travail demandé aux développeurs lors de l’intégration dans un projet. L’objectif n’est pas de masquer totalement le fonctionnement du système, mais de rendre son usage suffisamment simple et standardisé pour qu’un nouveau développeur puisse l’adopter rapidement. 
+
+=== 6. Réversibilité pour les sites clients
+
+Dans le cas où un client quitte l’agence, le site doit continuer à fonctionner sans dépendre fortement de la solution mise en place par Antistatique. Le départ d’un client ne doit pas rendre ses images inaccessibles. La perte acceptable est celle de l’optimisation avancée, pas celle du contenu.
+
+Ces besoins ne présupposent pas une solution technique unique. Ils servent de critères pour comparer plusieurs approches possibles, notamment une intégration par helpers, une approche par composant web, une réécriture HTML côté infrastructure ou un service d’optimisation d’images découplé. Le travail de Bachelor devra permettre d’évaluer ces pistes à partir de critères mesurables : performance, maintenabilité, facilité d’intégration et robustesse.
+
+
 #pagebreak()
 
 == Objectifs et livrables
@@ -229,6 +245,7 @@ caption: "Un exemple de code avec la balise picture", supplement: [Annexe], kind
 raw(read("assets/images.md", encoding: "utf8"), block:true, lang: "markdown"),
  caption: "Extrait de la documentation d'Antistatique sur les pratiques à adopter pour concernant les images", supplement: [Annexe], kind: "annexe"
 )<appendix-antistatique-doc-images>
+
 
 #bibliography("travail-bachelor.bib", style:"apa")
 #pagebreak()
