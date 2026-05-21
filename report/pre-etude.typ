@@ -161,6 +161,8 @@ Dans un second temps, le projet visera à déployer une preuve de concept (PoC) 
 === Connecteurs
 Pour assurer l'utilisabilité de cette architecture, le dernier objectif consistera à développer des connecteurs légers (composants ou helpers) pour les stacks principales de l'agence, telles que Drupal et Next.js. Ces connecteurs auront pour but d'interfacer les CMS avec le service de traitement d'images de façon transparente, limitant ainsi la dette technique tout en centralisant la maintenance. Le code de ces différents connecteurs et la documentation associé font partie des livrables de cette dernière phase, estimée à une durée de 2 semaines. Le but est de se limiter à Drupal et Next.js, mais il est envisagable d'ajouter d'autres connecteurs si le temps le temps le permet.
 
+Une planification plus détaillé se trouve en annexe. @appendix-planning
+
 
 
 
@@ -170,7 +172,7 @@ Pour assurer l'utilisabilité de cette architecture, le dernier objectif consist
 #contenu-attendu("1 page. Argumentaire permettant de comprendre en quoi votre travail apporte de la valeur ajoutée et quelle est cette valeur (technique, conceptuelle, analytique, marketing, autre)? Quel est le degré de mobilisation de vos compétences en ingénierie des médias?")
 
 == Valeur ajoutée pour le mandant
-Pour Antistatique, ce projet représente une opportunnité de standardiser un processus technique essentiel. Cette standardisation permet de préparer la gestion des images des clients à court et à moyen terme. Si un nouveau format d'image plus performant émerge, il sera très facile de l'intégrer à la solution centralisée. 
+Pour Antistatique, ce projet représente une opportunnité de standardiser un processus technique essentiel. Cette standardisation permet de préparer la gestion des images à moyen terme. Si un nouveau format d'image plus performant émerge, il sera très facile de l'intégrer à la solution centralisée, sans nécessiter une refonte sur chaque projet. 
 
 Dans le cas où un client a déjà beaucoup de contenu avec de nombreuses images mal optimisées, la solution pourrait permettre de livrer des images d'une qualité similaire mais d'un poids moindre. Cela peut être un argument de vente pour convaincre un client de faire appel à Antistatique pour la refonte de son service web, en lui proposant une amélioration des performances et du SEO grâce à une meilleure gestion des images.
 
@@ -178,11 +180,17 @@ Réaliser une analyse comparative des solutions du marché permettra à l'agence
 
 
 
-=== Compétences mobilisées :
-- Technologie web
-- Gestion de projet et du changement (adoption par les équipes)
-- Développement d'application
-- Intégration d'un service tiers au sein d'un processus existant
+== Compétences mobilisées
+
+Pour mener ce projet à son terme, différentes compétences de l'ingénieur des médias sont nécessaires. Les compétences techniques sont centrales, notamment en ce qui concerne les technologies web, l'architecture logicielle et le développement d'application. Une compréhension fine du fonctionnement des différentes stacks technologiques, notamment les architectures découplées, est essentielle pour comprendre comme intégrer la solution de manière transparente pour les développeurs et les clients. 
+
+Les compétences acquises en optimisation SEO sont aussi mobilisées pour comprendre les enjeux liés à la performance des sites web (Core Web Vitals) et à l'optimisation des images. Un enjeu d'écoconception peut également être identifié dans le cas d'un nouveau client qui ne sert pas du tout d'images optimisées à ses utilisateurs. 
+
+Pour que la solution proposée soit adpotée par les équipes de développement, il est nécessaire de faire un produit qui tient compte de l'expérience développeur (DX). Les compétences en UX design sont donc mobilisées pour comprendre les besoins et les contraintes des développeurs, et pour concevoir une solution qui s'intègre de manière fluide dans leur workflow.
+
+Les compétences en gestion de projet et du changement sont importantes pour accompagner l'adoption de la solution par les équipes de développement de l'agence.
+
+
 
 
 #pagebreak()
@@ -193,6 +201,12 @@ Attention à "protéger" l'endpoint, sinon les gens vont se mettre à l'utiliser
 #question("Quels sont les facteurs de risque du projet? Comment les prévenir et les atténuer s’ils surviennent ? ")
 #objectif("Proposer une matrice des risques (risque, mesure de prévention, mesure de correction, degré) cohérente et pertinente en fonction du contexte du TB et du mandant")
 #contenu-attendu("1 page Matrice des risques et commentaire court sur les points nécessitant davantage d’explications (Selon les contextes, certains risques ne sont pas évidents et doivent être expliqués).")
+
+
+#figure(
+image("assets/risks.webp", width: 12cm),
+ caption: "Analyse des risques du projet", 
+)
 #pagebreak()
 
 == Conclusion
@@ -211,7 +225,7 @@ Attention à "protéger" l'endpoint, sinon les gens vont se mettre à l'utiliser
 #show: appendix
 
 #figure(
-  image("./assets/infomaniak-web-hosting.png", width: 12cm),
+  image("assets/infomaniak-web-hosting.png", width: 12cm),
   caption: "Capture d'écran d'Infomaniak sur l'hébergement web mutualisé", supplement: [Annexe], kind: "annexe")<appendix-infomaniak-web-hosting>
 
 
@@ -252,6 +266,16 @@ caption: "Un exemple de code avec la balise picture", supplement: [Annexe], kind
 raw(read("assets/images.md", encoding: "utf8"), block:true, lang: "markdown"),
  caption: "Extrait de la documentation d'Antistatique sur les pratiques à adopter pour concernant les images", supplement: [Annexe], kind: "annexe"
 )<appendix-antistatique-doc-images>
+
+#figure(
+image("assets/planning.png", width: 12cm),
+ caption: "Planning détaillé du projet", supplement: [Annexe], kind: "annexe"
+)<appendix-planning>
+
+#figure(
+image("assets/risks.webp", width: 12cm),
+ caption: "Analyse des risques du projet", supplement: [Annexe], kind: "annexe"
+)<appendix-risks>
 
 
 #bibliography("travail-bachelor.bib", style:"apa")
