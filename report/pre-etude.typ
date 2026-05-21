@@ -18,7 +18,7 @@ header: [
       columns: (1fr, 1fr),
       align: (left, right),
       gutter: 0pt,
-      grid.cell(image("./images/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 3cm)),
+      grid.cell(image("./assets/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 3cm)),
     )
   ]
   
@@ -89,7 +89,12 @@ Dans ce contexte, les compétences de l'ingénieur de médias sont utiles pour p
 == Recherches
 Les recherches menées permettent de comprendre pourquoi Antistatique essaie de régler ce problème et d'amener des pistes de solutions.
 
-La documentation de MDN sur les formats d'image avance que plus de 51% de la bande passante utilisée pour le web est consacrée au téléchargement d'images @MultimediaImagesLearn2026. L'intérêt pour les entreprises de réduire la taille des images est donc évident, que ce soit pour réduire les coûts d'hébergement ou pour améliorer les performances de leurs sites web. De plus, les moteurs de recherche prennent en compte la performance d'un site web dans leur algorithme de référencement, ce qui rend l'optimisation des images importante pour le SEO @BonnesPratiquesSEO.
+La documentation de MDN sur les formats d'image avance que plus de 51% de la bande passante utilisée pour le web est consacrée au téléchargement d'images @MultimediaImagesLearn2026. L'intérêt pour les entreprises de réduire la taille des images est donc évident, que ce soit pour réduire les coûts d'hébergement ou pour améliorer les performances de leurs sites web. De plus, les moteurs de recherche prennent en compte la performance d'un site web dans leur algorithme de référencement, ce qui rend l'optimisation des images importante pour le SEO @BonnesPratiquesSEO. Le fait que la balise picture soit supportée par tous les navigateurs depuis 2016 témoigne de l'importance de ce sujet pour les acteurs du web @HTMLPictureElement2026.
+
+// La manière dont Antistatique résoud le problème de l'optimisation des images aujourd'hui est très manuelle et 
+
+
+Il existe des bonnes pratiques en matière de standardisation de processus qu'Antistatique pourrait appliquer pour résoudre ce problème. @appendix-antistatique-doc-images
 
 
 
@@ -181,7 +186,7 @@ Attention à "protéger" l'endpoint, sinon les gens vont se mettre à l'utiliser
 #show: appendix
 
 #figure(
-  image("./images/infomaniak-web-hosting.png", width: 12cm),
+  image("./assets/infomaniak-web-hosting.png", width: 12cm),
   caption: "Capture d'écran d'Infomaniak sur l'hébergement web mutualisé", supplement: [Annexe], kind: "annexe")<appendix-infomaniak-web-hosting>
 
 
@@ -218,9 +223,13 @@ srcset="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_256x154/public
 ```,
 caption: "Un exemple de code avec la balise picture", supplement: [Annexe], kind: "annexe")<appendix-pictureTag>
 
-
+#figure(
+raw(read("assets/images.md", encoding: "utf8"), block:true, lang: "markdown"),
+ 
+)<appendix-antistatique-doc-images>
 
 #bibliography("travail-bachelor.bib", style:"apa")
+#pagebreak()
 
 1.  Pour optmiser les performances et améliorer les SEO de ses clients, l'agence procède de plusieurs manières pour que l'image servie à l'utilisateur final soit la plus légère et dans un format accepté par son navigateur. Cette non-standardisation génère du travail supplémentaire, écrire de la documentation et adapter le workflow à chaque client/stack technologique. Antistatique n'a pas de moyen efficace pour valider que les formats générés sont réellement utilisés.
 
@@ -233,4 +242,3 @@ d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieu
 
 Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien. Il y a un script qui définit des ratios d'image présents dans la page et les différentes largeurs.
 
-par exemple : @appendix-pictureTag
