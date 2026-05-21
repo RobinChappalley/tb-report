@@ -79,37 +79,19 @@ L'agence exprime un besoin de standardiser la gestion des images. Bien que le pr
 
 Malgré la séparation des responsabilités, l'agence a besoin que la solution choisie n'altère ni l'expérience de développement de ses employés, ni l'expérience de rédaction de ses clients. Autrement dit, quand un client upload une image, il doit pouvoir continuer à le faire de la même manière, sans devoir apprendre à utiliser un nouvel outil. De même, les développeurs doivent pouvoir continuer à utiliser les outils et les processus qu'ils utilisent aujourd'hui pour intégrer les images dans les pages web.
 
-Concernant l'hébergement, Antistatique souhaite que la solution s'adapte à n'importe quel type d'hébergment. La majorité de ses clients utilise l'hébergement mutualisé d'Infomaniak; dans ce cas, les images se trouvent sur le le serveur du site web (@appendix-infomaniak-web-hosting), mais la solution doit pouvoir s'adapter en fonction d'où les images se trouvent.
+Concernant l'hébergement, Antistatique souhaite que la solution s'adapte à n'importe quel type d'hébergment. La majorité de ses clients utilise l'hébergement mutualisé d'Infomaniak; dans ce cas, les images se trouvent sur le serveur du site web (@appendix-infomaniak-web-hosting), mais la solution doit pouvoir s'adapter en fonction d'où les images se trouvent.
 
 
 Dans ce contexte, les compétences de l'ingénieur de médias sont utiles pour proposer une solution technique adaptée aux besoins de l'entreprise, puisqu'il comprend les enjeux techniques, mais aussi les aspects liés à l'expérience développeur/rédacteur. Il s'agira aussi d'accompagner le changement et l'adoption de cette solution par les équipes de développement.
 
 
-#pagebreak()
-
-
-1.  Pour optmiser les performances et améliorer les SEO de ses clients, l'agence procède de plusieurs manières pour que l'image servie à l'utilisateur final soit la plus légère et dans un format accepté par son navigateur. Cette non-standardisation génère du travail supplémentaire, écrire de la documentation et adapter le workflow à chaque client/stack technologique. Antistatique n'a pas de moyen efficace pour valider que les formats générés sont réellement utilisés.
-
-2.  Les solutions clés en main utilisées par l'agence la rend dépendante à des fournisseurs tiers. Ces fournisseurs facturent habituellement la bande passante et le nombre de requêtes traitées, ce qui rend les coûts d'hébergement difficiles à maîtriser. Bien qu'aujourd'hui les montants en jeu représentent quelques dizaines de francs par mois, avoir la totale maîtrise des coûts de la gestion des images peut être présenté comme un avantage concurentiel par Antistatique.
-
-
-
-d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieurs....? Aujourd'hui, l'agence gère les différentes tailles d'images comme suit : Des tailles fixes sont définies dans le code (3:2, 4:3, etc) ainsi que des formats (jpg, webp). Lorsqu'un client upload une image, un script s'exécute et génère les différentes tailles d'images. Ces images sont stockées chez l'hébergeur. Les développeurs front-end utilisent la balise Picture @HTMLPictureElement2026 avec dans l'ordre : 
-1. Une image dans un format léger (avif ou webp) avec des règles CSS pour choisir la version
-
-Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien. Il y a un script qui définit des ratios d'image présents dans la page et les différentes largeurs.
-
-par exemple : @appendix-pictureTag
-
-
-
-
-
-#pagebreak()
 
 == Recherches
+Les recherches menées permettent de comprendre pourquoi Antistatique essaie de régler ce problème et d'amener des pistes de solutions.
 
-Dans le monde du web, il y a peu de littérature scientifique qui définit qu'une manière de faire est meilleure qu'une autre. Le développeur qui décide d'implémenter une solution plutôt qu'une autre fait des choix, en fonction de différentes contraintes, qu'il pondère pour choisir la solution la plus adaptée. 
+La documentation de MDN sur les formats d'image avance que plus de 51% de la bande passante utilisée pour le web est consacrée au téléchargement d'images @MultimediaImagesLearn2026. L'intérêt pour les entreprises de réduire la taille des images est donc évident, que ce soit pour réduire les coûts d'hébergement ou pour améliorer les performances de leurs sites web. De plus, les moteurs de recherche prennent en compte la performance d'un site web dans leur algorithme de référencement, ce qui rend l'optimisation des images importante pour le SEO @BonnesPratiquesSEO.
+
+
 
 
 
@@ -238,6 +220,17 @@ caption: "Un exemple de code avec la balise picture", supplement: [Annexe], kind
 
 
 
-#bibliography("travail-bachelor.bib")
+#bibliography("travail-bachelor.bib", style:"apa")
+
+1.  Pour optmiser les performances et améliorer les SEO de ses clients, l'agence procède de plusieurs manières pour que l'image servie à l'utilisateur final soit la plus légère et dans un format accepté par son navigateur. Cette non-standardisation génère du travail supplémentaire, écrire de la documentation et adapter le workflow à chaque client/stack technologique. Antistatique n'a pas de moyen efficace pour valider que les formats générés sont réellement utilisés.
+
+2.  Les solutions clés en main utilisées par l'agence la rend dépendante à des fournisseurs tiers. Ces fournisseurs facturent habituellement la bande passante et le nombre de requêtes traitées, ce qui rend les coûts d'hébergement difficiles à maîtriser. Bien qu'aujourd'hui les montants en jeu représentent quelques dizaines de francs par mois, avoir la totale maîtrise des coûts de la gestion des images peut être présenté comme un avantage concurentiel par Antistatique.
 
 
+
+d'une part, les clients stockent leurs images avec leur hébergeur, soit plusieurs....? Aujourd'hui, l'agence gère les différentes tailles d'images comme suit : Des tailles fixes sont définies dans le code (3:2, 4:3, etc) ainsi que des formats (jpg, webp). Lorsqu'un client upload une image, un script s'exécute et génère les différentes tailles d'images. Ces images sont stockées chez l'hébergeur. Les développeurs front-end utilisent la balise Picture @HTMLPictureElement2026 avec dans l'ordre : 
+1. Une image dans un format léger (avif ou webp) avec des règles CSS pour choisir la version
+
+Le problème, c'est que c'est chiant d'écrire du code pour générer des tailels d'image. Et on sait pas quelles images sont vraiment utilisées au final, et lesquelles ne servent à rien. Il y a un script qui définit des ratios d'image présents dans la page et les différentes largeurs.
+
+par exemple : @appendix-pictureTag
