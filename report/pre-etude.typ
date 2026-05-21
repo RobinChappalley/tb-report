@@ -197,16 +197,110 @@ Les compétences en gestion de projet et du changement sont importantes pour acc
 
 == Risques
 
-Attention à "protéger" l'endpoint, sinon les gens vont se mettre à l'utiliser pour faire tout et n'importe quoi (créer une UI pour ajouter les sites autorisés ?)
-#question("Quels sont les facteurs de risque du projet? Comment les prévenir et les atténuer s’ils surviennent ? ")
-#objectif("Proposer une matrice des risques (risque, mesure de prévention, mesure de correction, degré) cohérente et pertinente en fonction du contexte du TB et du mandant")
-#contenu-attendu("1 page Matrice des risques et commentaire court sur les points nécessitant davantage d’explications (Selon les contextes, certains risques ne sont pas évidents et doivent être expliqués).")
 
+
+=== Matrice des risques
 
 #figure(
-image("assets/risks.webp", width: 12cm),
- caption: "Analyse des risques du projet", 
+  align(center)[
+    #table(
+      columns: (1fr, 1.2fr, 1.2fr, 1.2fr),
+      stroke: 0.5pt + black,
+      fill: (col, row) => {
+        if row == 0 or col == 0 { rgb("#e6e6e6") }
+        else {
+          let impact = col - 1
+          let probability = row - 1
+          let score = (probability + 1) * (impact + 1)
+          if score <= 2 { rgb("#d4edda") }
+          else if score <= 4 { rgb("#fff3cd") }
+          else if score <= 6 { rgb("#f8d7da") }
+          else { rgb("#d63031") }
+        }
+      },
+      
+      // En-têtes
+      align: center + horizon,
+      text(weight: "bold", size: 10pt)[Probabilité ➡️  \ Impact ⬇️ ],
+      text(weight: "bold", size: 10pt)[Faible (1)],
+      text(weight: "bold", size: 10pt)[Moyen (2)],
+      text(weight: "bold", size: 10pt)[Élevé (3)],
+      
+      // Ligne Faible
+      text(weight: "bold", size: 10pt)[Faible],
+      text(size: 9pt, )[],
+      text(size: 9pt, )[- Les développeurs sont très occupés et n'ont pas le temps de valider la bonne DX de la solution (1)],
+      text(size: 9pt, )[- La solution fonctionne sur un site avec peu d'images, mais sur un vrai site client en production, elle ne tient pas la charge et rend le site lent (2)],
+      
+      // Ligne Moyen
+      text(weight: "bold", size: 10pt)[Moyen],
+      text(size: 9pt, )[],
+      text(size: 9pt, )[- La solution issue du benchmark n'est pas compatible avec les soltions d'hébergement utilisées par les clients de l'agence (3)],
+      text(size: 9pt, )[],
+      
+      // Ligne Élevé
+      text(weight: "bold", size: 10pt)[Élevé],
+      text(size: 9pt, )[- L'agence n'est pas capable de fournir des données représentatives sur les statistiques de trafic, ce qui mène à des tests torp éloignés de la réalité (4)
+      - Un problème de sécurité majeur est découvert sur la solution choisie (5)
+      - Les bonnes pratiques de sécurité ne sont pas suivies, ce qui  rend le service de redimensionnement des images exposés à tout le monde sur le web (6)],
+      text(size: 9pt, )[],
+      text(size: 9pt, )[],
+    )
+  ],
+  kind: "figure",
+  supplement: [Figure],
+  caption: [Matrice des risques (Probabilité × Impact)]
 )
+
+#v(1.5em)
+
+
+=== Mitigation des risques
+
+#figure(
+  table(
+  columns: (1.5fr, 1fr, 2fr),
+  stroke: 0.5pt + black,
+  fill: (col, row) => if row == 0 { rgb("#e6e6e6") } else { none },
+  align: (left, center, center, center, left),
+  inset: 8pt,
+  
+  // En-têtes
+  text(weight: "bold")[Risque],
+  text(weight: "bold")[Score],
+  text(weight: "bold")[Plan d'atténuation],
+  
+  // À compléter avec les risques du projet
+
+  [Développeurs occupés (1)],
+  [2\ Faible],
+  [Planifier les demandes de retour longtemps à l'avance. Itérer souvent, pour avoir des petits retours et rester dans la bonne direction],
+  
+  [Staging vs Production (2)],
+  [3\ Modéré],
+  [Utiliser une copie d'un environnment de production pour les tests de charge. Ev. travailler sur un vrai projet que l'agence réalise actuellement.],
+  
+  [Intégration impossible (3)],
+  [4\ Modéré],
+  [Choisir une autre solution du benchmark, compatible avec les hébergements utilisés par les clients de l'agence],
+  
+  [Donnes de trafic inexactes(4)],
+  [3\ Modéré],
+  [Analyser un maximum de données disponibles, ne pas se contenter d'extrapoler à partir de données d'un seul site ],
+  
+  [Problème de sécurité majeur (5)],
+  [3\ Modéré],
+  [Changer de solution ou prendre une ancienne version stable],
+  
+  [Mauvaise configuration de la sécurité (6)],
+  [3\ Modéré],
+  [Protéger le service avec une URL signée],
+  ),
+  kind: "figure",  supplement: [Figure],
+  caption: [Tableau de mitigation des risques]
+
+)
+
 #pagebreak()
 
 == Conclusion
@@ -272,10 +366,7 @@ image("assets/planning.png", width: 12cm),
  caption: "Planning détaillé du projet", supplement: [Annexe], kind: "annexe"
 )<appendix-planning>
 
-#figure(
-image("assets/risks.webp", width: 12cm),
- caption: "Analyse des risques du projet", supplement: [Annexe], kind: "annexe"
-)<appendix-risks>
+
 
 
 #bibliography("travail-bachelor.bib", style:"apa")
