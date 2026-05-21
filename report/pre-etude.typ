@@ -123,7 +123,7 @@ La solution doit pouvoir être utilisée indépendamment du CMS, du framework fr
 
 === 2. Centralisation de la logique d’optimisation
 
-Le traitement des images doit être centralisé afin d’éviter que chaque projet doive réimplémenter ses propres règles de compression, de redimensionnement et de conversion de formats. Ce besoin répond à un enjeu de maintenance : lorsqu’une règle évolue ou qu’un nouveau format devient pertinent, la mise à jour doit pouvoir être effectuée à un seul endroit plutôt que dans chaque codebase.
+Le traitement des images doit être centralisé afin que chaque projet ne réimplémente pas ses propres règles de compression, de redimensionnement et de conversion de formats. Ce besoin répond à un enjeu de maintenance : lorsqu’une règle évolue ou qu’un nouveau format devient pertinent, la mise à jour doit pouvoir être effectuée à un seul endroit plutôt que dans chaque codebase.
 
 === 3. Maîtrise du déploiement et des coûts
 
@@ -139,7 +139,7 @@ La solution doit limiter au maximum le travail demandé aux développeurs lors d
 
 === 6. Réversibilité pour les sites clients
 
-Dans le cas où un client quitte l’agence, le site doit continuer à fonctionner sans dépendre fortement de la solution mise en place par Antistatique. Le départ d’un client ne doit pas rendre ses images inaccessibles. La perte acceptable est celle de l’optimisation avancée, pas celle du contenu.
+Dans le cas où un client quitte l’agence, le site doit continuer à fonctionner sans dépendre absolument de la solution mise en place par Antistatique. Le départ d’un client ne doit pas rendre ses images inaccessibles. La perte acceptable est celle de l’optimisation avancée, pas celle du contenu.
 
 Ces besoins ne présupposent pas une solution technique unique. Ils servent de critères pour comparer plusieurs approches possibles, notamment une intégration par helpers, une approche par composant web, une réécriture HTML côté infrastructure ou un service d’optimisation d’images découplé. Le travail de Bachelor devra permettre d’évaluer ces pistes à partir de critères mesurables : performance, maintenabilité, facilité d’intégration et robustesse.
 
@@ -149,24 +149,33 @@ Ces besoins ne présupposent pas une solution technique unique. Ils servent de c
 == Objectifs et livrables
 Documentation sur comment utiliser, comment ça a été déployé et comment le mettre en place sur d'autres sites.
 #question("Comment mon travail est-il organisé? ")
-#table([
-
-- semaine 1: 
-- semaine 2:
-- semaine 3:
-- semaine 4: 
-- semaine 5:
-- semaine 6:
-])
 #objectif("Formuler clairement et synthétiquement les objectifs de développement, les tâches et les livrables associés, ainsi que la manière dont ces éléments s’articulent dans un planning crédible.")
 #contenu-attendu("1-2 pages. Objectifs découpés en tâches et en livrables. Description synthétique des livrables. Planning crédible, dont on décrira les principales étapes directement dans le rapport, avec une version complète en annexe.")
+
+
+Ce projet se structure autour de trois objectifs majeurs. 
+=== Analyses
+Dans un premier temps, une phase d'analyse critique permettra d'évaluer et de comparer les différentes stratégies centralisées de livraison de médias (solutions SaaS, optimisation via Edge CDN ou proxy auto-hébergé). Cette comparaison s'appuiera sur des critères stricts de coût, de performance et d'indépendance technologique. La procédure de tests ainsi que les résultats obtenus font parties des livrables qui seront rendus à l'issue du travail de bachelor. L'élaboration et la réalisation de ces tests est estimée à une durée de 3 semaines. Un site avec des images lourdes non compressées a déjà été mis en place pour servir de terrain de test.
+=== Preuve de concept
+Dans un second temps, le projet visera à déployer une preuve de concept (PoC) de la solution retenue, afin de valider sa capacité technique à traiter et distribuer des images à la volée sur un projet réel de l'agence. Le livrable associé comprendra le code source de la preuve de concept ainsi que la documentation de son déploiement, de manière à permettre à l'agence de la répliquer sur d'autres projets. Cette phase est estimée à une durée de 4 semaines, en incluant le temps nécessaire pour intégrer la solution dans un projet existant.
+=== Connecteurs
+Pour assurer l'utilisabilité de cette architecture, le dernier objectif consistera à développer des connecteurs légers (composants ou helpers) pour les stacks principales de l'agence, telles que Drupal et Next.js. Ces connecteurs auront pour but d'interfacer les CMS avec le service de traitement d'images de façon transparente, limitant ainsi la dette technique tout en centralisant la maintenance. Le code de ces différents connecteurs et la documentation associé font partie des livrables de cette dernière phase, estimée à une durée de 2 semaines. Le but est de se limiter à Drupal et Next.js, mais il est envisagable d'ajouter d'autres connecteurs si le temps le temps le permet.
+
+
+
+
 #pagebreak()
+#question("Quelle est la valeur ajoutée pour le mandant de mon travail?")
+#objectif("Démontrer la valeur ajoutée que votre travail apportera au mandant: la nature des tâches, leur complexité et leur diversité, en lien avec les compétences multidisciplinaires de l’ingénierie des médias.")
+#contenu-attendu("1 page. Argumentaire permettant de comprendre en quoi votre travail apporte de la valeur ajoutée et quelle est cette valeur (technique, conceptuelle, analytique, marketing, autre)? Quel est le degré de mobilisation de vos compétences en ingénierie des médias?")
 
-== Compétences
+== Valeur ajoutée pour le mandant
+Pour Antistatique, ce projet représente une opportunnité de standardiser un processus technique essentiel. Cette standardisation permet de préparer la gestion des images des clients à court et à moyen terme. Si un nouveau format d'image plus performant émerge, il sera très facile de l'intégrer à la solution centralisée. 
 
-=== Valeur ajoutée :
-- Facilite l'onboarding de nouveau employés
-- Permet à Antistatique de devenir indépendant des PAAS et de leurs changements de prix, de politique ou autre.
+Dans le cas où un client a déjà beaucoup de contenu avec de nombreuses images mal optimisées, la solution pourrait permettre de livrer des images d'une qualité similaire mais d'un poids moindre. Cela peut être un argument de vente pour convaincre un client de faire appel à Antistatique pour la refonte de son service web, en lui proposant une amélioration des performances et du SEO grâce à une meilleure gestion des images.
+
+Réaliser une analyse comparative des solutions du marché permettra à l'agence de choisir en se basant sur des critères objectifs et mesurables, plutôt que sur des considérations subjectives ou des recommandations de fournisseurs. 
+
 
 
 === Compétences mobilisées :
@@ -175,9 +184,7 @@ Documentation sur comment utiliser, comment ça a été déployé et comment le 
 - Développement d'application
 - Intégration d'un service tiers au sein d'un processus existant
 
-#question("Quelle est la valeur ajoutée pour le mandant de mon travail?")
-#objectif("Démontrer la valeur ajoutée que votre travail apportera au mandant: la nature des tâches, leur complexité et leur diversité, en lien avec les compétences multidisciplinaires de l’ingénierie des médias.")
-#contenu-attendu("1 page. Argumentaire permettant de comprendre en quoi votre travail apporte de la valeur ajoutée et quelle est cette valeur (technique, conceptuelle, analytique, marketing, autre)? Quel est le degré de mobilisation de vos compétences en ingénierie des médias?")
+
 #pagebreak()
 
 == Risques
