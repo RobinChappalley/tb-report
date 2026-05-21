@@ -81,6 +81,8 @@ Malgré la séparation des responsabilités, l'agence a besoin que la solution c
 
 Concernant l'hébergement, Antistatique souhaite que la solution s'adapte à n'importe quel type d'hébergment. La majorité de ses clients utilise l'hébergement mutualisé d'Infomaniak; dans ce cas, les images se trouvent sur le serveur du site web (@appendix-infomaniak-web-hosting), mais la solution doit pouvoir s'adapter en fonction d'où les images se trouvent.
 
+Actuellement, la documentation d'Antistatique à propos de la gestion des images précise qu'il est nécessaire d'utiliser la balise picture (voir @appendix-antistatique-doc-images), mais ne contient pas d'information sur comment les différentes images qui seront appelées par cette balise doivent être créées. Ce vide documentaire laisse chaque développeur libre de définir sa propre approche, ce qui rend les pratiques difficiles à auditer, à faire évoluer ou à transférer d'un projet à l'autre.
+
 
 Dans ce contexte, les compétences de l'ingénieur de médias sont utiles pour proposer une solution technique adaptée aux besoins de l'entreprise, puisqu'il comprend les enjeux techniques, mais aussi les aspects liés à l'expérience développeur/rédacteur. Il s'agira aussi d'accompagner le changement et l'adoption de cette solution par les équipes de développement.
 
@@ -93,12 +95,12 @@ La documentation de MDN sur les formats d'image avance que plus de 51% de la ban
 
 // La manière dont Antistatique résoud le problème de l'optimisation des images aujourd'hui est très manuelle et 
 
-
-Il existe des bonnes pratiques en matière de standardisation de processus qu'Antistatique pourrait appliquer pour résoudre ce problème. @appendix-antistatique-doc-images
-
+Une des grandes métrique en développement logiciel est le couplage. @CouplingCohesionSoftware. Avec le processus actuel, la transformation des images et leur livraison à l'utilisateur final sont intimement liés à la technologie utilisée (Wordpress, Drupal, etc). Découpler l'architecture de gestion des images et la technologie utilisée permettrait à Antistatique d'être plus fexible et de s'adapter plus facilement aux évolutions technologiques @ganapathyDiscoverBenefitsDecoupled2023. Liip, l'une des grandes agences web suisse, a lancé un service (Rokka) pour répondre à ce besoin et découpler la gestion des images de la technologie utilisée @switzerlandRokkaWebImages. Cela prouve qu'il existe une demande concrète pour ce type de service au sein du marché des agences web suisses.
 
 
 
+
+Il existe des bonnes pratiques en matière de standardisation de processus qu'Antistatique pourrait appliquer pour résoudre ce problème
 
 
 
@@ -225,7 +227,7 @@ caption: "Un exemple de code avec la balise picture", supplement: [Annexe], kind
 
 #figure(
 raw(read("assets/images.md", encoding: "utf8"), block:true, lang: "markdown"),
- 
+ caption: "Extrait de la documentation d'Antistatique sur les pratiques à adopter pour concernant les images", supplement: [Annexe], kind: "annexe"
 )<appendix-antistatique-doc-images>
 
 #bibliography("travail-bachelor.bib", style:"apa")
