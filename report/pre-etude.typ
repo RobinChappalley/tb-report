@@ -70,9 +70,7 @@ Cette typologie de clientèle implique une diversité importante de stacks techn
 
 
 == Problématique
-#question("Comment le mandant présente-t-il sa problématique dans son contexte?")
-#objectif("Expliquer la problématique du mandant de manière structurée et contextualisée. Montrer en quoi les compétences en ingénierie des médias sont a priori pertinentes pour y répondre.")
-#contenu-attendu("1 page. Résumé de la situation actuelle et des développements demandés par le mandant. À quel besoin devra répondre ce projet ? Quelles compétences seront nécessaires et pourquoi?")
+
 Aujourd'hui, Antistatique est capable de livrer des images optimisées (format et poids) aux utilisateur finaux de ses clients. Le processus pour y parvenir varie selon la stack technologique et repose sur des tâches répétitives et fastidieuses.
 
 L'agence exprime un besoin de standardiser la gestion des images. Bien que le processus actuel soit satisfaisant pour les clients et utilisateurs finaux, ce n'est pas une solution satisfaisante pour les développeurs. Sur chaque projet, le développeur front-end et le backend doivent se mettre d'accord sur comment gérer la livraison d'images adaptées à l'utilisateur final. Antistatique souhaite que cette responsabilité soit déleguée à une brique logicielle tierce, indépendante de la technologie utilisée.
@@ -89,9 +87,7 @@ Dans ce contexte, les compétences de l'ingénieur de médias sont utiles pour p
 
 
 == Recherches
-#question("Quelles sources ai-je identifiées pour comprendre la problématique? En quoi sont-elles pertinentes?")
-#objectif("Exposer synthétiquement les recherches menées pour analyser la problématique")
-#contenu-attendu("1-2 pages. Description de ce que vous avez appris, provenant de différentes sources, et qui vous a permis de mieux comprendre la problématique, de la contextualiser par rapport à l’écosystème de votre mandant et de la transformer en besoins")
+
 
 Les recherches menées permettent de comprendre pourquoi Antistatique essaie de régler ce problème et d'amener des pistes de solutions.
 
@@ -105,12 +101,7 @@ Pourtant, le processus actuel d'Antistatique souffre d'un couplage fort @Couplin
 Enfin, bien que le temps de configuration de ces outils par projet semble faible (1h pour intégrer le module dans Drupal selon un développeur), cette approche génère une dette technique. Dans l'ingénierie logicielle, ce type de configuration manuelle répétitive s'apparente au Toil,  @GoogleSREWhat comme une tâche sans valeur ajoutée durable. Avant de pouvoir automatiser un processus, il faut d'abord le standardiser @davenportProcessInnovationReengineering20xx. Définir une méthode unique pour toute l'agence permettrait de garantir une qualité d'image constante sur tous les sites, tout en évitant que la configuration ne dépende des habitudes techniques de chaque développeur.
 
 
-#pagebreak()
-== Besoins
 
-#question("Qu’ai-je appris de l’analyse des sources identifiées? Quels liens ai-je établis entre plusieurs sources pour en tirer des conclusions utiles sur les besoins du mandant?")
-#objectif("Exposer synthétiquement la traduction de la problématique en besoins clairs, précis et structurés. Montrer les liens entre la recherche documentaire, l’analyse et les besoins.")
-#contenu-attendu("1-2 pages. Liste des besoins et argumentaire expliquant en quoi l’analyse menée à partir de vos recherches documentaires a permis de définir cette liste.")
 == Besoins identifiés
 
 L’analyse de la problématique met en évidence deux contraintes principales pour Antistatique. La première concerne la dépendance aux services tiers : l’agence souhaite conserver la maîtrise de la solution, de ses coûts et de son déploiement. La seconde concerne la diversité technique de ses projets : les sites maintenus par l’agence reposent sur des CMS, frameworks et hébergements différents.
@@ -144,18 +135,13 @@ Dans le cas où un client quitte l’agence, le site doit continuer à fonctionn
 Ces besoins ne présupposent pas une solution technique unique. Ils servent de critères pour comparer plusieurs approches possibles, notamment une intégration par helpers, une approche par composant web, une réécriture HTML côté infrastructure ou un service d’optimisation d’images découplé. Le travail de Bachelor devra permettre d’évaluer ces pistes à partir de critères mesurables : performance, maintenabilité, facilité d’intégration et robustesse.
 
 
-#pagebreak()
+
 
 == Objectifs et livrables
-Documentation sur comment utiliser, comment ça a été déployé et comment le mettre en place sur d'autres sites.
-#question("Comment mon travail est-il organisé? ")
-#objectif("Formuler clairement et synthétiquement les objectifs de développement, les tâches et les livrables associés, ainsi que la manière dont ces éléments s’articulent dans un planning crédible.")
-#contenu-attendu("1-2 pages. Objectifs découpés en tâches et en livrables. Description synthétique des livrables. Planning crédible, dont on décrira les principales étapes directement dans le rapport, avec une version complète en annexe.")
-
 
 Ce projet se structure autour de trois objectifs majeurs. 
 === Analyses
-Dans un premier temps, une phase d'analyse critique permettra d'évaluer et de comparer les différentes stratégies centralisées de livraison de médias (solutions SaaS, optimisation via Edge CDN ou proxy auto-hébergé). Cette comparaison s'appuiera sur des critères stricts de coût, de performance et d'indépendance technologique. La procédure de tests ainsi que les résultats obtenus font parties des livrables qui seront rendus à l'issue du travail de bachelor. L'élaboration et la réalisation de ces tests est estimée à une durée de 3 semaines. Un site avec des images lourdes non compressées a déjà été mis en place pour servir de terrain de test.
+Dans un premier temps, une phase d'analyse  permettra d'évaluer et de comparer les différentes stratégies centralisées de livraison de médias (solutions SaaS, optimisation via Edge CDN ou proxy auto-hébergé). Cette comparaison s'appuiera sur des critères stricts de coût, de performance et d'indépendance technologique. La procédure de tests ainsi que les résultats obtenus font parties des livrables qui seront rendus à l'issue du travail de bachelor. L'élaboration et la réalisation de ces tests est estimée à une durée de 3 semaines. Un site avec des images lourdes non compressées a déjà été mis en place pour servir de terrain de test.
 === Preuve de concept
 Dans un second temps, le projet visera à déployer une preuve de concept (PoC) de la solution retenue, afin de valider sa capacité technique à traiter et distribuer des images à la volée sur un projet réel de l'agence. Le livrable associé comprendra le code source de la preuve de concept ainsi que la documentation de son déploiement, de manière à permettre à l'agence de la répliquer sur d'autres projets. Cette phase est estimée à une durée de 4 semaines, en incluant le temps nécessaire pour intégrer la solution dans un projet existant.
 === Connecteurs
@@ -163,13 +149,6 @@ Pour assurer l'utilisabilité de cette architecture, le dernier objectif consist
 
 Une planification plus détaillé se trouve en annexe. @appendix-planning
 
-
-
-
-#pagebreak()
-#question("Quelle est la valeur ajoutée pour le mandant de mon travail?")
-#objectif("Démontrer la valeur ajoutée que votre travail apportera au mandant: la nature des tâches, leur complexité et leur diversité, en lien avec les compétences multidisciplinaires de l’ingénierie des médias.")
-#contenu-attendu("1 page. Argumentaire permettant de comprendre en quoi votre travail apporte de la valeur ajoutée et quelle est cette valeur (technique, conceptuelle, analytique, marketing, autre)? Quel est le degré de mobilisation de vos compétences en ingénierie des médias?")
 
 == Valeur ajoutée pour le mandant
 Pour Antistatique, ce projet représente une opportunnité de standardiser un processus technique essentiel. Cette standardisation permet de préparer la gestion des images à moyen terme. Si un nouveau format d'image plus performant émerge, il sera très facile de l'intégrer à la solution centralisée, sans nécessiter une refonte sur chaque projet. 
@@ -193,7 +172,7 @@ Les compétences en gestion de projet et du changement sont importantes pour acc
 
 
 
-#pagebreak()
+
 
 == Risques
 
@@ -259,7 +238,7 @@ Les compétences en gestion de projet et du changement sont importantes pour acc
 
 #figure(
   table(
-  columns: (1.5fr, 1fr, 2fr),
+  columns: (1.5fr, 0.5fr, 2fr),
   stroke: 0.5pt + black,
   fill: (col, row) => if row == 0 { rgb("#e6e6e6") } else { none },
   align: (left, center, center, center, left),
@@ -304,10 +283,18 @@ Les compétences en gestion de projet et du changement sont importantes pour acc
 #pagebreak()
 
 == Conclusion
-#question("1-2 pages. En prenant du recul, qu’ai-je appris? Que ferai-je différemment? Quelles sont les limites de mon approche et du contexte dans lequel s’est déroulée cette pré-étude?")
-#objectif("Démontrer des capacités d’analyse de son propre travail, des choix pris et de son évolution professionnelle.")
-#contenu-attendu("Une première partie présente les principaux éléments découverts (analyse) et résume brièvement les limites, les défis et les choix effectués. Une deuxième partie, plus personnelle, rend compte, de manière réflexive, du déroulement de la pré-étude.")
 
+Lors de cette phase de pré-étude, j'ai compris comment une agence web utilise les compétences que j'ai accquises durant la formation au quotidien, pour réaliser des projets. J'ai par exemple découvert qu'il était possible d'utiliser Wordpress comme CMS Headless et de générer un site avec une autre technologie, par exemple Next.js. J'ai appris qu'arriver sur une base de code existante et comprendre comment tout fonctionne, quelle entité est responsable de quoi, sur un outil que je ne connais pas (Drupal) est un défi en soi, qui demande de la patience et de la curiosité. J'ai aussi compris que les enjeux techniques ne sont pas les seuls à prendre en compte dans un projet, et que l'expérience développeur est un aspect important à considérer pour que la solution soit adoptée par les équipes de développement.
+
+J'ai souvent été confronté à une situation dans laquelle je devais arbitrer un choix, je n'arrivais pas à trouver des arguments pertinents. J'ai donc voulu tester les différentes options pour avoir une base comparative, mais je me suis rendu compte que cela faisait plutôt partie de la réalisation du travail que de la pré-étude, en raison du temps à disposition. Les informations sur le contexte m'ont parfois manquées, mais j'ai pu compter sur Antistatique pour mes les fournir et mieux comprendre les outils et la marge manoeuvre à disposition. 
+
+L'une des limites de cette pré-étude est que le problème que j'essaie de résoudre n'est pas critique pour l'entreprise aujourd'hui. Étant novice dans le domaine, comprendre le problème et ce qui doit être résolu n'a pas été simple. Le problème est étendu et se retrouve en quelques minutes dans les quotidien des développeurs. Cela implique que les gains apportés par la solution ne seront pas forcément perceptible pour eux, ni pour les utilisateur finaux. Mon travail consiste plus à anticiper l'avenir et s'inscrire dans une démarche d'amélioration continue que dans la résolution d'un problème aigu.
+
+
+À titre personnel, j'ai découvert le monde du web en entreprise et j'ai apprécié être inclus dans le day-to-day de l'agence, participer aux réunions d'équipe et aux discussions techniques. J'ai apprécié la liberté qui m'a été donnée par l'agence et la confiance qu'ils m'ont témoignée pour mener à bien ce projet. J'en étais convaincu, mais j'ai vu la force des  profils pluridisciplinaires des ingénieurs des médias; mis à part mon manque d'expérience, j'ai toujours été à même de comprendre les enjeux de telle ou telle solution technique, son impact sur le SEO des clients et l'intérêt que cela représente pour l'agence.
+
+
+Je me réjouis de passer à la partie de l'implémentation et d'expérimenter les différentes pistes de solutions identifiées lors de la phase d'analyse. Cela me permettra d'avancer de de manière plus concrète. Et je me réjouis aussi de pouvoir répondre à la question "pourquoi as-tu fait ce choix ?" avec des vrais chiffres de performance, de coût et d'expérience développeur.
 
 
 
@@ -323,38 +310,6 @@ Les compétences en gestion de projet et du changement sont importantes pour acc
   caption: "Capture d'écran d'Infomaniak sur l'hébergement web mutualisé", supplement: [Annexe], kind: "annexe")<appendix-infomaniak-web-hosting>
 
 
-#figure(
-```html
-<picture>
- <source type="image/webp" 
-srcset="https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_256x154/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=cxoRUVZH 256w,
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_384x230/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=BBNjNnkT 384w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_690x414/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=nAipFH2_ 690w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=vHHT8gqI 750w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_828x497/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=bLlh56QY 828w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1080x648/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=WE0s6VXz 1080w,
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1400x840/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=GIDqcKq- 1400w, 
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_1920x1152/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=fhzMzAm0 1920w,
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_2048x1229/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=rQCkwrSh 2048w,
-https://www.frc.ch/sites/default/files/styles/frc_webp_5_3_3840x2304/public/2026-04/pexels-szafran-32028869.jpg.webp?itok=VD7_Jvai 3840w"
-sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)">
-  <source type="image/jpg" 
-srcset="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_256x154/public/2026-04/pexels-szafran-32028869.jpg?itok=z6eaPvTh 256w,
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_384x230/public/2026-04/pexels-szafran-32028869.jpg?itok=cTiVZoQS 384w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_690x414/public/2026-04/pexels-szafran-32028869.jpg?itok=tuQf6bTj 690w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg?itok=S1R2qZnN 750w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_828x497/public/2026-04/pexels-szafran-32028869.jpg?itok=FYkyOZlF 828w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1080x648/public/2026-04/pexels-szafran-32028869.jpg?itok=O-lcvyzb 1080w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1400x840/public/2026-04/pexels-szafran-32028869.jpg?itok=zp6U1OOz 1400w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_1920x1152/public/2026-04/pexels-szafran-32028869.jpg?itok=Ennm_aoY 1920w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_2048x1229/public/2026-04/pexels-szafran-32028869.jpg?itok=HVGzTVsG 2048w, 
- https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_3840x2304/public/2026-04/pexels-szafran-32028869.jpg?itok=7jCS1LeC 3840w" 
- sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)">
-  <img alt="champ de céréales" src="https://www.frc.ch/sites/default/files/styles/frc_jpg_5_3_750x450/public/2026-04/pexels-szafran-32028869.jpg?itok=S1R2qZnN" 
-  sizes="(min-width: 1940px) 501px, (min-width: 1280px) calc(29.22vw - 60px), (min-width: 960px) calc(33.33vw - 76px), calc(33.13vw - 53px)" loading="eager" fetchpriority="high" class="object-cover object-center size-full">
-</picture>
-```,
-caption: "Un exemple de code avec la balise picture", supplement: [Annexe], kind: "annexe")<appendix-pictureTag>
 
 #figure(
 raw(read("assets/images.md", encoding: "utf8"), block:true, lang: "markdown"),
