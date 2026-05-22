@@ -34,7 +34,9 @@ header: [
 #show: doc => conf(doc)
 
 //Début du rapport
+== Note sur l'utilisation de l'intelligence artificielle
 
+Dans le cadre de ce travail, l'intelligence artificielle a été utilisée pour confronter les idées, reformuler des textes et aider à la recherche. Le service de Mammouth de Mammoth AI a été utilisé avec un system prompt qui se trouve en annexe. @appendix-mammouth-system-prompt
 == Mandant
 
 
@@ -146,6 +148,9 @@ Dans un premier temps, une phase d'analyse  permettra d'évaluer et de comparer 
 Dans un second temps, le projet visera à déployer une preuve de concept (PoC) de la solution retenue, afin de valider sa capacité technique à traiter et distribuer des images à la volée sur un projet réel de l'agence. Le livrable associé comprendra le code source de la preuve de concept ainsi que la documentation de son déploiement, de manière à permettre à l'agence de la répliquer sur d'autres projets. Cette phase est estimée à une durée de 4 semaines, en incluant le temps nécessaire pour intégrer la solution dans un projet existant.
 === Connecteurs
 Pour assurer l'utilisabilité de cette architecture, le dernier objectif consistera à développer des connecteurs légers (composants ou helpers) pour les stacks principales de l'agence, telles que Drupal et Next.js. Ces connecteurs auront pour but d'interfacer les CMS avec le service de traitement d'images de façon transparente, limitant ainsi la dette technique tout en centralisant la maintenance. Le code de ces différents connecteurs et la documentation associé font partie des livrables de cette dernière phase, estimée à une durée de 2 semaines. Le but est de se limiter à Drupal et Next.js, mais il est envisagable d'ajouter d'autres connecteurs si le temps le temps le permet.
+
+=== Académique 
+Sur le plan académique le rapport du travail de Bachelor sera le livrable principal, accompagné du résumé publiable, du poster académique, des posters teaser (A4 et A0) et du post linkedin prêt à l'emploi.
 
 Une planification plus détaillé se trouve en annexe. @appendix-planning
 
@@ -304,6 +309,10 @@ Je me réjouis de passer à la partie de l'implémentation et d'expérimenter le
 #outline(target: figure.where(kind: "annexe"), title: [Annexes])
 
 #show: appendix
+ #figure(
+  raw(read("assets/system-prompt.md", encoding: "utf8"), block:true, lang: "markdown"),
+  caption: "System prompt utilisé pour les interactions avec Mammouth AI", supplement: [Annexe], kind: "annexe")<appendix-mammouth-system-prompt>
+
 
 #figure(
   image("assets/infomaniak-web-hosting.png", width: 12cm),
@@ -317,7 +326,7 @@ raw(read("assets/images.md", encoding: "utf8"), block:true, lang: "markdown"),
 )<appendix-antistatique-doc-images>
 
 #figure(
-image("assets/planning.png", width: 12cm),
+image("assets/planning.pdf"),
  caption: "Planning détaillé du projet", supplement: [Annexe], kind: "annexe"
 )<appendix-planning>
 
