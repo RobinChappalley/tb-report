@@ -12,6 +12,10 @@
 #let date = datetime.today()
 #let city = "Yverdon-les-Bains"
 
+#let department = "TIN"
+#let faculty = "Génie Électrique"
+#let orientation = "Électronique et Automatisation industrielle"
+
 #let principal = "Antistatique"
 #let principal-supervisor = "Marc Friederich"
 #let principal-adress = "Rue de Genève 90b\n1004 Lausanne"

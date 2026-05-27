@@ -112,7 +112,7 @@
     #v(8em)
     #text(size: 17pt)[#smallcaps[#type-projet\ #filiere]]
     #v(2em)
-    #image("assets/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 25%)
+    #image("/ps-report/assets/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 25%)
     #v(2em)
     #text(size: 14pt)[#smallcaps[Bachelor COMEM - HEIG-VD]]
     #v(2em)

@@ -49,7 +49,7 @@
   #v(8em)
   #text(size: 17pt)[#smallcaps[#project-type\ #study]]
   #v(2em)
-  #image("images/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 25%)
+  #image("assets/logos/heig-vd-baseline.pdf", width: 25%)
   #v(2em)
   #text(size: 14pt)[#smallcaps[Bachelor COMEM - HEIG-VD]]
   #v(2em)
