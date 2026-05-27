@@ -6,7 +6,7 @@
       columns: (1fr, 1fr),
       align: (left, right),
       gutter: 0pt,
-      grid.cell(image("images/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 3cm)),
+      grid.cell(image("assets/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 3cm)),
     )
   ])
 
