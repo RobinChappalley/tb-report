@@ -112,7 +112,7 @@
     #v(8em)
     #text(size: 17pt)[#smallcaps[#type-projet\ #filiere]]
     #v(2em)
-    #image("/ps-report/assets/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 25%)
+    #image("assets/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 25%)
     #v(2em)
     #text(size: 14pt)[#smallcaps[Bachelor COMEM - HEIG-VD]]
     #v(2em)
@@ -225,7 +225,7 @@
   inset: (left: 10pt, top: 6pt, bottom: 6pt, right: 6pt),
   width: 100%,
   below: 1em,
-  text(fill: rgb("#666666"), size: 10pt)[*Contenu attendu :* #contenu],
+  text(fill: rgb("#666666"), size: 10pt)[*Nouvelle version :* #contenu],
 )
 
 // Encadré IMPORTANT (pour notes éditoriales)

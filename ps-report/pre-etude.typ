@@ -34,9 +34,7 @@ header: [
 #show: doc => conf(doc)
 
 //Début du rapport
-== Note sur l'utilisation de l'intelligence artificielle
 
-Dans le cadre de ce travail, l'intelligence artificielle a été utilisée pour confronter les idées, reformuler des textes et aider à la recherche. Le service de Mammouth de Mammouth AI a été utilisé avec un system prompt qui se trouve en annexe. @appendix-mammouth-system-prompt
 == Mandant
 
 
@@ -45,6 +43,15 @@ Antistatique est une agence web lausannoise spécialisée dans la conception, le
 
 Cette typologie de clientèle implique une diversité importante de stacks techniques et d'infrastructures d'hébergement, chaque mandat reposant sur les contraintes propres au commanditaire. Pour travailler malgré cette hétérogénéité, l'équipe s'appuie sur les standards du web, qui constituent un socle commun à tous les projets, et entretient une veille technique active.
 
+== Nouvelle version
+
+Antistatique est une agence lausannoise fondée en 2008. Son coeur d'activité repose sur de la stratégie marketing, du branding et des solutions web. Son bureau principal se situe actuellement à la route de Genève 90B à Lausanne. Elle réalise principalement des projets pour des organisations publiques et parapubliques, parfois pour des clients privés. Une part notable de ses clients sont des agences immobilières, pour lesquels elle réalise des sites web de présentation de biens immobiliers. Parmi les autres récents projets marquants, on trouve par exemple la refonte complète du site de la fédération romande des consommateurs, une campagne de communication pour le Lausanne Hockey Club féminin ou la création d'un design system pour l'université de Lausanne.
+
+Pour réaliser ses projets, l'agence s'appuie sur une équipe de 4 designers et 6 développeurs. Les principales technologies de développement web utilisées sont Drupal, Wordpress, Symfony et Next.js. Elle se positionne en tant que spécialiste du développement sur mesure front-end et back-end. L'équipe produit une vingtaine de nouveaux projets par an, tout en assurant la maintenance et le développement continud'une cinquantaine de sites déjà en production. 
+
+Le fait de travailler avec des clients très différents, avec des besoins et des contraintes techniques variées, génère de grandes variations dans les processus de développement. Ces variations rendent la standardisation d'un processus compliquée : chaque projet a ses propres spécificités, et les développeurs doivent souvent adapter leur approche en fonction de la stack technologique utilisée. Par exemple, la manière dont les images sont gérées et optimisées peut varier considérablement d'un projet à l'autre, ce qui rend difficile la mise en place de bonnes pratiques communes à tous les projets. Certains projets de sites statiques ont une approche très simple avec quelques dizaines d'images dans le code source, alors que d'autres projets comprennent plusieurs miliers d'images, de nombreuses variantes pour chacune et un ajout d'images quotidien par les clients.
+
+L'objectif principal de ce travail sera de proposer à l'agence des pistes de solution pour standardiser la gestion des images au sein de son workflow de développement.
 
 
 /* #oxdraw(
@@ -85,7 +92,18 @@ Actuellement, la documentation d'Antistatique à propos de la gestion des images
 
 
 Dans ce contexte, les compétences de l'ingénieur de médias sont utiles pour proposer une solution technique adaptée aux besoins de l'entreprise, puisqu'il comprend les enjeux techniques, mais aussi les aspects liés à l'expérience développeur/rédacteur. Il s'agira aussi d'accompagner le changement et l'adoption de cette solution par les équipes de développement.
+#pagebreak()
+== Nouvelle version
+Aujourd'hui, Antistatique est capable de livrer des images optimisées à ses utilisateurs finaux. Cependant, le processus pour y parvenir varie selon la stack technologique et repose sur des tâches répétitives. 
 
+Actuellement, lorsqu'une image est téléversée, elle est généralement stockée localement sur le serveur hébergeant le site. Ce fonctionnement couple l'optimisation et la livraison à la plateforme utilisée. La responsabilité de la transformation des images incombe au CMS (ou au framework). Par conséquent, les formats générés (comme WebP ou AVIF) dépendent directement des capacités natives de l'outil, des plugins installés et des librairies sous-jacentes du serveur (ex: ImageMagick). Cela crée une forte hétérogénéité technique d'un projet à l'autre.
+
+À titre d'exemple, le flux de travail d'un développeur varie radicalement selon le projet. Sur un projet WordPress, il devra configurer des plugins spécifiques (comme WebP Express) ou écrire des fonctions PHP pour forcer la génération des différents formats au moment du téléversement. À l'inverse, sur un projet basé sur Next.js, il devra utiliser le composant natif #raw(str("<Image/>"),lang:"html") qui délègue l'optimisation à la volée au serveur Node.js. Ces paradigmes opposés empêchent toute mutualisation des connaissances.
+
+Puisque la technologie diffère selon les mandats, il est impossible de définir une méthode unique pour traiter ces médias. Cette absence de standardisation se ressent dans la documentation interne de l'agence. Celle-ci suppose l'utilisation de la balise HTML #raw(str("<picture>"),lang:"html") (voir @appendix-antistatique-doc-images), mais n'explique pas comment générer les différentes sources appelées. Ce vide documentaire laisse les développeurs libres de définir leur propre approche, ce qui rend les pratiques difficiles à auditer, à maintenir ou à transférer d'un projet à l'autre.
+
+
+Dans le but de standardiser ce processus, Antistatique souhaite découpler la gestion des images de la technologie utilisée. L'objectif est de déléguer l'optimisation et la livraison à une brique logicielle tierce. Ainsi, le stockage serait séparé du traitement : le CMS ou le framework devrait simplement fournir l'URL de l'image source, et le service tiers se chargerait de la transformer et de la distribuer de manière optimisée.
 
 
 == Recherches
