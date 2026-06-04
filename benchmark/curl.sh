@@ -1,31 +1,63 @@
 #!/usr/bin/env bash
 
+# Script de benchmark pour récupérer des images via Cloudinary fetch
+# Il exécute plusieurs requêtes curl, mesure des métriques, et écrit un CSV.
+
+# Quit on error, treat unset vars as errors, and fail pipelines on first failing command
 set -euo pipefail
 
-CLOUDINARY_CLOUD="di5rp4t2p"
-CLOUDINARY_BASE_URL="https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/fetch"
-ACCEPT_HEADER="image/avif,image/webp,image/apng,*/*;q=0.8"
-OUTPUT_CSV="resultats_benchmark.csv"
-IMAGE_BASE_URL="https://image.chapi.ch/wp-content/uploads/raw/image-test-"
-NUMBER_OF_IMAGES=9
-NUMBER_OF_JPG_IMAGES=8
-NUMBER_OF_RUNS=11
+# Test id utilisé pour distinguer éventuellement des répertoires temporaires
 TEST_ID=$(date +%s)
 
-# List of transformations to benchmark, from the most generic to more specific variants.
+# --- Configuration ---
+# Identifiant du cloud sur Cloudinary
+CLOUDINARY_CLOUD="di5rp4t2p"
+# URL de base pour fetcher une image via Cloudinary
+CLOUDINARY_BASE_URL="https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/fetch"
+# En-tête Accept pour préférer les formats modernes (avif/webp)
+ACCEPT_HEADER="image/avif,image/webp,image/apng,*/*;q=0.8"
+# Fichier CSV de sortie
+OUTPUT_CSV="resultats_benchmark.csv"
+# Préfixe des images source (le script construit image-test-1.jpg, image-test-2.jpg, ...)
+# Note: la variable TEST_ID est insérée pour générer un dossier unique si nécessaire
+IMAGE_BASE_URL="https://image.chapi.ch/wp-content/uploads/raw/v-${TEST_ID}/image-test-"
+# Nombre total d'images à tester
+NUMBER_OF_IMAGES=9
+# Combien des premières images sont en JPG (les dernières seront en PNG)
+NUMBER_OF_JPG_IMAGES=8
+# Nombre d'itérations (passes) par image
+NUMBER_OF_RUNS=11
+
+
+# Liste des transformations Cloudinary à tester.
+# Chaque élément sera inséré entre la base Cloudinary et l'URL de l'image.
 TRANSFORMATIONS=(
-	"f_auto,q_auto"
+	"f_auto,q_auto"  # transformation générique: Cloudinary choisit le format optimal
 )
 
+# Si le CSV n'existe pas, on ajoute l'entête. L'ordre des colonnes est choisi
+# pour que l'URL finale (fetch_url) soit la première colonne, facile à lire.
 if [[ ! -f "${OUTPUT_CSV}" ]]; then
 	printf 'fetch_url,image_url,run_index,transformation,http_code,content_type,size_download,time_starttransfer,time_total\n' > "${OUTPUT_CSV}"
 fi
 
+
+## ---------- Fonctions ----------
+
+## Execute curl pour une image + transformation donnée et append les métriques au CSV
+## Arguments:
+##   $1 = image_url (ex: https://.../image-test-1.jpg)
+##   $2 = run_index (numéro d'itération pour cette image)
+##   $3 = transformation (chaîne Cloudinary, ex: f_auto,q_auto)
 benchmark_variant() {
 	local image_url="$1"
 	local run_index="$2"
 	local transformation="$3"
-	local fetch_url="${CLOUDINARY_BASE_URL}/${transformation}/${image_url}?test=${TEST_ID}"
+
+	# Construire l'URL que Cloudinary va fetcher
+	local fetch_url="${CLOUDINARY_BASE_URL}/${transformation}/${image_url}"
+
+	# Exécuter curl en mode silencieux, récupérer plusieurs métriques formatées par tab
 	local metrics
 	local http_code
 	local content_type
@@ -40,8 +72,10 @@ benchmark_variant() {
 			"${fetch_url}"
 	})"
 
+	# Décomposer la sortie dans des variables individuelles
 	IFS=$'\t' read -r http_code content_type size_download time_starttransfer time_total <<< "${metrics}"
 
+	# Écrire une ligne CSV; on quote certains champs pour sécurité
 	printf '"%s","%s",%s,"%s",%s,"%s",%s,%s,%s\n' \
 		"${fetch_url}" \
 		"${image_url}" \
@@ -54,6 +88,8 @@ benchmark_variant() {
 		"${time_total}" >> "${OUTPUT_CSV}"
 }
 
+
+## Construit l'URL source de l'image (jpg pour les premières images, png pour la dernière)
 build_image_url() {
 	local image_index="$1"
 
@@ -64,6 +100,9 @@ build_image_url() {
 	fi
 }
 
+
+## Pour une image donnée, exécute NUMBER_OF_RUNS passes, et pour chaque passe
+## teste toutes les transformations listées.
 benchmark_image() {
 	local image_index="$1"
 	local image_url
@@ -79,6 +118,8 @@ benchmark_image() {
 	done
 }
 
+
+## Boucle principale: itère sur toutes les images configurées
 for (( image_index = 1; image_index <= NUMBER_OF_IMAGES; image_index++ )); do
 	benchmark_image "${image_index}"
-done 
+done
