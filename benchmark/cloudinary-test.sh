@@ -17,12 +17,12 @@ CLOUDINARY_BASE_URL="https://res.cloudinary.com/${CLOUDINARY_CLOUD}/image/fetch"
 # En-tête Accept pour préférer les formats modernes (avif/webp)
 ACCEPT_HEADER="image/avif,image/webp,image/apng,*/*;q=0.8"
 # Fichier CSV de sortie
-OUTPUT_CSV="resultats_benchmark.csv"
+OUTPUT_CSV="resultats_benchmark_cloudinary.csv"
 # Préfixe des images source (le script construit image-test-1.jpg, image-test-2.jpg, ...)
 # Note: la variable TEST_ID est insérée pour générer un dossier unique si nécessaire
 IMAGE_BASE_URL="https://image.chapi.ch/wp-content/uploads/raw/v-${TEST_ID}/image-test-"
 # Nombre total d'images à tester
-NUMBER_OF_IMAGES=9
+NUMBER_OF_IMAGES=12
 # Combien des premières images sont en JPG (les dernières seront en PNG)
 NUMBER_OF_JPG_IMAGES=8
 # Nombre d'itérations (passes) par image
