@@ -1,0 +1,67 @@
+version: "3"
+
+services:
+  # =========================================================================
+  # 1. COUCHE INFRASTRUCTURE GLOBALE (Existe en 1 seul exemplaire sur le serveur)
+  # =========================================================================
+
+  # La porte d'entrée unique du serveur. Elle écoute sur le web (80/443)
+  # et distribue le trafic aux bons projets selon le nom de domaine (Virtual Host).
+  infra-reverse-proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+  # Le gestionnaire de certificats SSL Let's Encrypt pour toute la machine.
+  infra-ssl-manager:
+    image: nginxproxy/acme-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    depends_on:
+      - infra-reverse-proxy
+
+  # =========================================================================
+  # 2. COUCHE APPLICATIVE : LA BRIQUE D'IMAGES (Ton projet de TB)
+  # =========================================================================
+
+  # Le cache intelligent spécifique aux images (gère le format WebP/AVIF, le disque).
+  # C'est lui qui discute avec la porte d'entrée globale.
+  image-cache-nginx:
+    image: nginx:latest
+    environment:
+      # Ces variables indiquent à "infra-reverse-proxy" quel domaine lui envoyer.
+      # Dans la réalité, on mettra le domaine images.antistatique.net et le SSL sera géré pour ce domaine
+      - VIRTUAL_HOST=resize.chapi.ch
+      - LETSENCRYPT_HOST=resize.chapi.ch
+      - LETSENCRYPT_EMAIL=robin@chapi.ch
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - cache_zone:/var/cache/nginx
+    depends_on:
+      - image-processor-imgproxy
+
+  # Le moteur de calcul brut. Il ne fait QUE redimensionner. Il est caché derrière le cache.
+  image-processor-imgproxy:
+    image: darthsim/imgproxy:latest
+    environment:
+      - IMGPROXY_KEY=7365637265746b657931323334353637
+      - IMGPROXY_SALT=73656372657473616c74313233343536
+      - IMGPROXY_ENABLE_WEBP_DETECTION=true
+      - IMGPROXY_ENABLE_AVIF_DETECTION=true
+
+volumes:
+  cache_zone:
+  certs:
+  vhost:
+  html:
