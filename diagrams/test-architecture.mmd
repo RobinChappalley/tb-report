@@ -1,0 +1,68 @@
+flowchart TD
+    %% Configuration globale et styles
+    classDef service fill:#2d3748,stroke:#4a5568,stroke-width:2px,color:#fff;
+    classDef volume fill:#1a202c,stroke:#e2e8f0,stroke-width:1px,stroke-dasharray: 5 5,color:#cbd5e0;
+    classDef host fill:#2c5282,stroke:#3182ce,stroke-width:1px,color:#fff;
+    classDef external fill:#234e52,stroke:#319795,stroke-width:1px,color:#fff;
+
+    subgraph Internet [Internet / Externe]
+        Client([Navigateur / Client])
+        LE[Let's Encrypt]
+    end
+
+    subgraph Host [Hôte Docker]
+        
+        subgraph Services [Conteneurs]
+            NP[nginx-proxy<br/><i>nginxproxy/nginx-proxy</i>]:::service
+            SC[ssl-companion<br/><i>nginxproxy/acme-companion</i>]:::service
+            NC[nginx-cache<br/><i>nginx:latest</i>]:::service
+            IP[imgproxy<br/><i>darthsim/imgproxy:latest</i>]:::service
+        end
+
+        subgraph Volumes [Volumes Docker]
+            V_certs[(certs)]:::volume
+            V_vhost[(vhost)]:::volume
+            V_html[(html)]:::volume
+            V_cache[(cache_zone)]:::volume
+        end
+
+        subgraph HostFiles [Fichiers Hôte]
+            Sock[(/var/run/docker.sock)]:::host
+            Conf[./nginx.conf]:::host
+        end
+    end
+
+    %% Flux d'entrée
+    Client -->|Requêtes HTTP :80 / HTTPS :443| NP
+
+    %% Interaction Docker Socket (Lecture des métadonnées)
+    Sock -.->|Lecture des évènements| NP
+    Sock -.->|Lecture des évènements| SC
+
+    %% Partage de volumes entre Nginx Proxy et SSL Companion
+    NP <--> V_certs
+    SC <--> V_certs
+    
+    NP <--> V_vhost
+    SC <--> V_vhost
+    
+    NP <--> V_html
+    SC <--> V_html
+
+    %% Processus SSL avec Let's Encrypt
+    SC <-->|Validation ACME & Certificats| LE
+
+    %% Configuration Nginx Cache
+    Conf -.->|Montage configuration| NC
+    NC <-->|Lecture / Écriture| V_cache
+
+    %% Routage du trafic interne
+    NP -->|Proxy Pass<br/><i>VIRTUAL_HOST: resize.chapi.ch</i>| NC
+    NC -->|Proxy Pass| IP
+
+    %% Dépendances de démarrage (depends_on)
+    SC -.->|depends_on| NP
+    NC -.->|depends_on| IP
+
+    %% Styles des classes appliqués
+    class Client,LE external;

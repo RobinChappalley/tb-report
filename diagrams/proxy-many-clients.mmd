@@ -1,0 +1,31 @@
+graph LR
+    subgraph "Utilisateurs"
+        U1((User 1))
+        U2((User 2))
+        U3((User 3))
+    end
+
+    subgraph "VM Infomaniak (Port 443)"
+        NP[Nginx-Proxy]
+    end
+
+    subgraph "Conteneurs isolés"
+        IP_A[imgproxy Client A]
+        IP_B[imgproxy Client B]
+    end
+
+    subgraph "Sources Images (S3 / CMS)"
+        S3A[(Images Client A)]
+        S3B[(Images Client B)]
+    end
+
+    %% Flux Client A
+    U1 -- "images.clientA.ch/..." --> NP
+    U3 -- "images.clientA.ch/..." --> NP
+    NP -- "Route vers A" --> IP_A
+    IP_A -- "Fetch" --> S3A
+
+    %% Flux Client B
+    U2 -- "images.clientB.ch/..." --> NP
+    NP -- "Route vers B" --> IP_B
+    IP_B -- "Fetch" --> S3B
