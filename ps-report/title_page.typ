@@ -84,5 +84,5 @@
   )
   #v(1fr)
   
-  #text(size: 12pt)[#city, le #date.display("[day]-[month]-[year]")]
+  #text(size: 12pt)[#city, le #date.display("[month]-[year]")]
 ]

@@ -38,7 +38,7 @@
     ],
   )
 
-  set text(font: "Arial", size: 11pt, lang: "fr")
+  set text(font: "libertinus serif", size: 11pt, lang: "fr")
   set par(justify: true)
   set heading(numbering: "1.1")
 
@@ -146,7 +146,7 @@
       ],
     )
     #v(1fr)
-    #text(size: 12pt)[#ville, le #date-doc.display("[day] [month] [year]")]
+    #text(size: 12pt)[#ville, le #date-doc.display("[day]-[month]-[year]")]
   ]
 }
 
