@@ -3,6 +3,7 @@
 
 #set par(justify: true)
 
+
 #set heading(numbering: "1.1")
 #show heading.where(level: 1): set heading(supplement: [Chapter])
 #show heading.where(level: 1): it => {
@@ -31,6 +32,7 @@
 //  fill: repeat(justify: true, gap: 0.5em)[.],
 //)
 
+
 #show outline.entry.where(level: 2).or(outline.entry.where(level: 3)): it => link(
   it.element.location(),
   it.indented(
@@ -41,7 +43,8 @@
 )
 
 // Title Page
-#align(center)[
+#page(numbering: none,
+align(center)[
   #v(8em)
   #image("../assets/logos/heig-vd-baseline.pdf", width: 25%)
   #text(size: 17pt)[#smallcaps[#vars.project-type]]
@@ -65,7 +68,7 @@
       _Auteur:_\
       #vars.author.name
       #v(1em)
-      Année académique : #text(size: 14pt)[#vars.academic-year]
+      Année académique : #text[#vars.academic-year]
     ],
     align(right)[
       #{
@@ -83,3 +86,4 @@
 
   #text(size: 12pt)[#vars.city, le #vars.date.display("[day]-[month]-[year]")]
 ]
+)

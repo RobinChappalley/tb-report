@@ -1,5 +1,5 @@
 // main.typ
-#import "template.typ": rapport-tb
+#import "template.typ": rapport-tb, page-admin
 
 #show: rapport-tb
 

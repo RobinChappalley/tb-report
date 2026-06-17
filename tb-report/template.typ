@@ -47,3 +47,10 @@
 
   body
 }
+
+#let page-admin(titre, body) = {
+  page(numbering: none)[
+    #heading(numbering: none, outlined: true)[#titre]
+    #body
+  ]
+}
