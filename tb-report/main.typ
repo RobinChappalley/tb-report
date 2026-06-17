@@ -5,7 +5,10 @@
 
 // --- Pages liminaires (gèrent leur propre mise en page) ---
 #include "pages-admin/title-page.typ"
+#include "pages-admin/foreword.typ"
+#include "pages-admin/thanks.typ"
 #include "pages-admin/authenticity.typ"
+
 
 // --- Contenu ---
 #include "contenu/01-introduction.typ"
