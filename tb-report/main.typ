@@ -20,3 +20,5 @@
 #include "pages-admin/bachelor-thesis-conduct.typ"
 #include "pages-admin/ai-usage-declaration.typ"
 #include "pages-admin/confidentiality-declaration.typ"
+
+#include "pages-admin/bilan-inter.typ"
