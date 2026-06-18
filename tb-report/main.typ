@@ -17,7 +17,7 @@
 #include "contenu/01-introduction.typ"
 
 
-
+#include "pages-admin/bibliography.typ"
 #include "pages-admin/bachelor-thesis-conduct.typ"
 #include "pages-admin/ai-usage-declaration.typ"
 #include "pages-admin/confidentiality-declaration.typ"
