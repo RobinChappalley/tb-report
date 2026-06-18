@@ -8,6 +8,7 @@
 #include "pages-admin/foreword.typ"
 #include "pages-admin/thanks.typ"
 #include "pages-admin/authenticity.typ"
+#include "pages-admin/publiable-abstract.typ"
 
 
 // --- Contenu ---
