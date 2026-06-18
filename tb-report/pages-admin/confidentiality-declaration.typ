@@ -60,8 +60,6 @@ TB peut être consulté sur la plateforme des TB.
         Les conditions suivantes de diffusion des informations sont appliquées :
       ]
 
-      #v(0.15cm)
-
       #text(8pt)[
         _Aucune consultation ou emprunt du TB n'est permis hormis par
         l'enseignant responsable du TB et le diplômé qui s'engagent à ne pas
@@ -69,10 +67,10 @@ TB peut être consulté sur la plateforme des TB.
         mention « *confidentiel* »._
       ]
 
-      #v(0.2cm)
+      
 
       #confidentiality-checkbox(
-        checked: false,  // ← true / false selon le cas
+        checked: true,  // ← true / false selon le cas
          [
           #text(8pt)[
             _Nous acceptons que le *nom de l'entreprise partenaire* figure dans
@@ -85,7 +83,7 @@ TB peut être consulté sur la plateforme des TB.
       #v(0.1cm)
 
       #confidentiality-checkbox(
-        checked: false,
+        checked: true,
          [
           #text(8pt)[
             _Nous acceptons que *l'affiche* du TB figure sur la plateforme de
