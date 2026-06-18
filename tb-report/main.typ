@@ -9,6 +9,7 @@
 #include "pages-admin/thanks.typ"
 #include "pages-admin/authenticity.typ"
 #include "pages-admin/publiable-abstract.typ"
+#include "pages-admin/bachelor-thesis-conduct.typ"
 
 
 // --- Contenu ---
