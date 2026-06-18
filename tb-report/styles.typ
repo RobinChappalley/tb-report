@@ -26,7 +26,7 @@
 
 // ─── PAGE ADMIN (pour les pages liminaires : titre en TdM, pas de numéro) ──
 #let page-admin(titre, body) = {
-  page(numbering: none, outlined: true)[
+  page(numbering: none)[
     #heading(numbering: none, outlined: true)[#titre]
     #body
   ]
