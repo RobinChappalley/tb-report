@@ -9,8 +9,14 @@
 #include "pages-admin/thanks.typ"
 #include "pages-admin/authenticity.typ"
 #include "pages-admin/publiable-abstract.typ"
-#include "pages-admin/bachelor-thesis-conduct.typ"
+
 
 
 // --- Contenu ---
 #include "contenu/01-introduction.typ"
+
+
+
+#include "pages-admin/bachelor-thesis-conduct.typ"
+#include "pages-admin/ai-usage-declaration.typ"
+#include "pages-admin/confidentiality-declaration.typ"
