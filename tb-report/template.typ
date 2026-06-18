@@ -45,7 +45,20 @@
     it,
   )
 
-  body
+set figure(numbering: n => {
+  let chapter = counter(heading.where(level: 1)).get().first()
+  numbering("1.1", chapter, n)
+})
+
+// 2. Reset du compteur de figures à chaque nouveau chapitre
+show heading.where(level: 1): it => {
+  counter(figure.where(kind: image)).update(0)
+  counter(figure.where(kind: table)).update(0)
+  it
+}
+
+  body// 1. Format : numérotation des figures basée sur le chapitre (heading niveau 1)
+
 }
 
 #let page-admin(titre, body) = {
@@ -54,3 +67,5 @@
     #body
   ]
 }
+
+
