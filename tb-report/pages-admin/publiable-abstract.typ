@@ -1,4 +1,4 @@
-#import "../template.typ" : page-admin
+#import "../styles.typ" : page-admin
 #import "../variables.typ" as vars
 
 
