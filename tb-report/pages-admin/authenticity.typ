@@ -1,18 +1,6 @@
 #import "../template.typ" : page-admin
 #import "../variables.typ" as vars
 
-#set page(
-  paper: "a4",
-  margin: (auto),
-  header: [
-    #grid(
-      columns: (1fr, 1fr),
-      align: (left, right),
-      gutter: 0pt,
-      grid.cell(image("../assets/logos/HEIG-VD_logotype-baseline_rouge-rvb.png", width: 3cm)),
-    )
-  ])
-
 #page-admin("Authentification")[
 #set par(justify: true)
   J’atteste par la présente avoir réalisé ce travail et n’avoir utilisé aucune autre source que celles expressément mentionnées.
