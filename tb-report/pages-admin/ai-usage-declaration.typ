@@ -89,7 +89,7 @@
 
   #v(1cm)
 
-  Nom : #vars.author.name #h(2cm) Date :
+  Nom : #vars.author.name #h(2cm) Date : #vars.date.display("[day]-[month]-[year]")
 
   #v(1cm)
 
