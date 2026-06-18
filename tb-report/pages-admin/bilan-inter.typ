@@ -4,5 +4,5 @@
 
 #{
   set heading(numbering: none, outlined: false, level:auto )
-  cmarker.render(read("pv-bilan.md"))
+  cmarker.render(read("../assets/pv-bilan.md"))
 }
