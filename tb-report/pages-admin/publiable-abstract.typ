@@ -48,4 +48,6 @@ Enseignant responsable : #vars.professor
   )).flatten()
 )
 
+Le super contenu ira ici !
+
 600 à 2000 caractères, espaces compris.]
