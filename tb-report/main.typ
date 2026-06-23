@@ -14,6 +14,14 @@
   number-align: center,
 )
 
+
+#set document(
+  title: "Travail de Bachelor",
+)
+
+#set text(
+  lang: "fr"
+)
 // ─── Numérotation des figures par chapitre ──────────────────
 // 1. Format : numérotation des figures basée sur le chapitre (heading niveau 1)
 #set figure(numbering: n => {
