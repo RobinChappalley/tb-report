@@ -1,0 +1,1 @@
+voilà une super procédure de test que j'ai trouvé pour benchmarker les services d'optimisation d'images. Elle est divisée en deux parties: une partie technique pour tester les performances des services et une partie pour tester la facilité d'intégration et la documentation. Le but est de créer une procédure de test reproductible. La marche à suivre se trouve en annexe

@@ -1,2 +1,2 @@
 = Contexte
-#lorem(1500)
+#lorem(500)

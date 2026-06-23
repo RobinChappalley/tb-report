@@ -1,3 +1,5 @@
+// !set document root: ../main.typ
+
 #set text(
   lang: "fr"
 )
@@ -48,7 +50,7 @@ Concernant le choix d'imgproxy comme solution auto-hébergée, il est expliqué 
 
 
 === Matrice MoSCoW
-Pour comparer les avantages et les inconvénients de chaque service, une matrice MoSCoW reprenant les besoins d'Antistatique a été créée. Des indicateurs de performance clé (KPI) ont été définis pour chaque besoin. (@moscow-matrix). 
+Pour comparer les avantages et les inconvénients de chaque service, une matrice MoSCoW reprenant les besoins d'Antistatique a été créée. Des indicateurs de performance clé (KPI) ont été définis pour chaque besoin. (@moscow-matrix). Suite à la définition de ces KPI, le but du benchmark était d'attribuer une valeur à chaque indicateur pour chaque service, de sorte à pouvoir comparer les services sur la base de critères objectifs.
 
 
 
@@ -146,15 +148,23 @@ table(
   [],
   priority-cell("Could have"),
 ),
-  caption: [Matrice MoSCoW],
+  caption: [Matrice MoSCoW, 1ère version],
   kind: table,
 ) <moscow-matrix>
 
 
 == Procédure de test
+
+La procédure de test a été divisée en 2 parties: Une partie technique, pour tester les performances des services et une seconde partie pour tester la facilité d'intégration et la documentation. Le but était de créer une procédure de test reproductible. La marche à suivre se trouve en annexe (@annexe-test-procedure). Pour avoir des images à tester, une instance de WordPress a été mise en place avec l'hébergement mutualisé d'infomaniak. Il s'agissait surtout de profiter d'un serveur web (Apache en l'occurence) pour servir les images de test. 12 images ont été utilsées pour les tests. Le détail des poids et des formats se trouve en annexe, mais le but était d'avoir un échantillon représentatif des contenus téléchargés par les clients d'Antistatique
+
+La partie technique a été réalisée en utilisant un script Node.js qui a été exécuté sur un serveur local. Le script a été conçu pour effectuer les tests de manière automatisée, en utilisant des images de test et en mesurant les temps de réponse et les taux de compression. La partie intégration a été réalisée en suivant les guides de démarrage rapide fournis par chaque service, et en notant les difficultés rencontrées lors de l'intégration.
 == Test de la solution Cloudinary
 == Test de la solution Cloudflare images
 == Test de la solution Imgproxy
 == Résultats
 
-#include "../pages-admin/bibliography.typ"
+
+
+
+
+
