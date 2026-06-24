@@ -16,8 +16,15 @@ include("../annexes/test-procedure.typ"),
  kind: "annexe"
 )<annexe-test-procedure>
 
+
+
+#let imagesizestable = csv("../annexes/taille-images.csv", delimiter:";")
 #figure(
-table(read("../annexes/taille-images.csv")),
+table(
+  columns :3,
+  inset: 6pt,
+    ..imagesizestable.flatten(),
+   ),
  caption: "Détail des images utilisées pour le benchmark",
  supplement: [Annexe], 
  kind: "annexe"
