@@ -5,7 +5,9 @@
   ("Claude Opus 4.8", "6", "Traduction du rapport word en typst"),
   ("Qwen 3.6 plus", "5", "Retranscription du bilan intermédiaire"),
   ("Uniscribe","5","Retranscription de l'entretien avec Christian Stucki"),
-  ("Gemini 3.1 Pro", "6", "Elaboration d'un script de test")
+  ("Gemini 3.1 Pro", "6", "Elaboration d'un script de test"),
+  ("Claude Opus 4.8", "6", "Glissement du modèle besoin/KPI vers le modèle filtre/critères de décision pondérés"),
+
   // ajoute tes lignes ici au fil du TB
 )
 

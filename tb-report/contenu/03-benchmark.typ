@@ -4,6 +4,10 @@
   lang: "fr"
 )
 = Benchmark
+
+
+== Cadre initial
+=== Besoins et matrice MoSCoW
 Afin de choisir un service qui répond au besoin d'Antistatique, 3 formats de solutions ont été envisagés :
 1. Un service SaaS
 2. Un service edge
@@ -31,25 +35,10 @@ Ces différentes solutions amènement différents avantages, expliqués dans le 
   kind: table,
 ) <avantages-inconvenients>
 
-== Choix des solutions
-Une fois que les types de solutions à tester ont été définis, il a été nécessaire de sélectionner les services à tester pour chaque type de solution. Pour sélectionner un service, plusieurs critères ont été pris en compte, notamment :
-1. L'existence d'un plan gratuit, pour pouvoir tester le service sans engager de frais
-2. Le fonctionnement du service, avec des paramètres dans l'URL pour répondre au critère d'agnosticité avancé dans la pré-étude
-3. La maturité de la documentation et l'adoption par la communauté (DX) pour une mise en place rapide respectant le temps prévu par le planning (3 semaines)
-
-Plutôt que de comparer exhaustivement tous les acteurs d'une même catégorie (comme Imgix, Uploadcare Image CDN et Cloudinary pour le SaaS), un seul service représentatif répondant à ces 3 critères a été sélectionné pour chaque architecture. *Cloudinary* a été sélectionné pour le SaaS, *Cloudflare Images* pour l'edge et *Imgproxy* pour le self-host. Ce choix est justfié par leur position dominante sur le marché : Cloudinary est l'un des leaders de ce marché @datainteloImageOptimizationSoftware, tandis que Cloudflare absorbe plus de la moitié (58%) des des requêtes HTTP à travers le monde. @figure-top-cdns-html. 
-#figure(
-  image("../assets/figures/top-cdns-html.png"),
-  caption:[Top CDN pour le HTML en 2025, @viggiano2025WebAlmanac2026]
-  )<figure-top-cdns-html>
+Les trois architectures retenues — SaaS, Edge CDN, self-hosted — ont été sélectionnées car *aucune ne présente de limitation incompatible* avec les infrastructures d'Antistatique. La comparaison porte donc sur des critères de compromis (coûts, indépendance, maintenabilité) plutôt que sur une élimination préalable.
 
 
-Concernant le choix d'imgproxy comme solution auto-hébergée, il est expliqué par sa popularité, sa communauté active (10K stars sur GitHub) et ses mises à jour fréquentes. Une mise à jour majeure est sortie au début du mois de mai 2026, preuve de la vitalité du projet. Aussi, imgproxy repose sur un modèle "Open Core", ce qui signifie que la plupart des fonctionnalités sont disponibles gratuitement, mais que certaines fonctionnalités avancées sont payantes. Cela permet de tester le service sans frais, tout en ayant la possibilité d'accéder à des fonctionnalités avancées si nécessaire. Cela permet aussi de garantir une viabilité économique à l'entreprise derrière le projet, ce qui est un gage de pérennité pour le service. À l'origine, le service a été développé par Evil Martians une société qui crée des outils pour les développeurs. Puis, une société dédiée uniquement à ce service a été créée @ImgproxyGoesSolo2023, grâce au succès important. Bien que cela ne soit pas une garantie de service à long terme, cela indique une équipe engagée et déterminée à faire vivre le service.
- 
- Pour le cas concerné, seules les fonctionnalités de base sont nécessaires: Redimensionnement, optimisation de format, et modification de la qualité. Toutes ces fonctionnalités sont disponibles gratuitement. @ImgproxyDocumentation
-
-
-=== Matrice MoSCoW
+=== Matrice MoSCoW et KPI initiaux
 Pour comparer les avantages et les inconvénients de chaque service, une matrice MoSCoW reprenant les besoins d'Antistatique a été créée. Des indicateurs de performance clé (KPI) ont été définis pour chaque besoin. (@moscow-matrix-v1). Suite à la définition de ces KPI, le but du benchmark était d'attribuer une valeur à chaque indicateur pour chaque service, de sorte à pouvoir comparer les services sur la base de critères objectifs.
 
 
@@ -152,8 +141,27 @@ table(
   kind: table,
 ) <moscow-matrix-v1>
 
+=== Choix des solutions
+Une fois que les architectures à tester ont été définies, il a été nécessaire de sélectionner les services à tester pour chaque type de solution. Pour sélectionner un service, plusieurs critères ont été pris en compte, notamment :
+1. L'existence d'un plan gratuit, pour pouvoir tester le service sans engager de frais
+2. Le fonctionnement du service, avec des paramètres dans l'URL pour répondre au critère d'agnosticité avancé dans la pré-étude
+3. La maturité de la documentation et l'adoption par la communauté (DX) pour une mise en place rapide respectant le temps prévu par le planning (3 semaines)
 
-== Procédure de test
+Plutôt que de comparer exhaustivement tous les acteurs d'une même catégorie (comme Imgix, Uploadcare Image CDN et Cloudinary pour le SaaS), un seul service représentatif répondant à ces 3 critères a été sélectionné pour chaque architecture. *Cloudinary* a été sélectionné pour le SaaS, *Cloudflare Images* pour l'edge et *Imgproxy* pour le self-host. Ce choix est justfié par leur position dominante sur le marché : Cloudinary est l'un des leaders de ce marché @datainteloImageOptimizationSoftware, tandis que Cloudflare absorbe plus de la moitié (58%) des des requêtes HTTP à travers le monde. @figure-top-cdns-html. 
+#figure(
+  image("../assets/figures/top-cdns-html.png"),
+  caption:[Top CDN pour le HTML en 2025, @viggiano2025WebAlmanac2026]
+  )<figure-top-cdns-html>
+
+
+Concernant le choix d'imgproxy comme solution auto-hébergée, il est expliqué par sa popularité, sa communauté active (10K stars sur GitHub) et ses mises à jour fréquentes. Une mise à jour majeure est sortie au début du mois de mai 2026, preuve de la vitalité du projet. Aussi, imgproxy repose sur un modèle "Open Core", ce qui signifie que la plupart des fonctionnalités sont disponibles gratuitement, mais que certaines fonctionnalités avancées sont payantes. Cela permet de tester le service sans frais, tout en ayant la possibilité d'accéder à des fonctionnalités avancées si nécessaire. Cela permet aussi de garantir une viabilité économique à l'entreprise derrière le projet, ce qui est un gage de pérennité pour le service. À l'origine, le service a été développé par Evil Martians une société qui crée des outils pour les développeurs. Puis, une société dédiée uniquement à ce service a été créée @ImgproxyGoesSolo2023, grâce au succès important. Cette transition vers une entreprise spécialisée indique une viabilité économique suffisante pour assurer la continuité du service.
+ 
+ Pour le cas concerné, seules les fonctionnalités de base sont nécessaires: Redimensionnement, optimisation de format, et modification de la qualité. Toutes ces fonctionnalités sont disponibles gratuitement. @ImgproxyDocumentation
+
+
+
+
+=== Procédure de test
 
 La procédure de test a été divisée en 2 parties: Une partie technique, pour tester les performances des services et une seconde partie pour tester la facilité d'intégration et la documentation. Le but était de créer une procédure de test reproductible. La marche à suivre se trouve en annexe (@annexe-test-procedure). 
 
@@ -163,7 +171,27 @@ La partie technique a été réalisée en utilisant un script curl (@test-script
 
 Concernant les formats testés, le choix a été fait de laisser les services dans leur mode "par défaut" (en précisant par exemple "format=auto") afin de voir quel format serait choisi pour chaque image. Le but était de valider le fait que les services choisissent le format le plus approprié pour chaque image. 
 
-La partie plus théorique a été réalisée en lisant la documentation de chaque service et en analysant comment les services fonctionnent. Le but était de voir si la documentation était claire et si l'intégration était facile à réaliser. Lors de cette analyse, il est apparu que les KPI définis plus tôt n'étaient pas toujours pertinents pour évaluer la facilité d'intégration ou comparer les services entre eux. Le cas où toutes les solutions obtiennent le même résultat à un KPI est aussi apparu, ce qui le rend inutile pour décider du choix d'une solution. La première version des KPI avait le but de comparer des *services*, mais le but de ce benchmark est de comparer des *architectures* et d'identifier la plus adaptée pour Antistatique. Il a donc été décidé de redéfinir des KPIs, plus pertinents et plus adaptés à la comparaison des architectures (@moscow-matrix-v2) et d'utiliser les 3 services precédemment cités pour pouvoir comparer.
+La partie plus théorique a été réalisée en lisant la documentation de chaque service et en analysant comment les services fonctionnent. Le but était de voir si la documentation était claire et si l'intégration était facile à réaliser. 
+
+
+
+== Exécution des tests
+=== Test de la solution Cloudinary
+=== Test de la solution Cloudflare images
+=== Test de la solution Imgproxy
+
+=== Qualité des images redimensionnées
+== Analyse des résultats et révision du modèle
+
+=== Analyse des résultats bruts
+
+=== Révision du modèle
+
+Lors de cette analyse, il est apparu que les KPI définis plus tôt n'étaient pas toujours pertinents pour évaluer la facilité d'intégration ou comparer les services entre eux. Le cas où toutes les solutions obtiennent le même résultat à un KPI est aussi apparu, ce qui le rend inutile pour décider du choix d'une solution. La première version des KPI avait le but de comparer des *services*, mais le but de ce benchmark est de comparer des *architectures* et d'identifier la plus adaptée pour Antistatique.
+
+Le modèle besoin/KPI s'est donc révélé inadapté : une partie des besoins relève de propriétés d'architecture non quantifiables, qu'aucun indicateur chiffré ne peut traduire fidèlement. L'évaluation distingue donc deux familles. D'une part, les indicateurs mesurables (TTFB, ratio de compression, coût annuel). D'autre part, les critères qualitatifs d'architecture (niveau de gestion, couplage à la stack, réversibilité). Bien que mesurable, le coût n'est pas fusionné avec les autres indicateurs dans un score unique : pondérer une grandeur monétaire face à un niveau de contrôle supposerait un taux de conversion entre les deux, qui ne pourrait être que posé arbitrairement.
+
+Il a donc été décidé de redéfinir des KPIs, plus pertinents et plus adaptés à la comparaison des architectures (@moscow-matrix-v2) et d'utiliser les 3 services precédemment cités pour pouvoir comparer.
 
 
 #let table-header(text) = {
@@ -262,16 +290,6 @@ table(
   caption: [Matrice MoSCoW, 2ème version],
   kind: table,
 ) <moscow-matrix-v2>
-
-== Test de la solution Cloudinary
-== Test de la solution Cloudflare images
-== Test de la solution Imgproxy
-
-== Qualité des images redimensionnées
-== Résultats
-
-
-
-
+== Décision finale
 
 
