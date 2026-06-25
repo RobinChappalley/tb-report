@@ -155,12 +155,19 @@ table(
 
 == Procédure de test
 
-La procédure de test a été divisée en 2 parties: Une partie technique, pour tester les performances des services et une seconde partie pour tester la facilité d'intégration et la documentation. Le but était de créer une procédure de test reproductible. La marche à suivre se trouve en annexe (@annexe-test-procedure). Pour avoir des images à tester, une instance de WordPress a été mise en place avec l'hébergement mutualisé d'infomaniak. Il s'agissait surtout de profiter d'un serveur web (Apache en l'occurence) pour servir les images de test. 12 images ont été utilsées pour les tests. Le détail des poids et des formats se trouve en annexe, mais le but était d'avoir un échantillon représentatif des contenus téléchargés par les clients d'Antistatique
+La procédure de test a été divisée en 2 parties: Une partie technique, pour tester les performances des services et une seconde partie pour tester la facilité d'intégration et la documentation. Le but était de créer une procédure de test reproductible. La marche à suivre se trouve en annexe (@annexe-test-procedure). 
 
-La partie technique a été réalisée en utilisant un script Node.js qui a été exécuté sur un serveur local. Le script a été conçu pour effectuer les tests de manière automatisée, en utilisant des images de test et en mesurant les temps de réponse et les taux de compression. La partie intégration a été réalisée en suivant les guides de démarrage rapide fournis par chaque service, et en notant les difficultés rencontrées lors de l'intégration.
+Pour avoir des images à tester, une instance de WordPress a été déployée sur l'hébergement mutualisé d'infomaniak. Il s'agissait surtout de profiter d'un serveur web ("inclus" dans une instance de WordPress) pour servir les images de test. Ainsi, toutes les extensions de base Wordpress ont été déasctivées. Les images ont été ajoutées en FTP pour éviter que Wordpress n'applique son redimensionnement de base @Big_image_size_thresholdHookDeveloperWordPressorg2020 .  12 images ont été utilsées pour les tests. Le détail des poids et des formats se trouve en annexe (@taille-images-benchmark), mais le but était d'avoir un échantillon représentatif des contenus téléchargés par les clients d'Antistatique
+
+La partie technique a été réalisée en utilisant un script curl (@test-script-procedure) qui envoie des requêtes HTTP aux différentes URL à tester. Le script mesure le temps de réponse et la taille de l'image retournée. Il a été lancé 4 fois, depuis 4 endroits différents : un ordinateur portable à Lausanne, un petit serveur d'infomaniak à Genève, un petit serveur Digital Ocean à New York et un petit serveur Digital Ocean à Singapour. Le but en lançant le script depuis différents endroits était de mesurer l'impact de la localisation géographique sur les performances des services. Les résultats ont été enregistrés dans un fichier CSV pour être analysés par la suite. Pour avoir des valeurs représentatives, le script est lancé 11 fois pour chaque image: la première exécution sert à mesurer l'efficacité du service de redimensionnement et d'optimisation, tandis que les 10 exécutions suivantes servent à mesurer la performance du service de cache. Le but est de voir si le service est capable de mettre en cache les images redimensionnées et optimisées pour les servir plus rapidement lors des requêtes suivantes.
+
+Concernant les formats testés, le choix a été fait de laisser les services dans leur mode "par défaut" (en précisant par exemple "format=auto") afin de voir quel format serait choisi pour chaque image. Le but était de valider le fait que les services choisissent le format le plus approprié pour chaque image. 
+
 == Test de la solution Cloudinary
 == Test de la solution Cloudflare images
 == Test de la solution Imgproxy
+
+== Qualité des images redimensionnées
 == Résultats
 
 
