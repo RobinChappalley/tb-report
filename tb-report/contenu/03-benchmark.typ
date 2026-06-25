@@ -50,7 +50,7 @@ Concernant le choix d'imgproxy comme solution auto-hébergée, il est expliqué 
 
 
 === Matrice MoSCoW
-Pour comparer les avantages et les inconvénients de chaque service, une matrice MoSCoW reprenant les besoins d'Antistatique a été créée. Des indicateurs de performance clé (KPI) ont été définis pour chaque besoin. (@moscow-matrix). Suite à la définition de ces KPI, le but du benchmark était d'attribuer une valeur à chaque indicateur pour chaque service, de sorte à pouvoir comparer les services sur la base de critères objectifs.
+Pour comparer les avantages et les inconvénients de chaque service, une matrice MoSCoW reprenant les besoins d'Antistatique a été créée. Des indicateurs de performance clé (KPI) ont été définis pour chaque besoin. (@moscow-matrix-v1). Suite à la définition de ces KPI, le but du benchmark était d'attribuer une valeur à chaque indicateur pour chaque service, de sorte à pouvoir comparer les services sur la base de critères objectifs.
 
 
 
@@ -150,7 +150,7 @@ table(
 ),
   caption: [Matrice MoSCoW, 1ère version],
   kind: table,
-) <moscow-matrix>
+) <moscow-matrix-v1>
 
 
 == Procédure de test
@@ -162,6 +162,107 @@ Pour avoir des images à tester, une instance de WordPress a été déployée su
 La partie technique a été réalisée en utilisant un script curl (@test-script-procedure) qui envoie des requêtes HTTP aux différentes URL à tester. Le script mesure le temps de réponse et la taille de l'image retournée. Il a été lancé 4 fois, depuis 4 endroits différents : un ordinateur portable à Lausanne, un petit serveur d'infomaniak à Genève, un petit serveur Digital Ocean à New York et un petit serveur Digital Ocean à Singapour. Le but en lançant le script depuis différents endroits était de mesurer l'impact de la localisation géographique sur les performances des services. Les résultats ont été enregistrés dans un fichier CSV pour être analysés par la suite. Pour avoir des valeurs représentatives, le script est lancé 11 fois pour chaque image: la première exécution sert à mesurer l'efficacité du service de redimensionnement et d'optimisation, tandis que les 10 exécutions suivantes servent à mesurer la performance du service de cache. Le but est de voir si le service est capable de mettre en cache les images redimensionnées et optimisées pour les servir plus rapidement lors des requêtes suivantes.
 
 Concernant les formats testés, le choix a été fait de laisser les services dans leur mode "par défaut" (en précisant par exemple "format=auto") afin de voir quel format serait choisi pour chaque image. Le but était de valider le fait que les services choisissent le format le plus approprié pour chaque image. 
+
+La partie plus théorique a été réalisée en lisant la documentation de chaque service et en analysant comment les services fonctionnent. Le but était de voir si la documentation était claire et si l'intégration était facile à réaliser. Lors de cette analyse, il est apparu que les KPI définis plus tôt n'étaient pas toujours pertinents pour évaluer la facilité d'intégration ou comparer les services entre eux. Le cas où toutes les solutions obtiennent le même résultat à un KPI est aussi apparu, ce qui le rend inutile pour décider du choix d'une solution. La première version des KPI avait le but de comparer des *services*, mais le but de ce benchmark est de comparer des *architectures* et d'identifier la plus adaptée pour Antistatique.
+Il a donc été décidé de redéfinir des KPIs, plus pertinents et plus adaptés à la comparaison des services (@moscow-matrix-v2).
+
+
+#let table-header(text) = {
+  strong(text)
+}
+
+#let priority-cell(label) = {
+  let color = if label == "Must have" {
+    (red.lighten(40%), red.darken(20%))
+  } else if label == "Should have" {
+    (orange.lighten(50%), orange.darken(10%))
+  } else if label == "Could have" {
+    (yellow.lighten(40%), orange.darken(30%))
+  } else {
+    (green.lighten(50%), green.darken(20%))
+  }
+  
+  rect(
+    fill: color.at(0),
+    radius: 4pt,
+    text(fill: color.at(1), weight: "medium", size: 9pt)[#label]
+  )
+}
+
+#set text(size: 10pt)
+
+
+#let kpi-style(cell) = {
+  text(size: 8pt)[#cell] 
+}
+#figure(
+
+table(
+  columns: (auto,  1fr, 1fr, 1fr, auto),
+  inset: 6pt,
+  align: (left,  horizon, horizon, horizon, center),
+  
+  // Header row
+  table-header([Nom]),
+  table-header([KPI 1]),
+  table-header([KPI 2]),
+  table-header([KPI 3]),
+  table-header([Priorité]),
+  
+  // Row 1: Interopérabilité
+  [Interopérabilité avec les stacks existantes et futures],
+  kpi-style[Nombre de dépendances requises (nombre)],
+  kpi-style[Type d'intégration: standard (url http) / propriétaire (SDK)],
+  [],
+  priority-cell("Must have"),
+  
+  // Row 2: Standardisation
+  [Standardisation de la logique d'optimisation],
+  kpi-style[Possibilité de modifier les paramètres d'image globalement (sans code source)],
+  kpi-style[Distribution adaptative du format],
+  [],
+  priority-cell("Must have"),
+  
+  // Row 3: Maîtrise du déploiement
+  [Maîtrise du déploiement et des coûts],
+  kpi-style[TCO (CHF/an): coût fixe + variable],
+  kpi-style[Niveau de gestion Antistatique (1–4)],
+  [],
+  priority-cell("Must have"),
+  
+  // Row 4: Disponibilité
+  [Disponibilité et robustesse],
+  kpi-style[SLA (%) — données fournisseur],
+  kpi-style[Présence d'un mécanisme de fallback (oui/non)],
+  [],
+  priority-cell("Must have"),
+
+    
+  // Row 5: Temps de chargement
+  [Garantie des temps de chargement optimisés],
+  kpi-style[TTFB (cache hit) — ms],
+  kpi-style[TTFB (cache miss) — ms],
+  kpi-style[Ratio de compression (%)],
+  priority-cell("Should have"),
+
+  
+  // Row 6: Faible charge d'intégration
+  [Faible charge d'intégration pour les développeurs],
+  kpi-style[Friction d'intégration (1–4)],
+  [],
+  [],
+  priority-cell("Could have"),
+  
+  // Row 7: Réversibilité
+  [Réversibilité pour les sites clients],
+  [],
+  [],
+  [],
+  priority-cell("Could have"),
+),
+  caption: [Matrice MoSCoW, 2ème version],
+  kind: table,
+) <moscow-matrix-v2>
 
 == Test de la solution Cloudinary
 == Test de la solution Cloudflare images

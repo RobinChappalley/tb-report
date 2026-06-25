@@ -4,7 +4,8 @@
 #let ai-tools = (
   ("Claude Opus 4.8", "6", "Traduction du rapport word en typst"),
   ("Qwen 3.6 plus", "5", "Retranscription du bilan intermédiaire"),
-  ("Uniscribe","5","Retranscription de l'entretien avec Christian Stucki")
+  ("Uniscribe","5","Retranscription de l'entretien avec Christian Stucki"),
+  ("Gemini 3.1 Pro", "6", "Elaboration d'un script de test")
   // ajoute tes lignes ici au fil du TB
 )
 
