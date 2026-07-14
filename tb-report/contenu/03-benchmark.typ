@@ -184,6 +184,9 @@ La partie plus théorique a été réalisée en lisant la documentation de chaqu
 
 Afin de pouvoir comparer les architectures entre elles, il est nécessaire de pouvoir comparer chaque point sur une échelle identique. Le choix de l'échelle a été fait de 1 à 10, où 10 est la meilleure note. Pour convertir les différentes valeurs de KPI en une note sur 10, chaque indicateur a été normalisé, au cas par cas selon le KPI. Cette normalisation se trouve en annexe (@annexe-normalisation-kpi).
 
+Le coût total de propriété (Total Cost of Ownership, TCO) a été calculé en prenant le projet sur lequel la solution choisie allait être implémentée. Il s'agit du site luxury-tribune.com, qui est composé d'un Wordpress Headless, consommé par un frontend en Next.js. 
+
+Pour estimer le nombre d'images contenues dans le site sans accès direct au serveur, l'analyse s'est basée sur l'API et le code source. L'API REST de WordPress recense 10 962 médias originaux. Du côté du code, le thème désactive les formats natifs du CMS pour imposer cinq recadrages sur mesure. L'ajout d'une image entraîne donc la création de six fichiers physiques (l'original et ses cinq déclinaisons), portant le total stocké sur le serveur à près de 65 772 fichiers.
 
 Pour évaluer les données obtenues de manière cohérente, une note a été attribuée à chaque service pour chaque KPI, en fonction du résultat obtenu. Cette note est comprise en 1 et 10 (10 est la meilleure note)
 

@@ -30,7 +30,7 @@ include("../annexes/test-procedure.typ"),
  kind: "annexe"
 )<annexe-test-procedure>
 
-
+#pagebreak()
 
 #let imagesizestable = csv("../annexes/taille-images.csv", delimiter:";")
 #figure(
@@ -44,14 +44,14 @@ table(
  kind: "annexe"
 )<taille-images-benchmark>
 
-
+#pagebreak()
 #figure(
   raw(read("../annexes/test-script.sh"),block:true, lang: "bash"),
  caption: "Script de test pour comparer les services d'optimistation d'images",
  supplement: [Annexe], 
  kind: "annexe",
 )<test-script-procedure>
-
+#pagebreak()
 #figure(
 include("../annexes/normalisation.typ"),
  caption: "Calculs normalisés pour comparer les services d'optimisation d'images",
