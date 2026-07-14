@@ -3,7 +3,7 @@
 // ============================================================
 
 #let doc-type = "Rapport de travail de Bachelor"
-#let title = "Standardiser la gestion des images dans les projets web d'une agence"
+#let title = "Standardisation de l’optimisation et de la livraison d’images au sein d’une agence web pour améliorer l'expérience développeur"
 #let subtitle = "Étude et conception d'une solution commune, indépendante des technologies web utilisées"
 #let author = (name: "Robin Chappalley")
 

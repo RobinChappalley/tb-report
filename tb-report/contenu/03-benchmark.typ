@@ -35,7 +35,7 @@ Ces différentes solutions amènement différents avantages, expliqués dans le 
   kind: table,
 ) <avantages-inconvenients>
 
-Les trois architectures retenues — SaaS, Edge CDN, self-hosted — ont été sélectionnées car *aucune ne présente de limitation incompatible* avec les infrastructures d'Antistatique. La comparaison porte donc sur des critères de compromis (coûts, indépendance, maintenabilité) plutôt que sur une élimination préalable.
+Les trois architectures retenues — SaaS, Edge CDN, self-hosted — ont été sélectionnées car *aucune ne présente de limitation incompatible* avec les besoins d'Antistatique. La comparaison porte donc sur des critères de compromis (coûts, indépendance, maintenabilité) plutôt que sur une élimination préalable.
 
 
 === Matrice MoSCoW et KPI initiaux
@@ -144,7 +144,7 @@ table(
 === Choix des solutions
 Une fois que les architectures à tester ont été définies, il a été nécessaire de sélectionner les services à tester pour chaque type de solution. Pour sélectionner un service, plusieurs critères ont été pris en compte, notamment :
 1. L'existence d'un plan gratuit, pour pouvoir tester le service sans engager de frais
-2. Le fonctionnement du service, avec des paramètres dans l'URL pour répondre au critère d'agnosticité avancé dans la pré-étude
+2. Le fonctionnement du service, avec des paramètres dans l'URL pour répondre au prérequis d'agnosticité avancé dans la pré-étude
 3. La maturité de la documentation et l'adoption par la communauté (DX) pour une mise en place rapide respectant le temps prévu par le planning (3 semaines)
 
 Plutôt que de comparer exhaustivement tous les acteurs d'une même catégorie (comme Imgix, Uploadcare Image CDN et Cloudinary pour le SaaS), un seul service représentatif répondant à ces 3 critères a été sélectionné pour chaque architecture. *Cloudinary* a été sélectionné pour le SaaS, *Cloudflare Images* pour l'edge et *Imgproxy* pour le self-host. Ce choix est justfié par leur position dominante sur le marché : Cloudinary est l'un des leaders de ce marché @datainteloImageOptimizationSoftware, tandis que Cloudflare absorbe plus de la moitié (58%) des des requêtes HTTP à travers le monde. @figure-top-cdns-html. 
@@ -171,7 +171,7 @@ La partie technique a été réalisée en utilisant un script curl (@test-script
 
 Concernant les formats testés, le choix a été fait de laisser les services dans leur mode "par défaut" (en précisant par exemple "format=auto") afin de voir quel format serait choisi pour chaque image. Le but était de valider le fait que les services choisissent le format le plus approprié pour chaque image. 
 
-La partie plus théorique a été réalisée en lisant la documentation de chaque service et en analysant comment les services fonctionnent. Le but était de voir si la documentation était claire et si l'intégration était facile à réaliser. 
+La partie plus théorique a été réalisée en lisant la documentation de chaque service et en analysant comment les services fonctionnent. Le but était de voir si la documentation était claire et si l'intégration était facile à réaliser. (WTF qu veut dire cett phrase?)
 
 
 
@@ -189,107 +189,67 @@ La partie plus théorique a été réalisée en lisant la documentation de chaqu
 
 Lors de cette analyse, il est apparu que les KPI définis plus tôt n'étaient pas toujours pertinents pour évaluer la facilité d'intégration ou comparer les services entre eux. Le cas où toutes les solutions obtiennent le même résultat à un KPI est aussi apparu, ce qui le rend inutile pour décider du choix d'une solution. La première version des KPI avait le but de comparer des *services*, mais le but de ce benchmark est de comparer des *architectures* et d'identifier la plus adaptée pour Antistatique.
 
-Le modèle besoin/KPI s'est donc révélé inadapté : une partie des besoins relève de propriétés d'architecture non quantifiables, qu'aucun indicateur chiffré ne peut traduire fidèlement. L'évaluation distingue donc deux familles. D'une part, les indicateurs mesurables (TTFB, ratio de compression, coût annuel). D'autre part, les critères qualitatifs d'architecture (niveau de gestion, couplage à la stack, réversibilité). Bien que mesurable, le coût n'est pas fusionné avec les autres indicateurs dans un score unique : pondérer une grandeur monétaire face à un niveau de contrôle supposerait un taux de conversion entre les deux, qui ne pourrait être que posé arbitrairement.
+Le modèle besoin/KPI s'est donc révélé inadapté tel quel : une partie des besoins relève de propriétés d'architecture non quantifiables, qu'aucun indicateur chiffré ne peut traduire fidèlement. Certains besoins sont également indispensables et élimineraient une solution d'office s'ils n'étaient pas respectés. La modèle a donc été révisé comme suit (@criteres-evaluation) : asdf
 
+/* L'évaluation distingue donc 
 Il a donc été décidé de redéfinir des KPIs, plus pertinents et plus adaptés à la comparaison des architectures (@moscow-matrix-v2) et d'utiliser les 3 services precédemment cités pour pouvoir comparer.
+ */
 
 
-#let table-header(text) = {
-  strong(text)
-}
-
-#let priority-cell(label) = {
-  let color = if label == "Must have" {
-    (red.lighten(40%), red.darken(20%))
-  } else if label == "Should have" {
-    (orange.lighten(50%), orange.darken(10%))
-  } else if label == "Could have" {
-    (yellow.lighten(40%), orange.darken(30%))
-  } else {
-    (green.lighten(50%), green.darken(20%))
-  }
-  
-  rect(
-    fill: color.at(0),
-    radius: 4pt,
-    text(fill: color.at(1), weight: "medium", size: 9pt)[#label]
-  )
-}
-
-#set text(size: 10pt)
-
-
-#let kpi-style(cell) = {
-  text(size: 8pt)[#cell] 
-}
 #figure(
+  table(
+    columns: (auto, auto, 1fr, 1fr, 1fr),
+    inset: 6pt,
+    align: (left, center, center, center, center),
 
-table(
-  columns: (auto,  1fr, 1fr, 1fr, auto),
-  inset: 6pt,
-  align: (left,  horizon, horizon, horizon, center),
-  
-  // Header row
-  table-header([Nom]),
-  table-header([KPI 1]),
-  table-header([KPI 2]),
-  table-header([KPI 3]),
-  table-header([Priorité]),
-  
-  // Row 1: Interopérabilité
-  [Interopérabilité avec les stacks existantes et futures],
-  kpi-style[Nombre de dépendances requises (nombre)],
-  kpi-style[Type d'intégration: standard (url http) / propriétaire (SDK)],
-  [],
-  priority-cell("Must have"),
-  
-  // Row 2: Standardisation
-  [Standardisation de la logique d'optimisation],
-  kpi-style[Possibilité de modifier les paramètres d'image globalement (sans code source)],
-  kpi-style[Distribution adaptative du format],
-  [],
-  priority-cell("Must have"),
-  
-  // Row 3: Maîtrise du déploiement
-  [Maîtrise du déploiement et des coûts],
-  kpi-style[TCO (CHF/an): coût fixe + variable],
-  kpi-style[Niveau de gestion Antistatique (1–4)],
-  [],
-  priority-cell("Must have"),
-  
-  // Row 4: Disponibilité
-  [Disponibilité et robustesse],
-  kpi-style[SLA (%) — données fournisseur],
-  kpi-style[Présence d'un mécanisme de fallback (oui/non)],
-  [],
-  priority-cell("Must have"),
+    // Header row
+    table-header([Nom]),
+    table-header([Catégorie]),
+    table-header([KPI 1]),
+    table-header([KPI 2]),
+    table-header([KPI 3]),
 
-    
-  // Row 5: Temps de chargement
-  [Garantie des temps de chargement optimisés],
-  kpi-style[TTFB (cache hit) — ms],
-  kpi-style[TTFB (cache miss) — ms],
-  kpi-style[Ratio de compression (%)],
-  priority-cell("Should have"),
+    // Row 1: Périmètre
+    [Centralisation de la logique d'optimisation],
+    [Périmètre],
+    [], [], [],
 
-  
-  // Row 6: Faible charge d'intégration
-  [Faible charge d'intégration pour les développeurs],
-  kpi-style[Friction d'intégration (1–4)],
-  [],
-  [],
-  priority-cell("Could have"),
-  
-  // Row 7: Réversibilité
-  [Réversibilité pour les sites clients],
-  [],
-  [],
-  [],
-  priority-cell("Could have"),
-),
-  caption: [Matrice MoSCoW, 2ème version],
+    // Row 2: Prérequis
+    [Agnosticité (indépendance vis-à-vis de la stack)],
+    [Prérequis],
+    [], [], [],
+
+    // Row 3: Critère 1
+    [Performance],
+    [Critère de choix],
+    [], [], [],
+
+    // Row 4: Critère 2
+    [Maîtrise du déploiement et des coûts],
+    [Critère de choix],
+    [], [], [],
+
+    // Row 5: Critère 3
+    [Charge d'intégration / DX],
+    [Critère de choix],
+    [], [], [],
+
+    // Row 6: Contrainte / Implémentation
+    [Fiabilité, robustesse (Fallback)],
+    [Contrainte d'implémentation],
+    [], [], [],
+    [Réversibilité (Fallback)],
+    [Contrainte d'implémentation],
+    [], [], [],
+  ),
+  caption: [Répartition des besoins d'Antistatique],
   kind: table,
-) <moscow-matrix-v2>
+) <criteres-evaluation>
+Concernant le besoin de centraliser la logique, il représente le but originel de ce travail, à savoir se séparer d'un modèle ou chaque projet réimplémente ses règles d'optimisation d'images. Il définit donc le cadre dans lequel les différentes architectures sont comparées, en étant le socle commun à chaque architecture. 
+
+Le besoin d'agnosticité est un prérequis indispensable pour qu'une architecture soit évaluable dans ce benchmark. Il n'est pas envisageable pour Antistatique de s'enfermer dans un écosystème propriétaire, pour des raisons de flexibilité et d'indépendance. Il est donc nécessaire que l'architecture choisie soit agnostique vis-à-vis de la stack utilisée par les clients d'Antistatique.
+
+
 == Décision finale
 
 
