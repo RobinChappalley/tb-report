@@ -142,7 +142,7 @@ table(
 ) <moscow-matrix-v1>
 
 === Choix des solutions
-Une fois que les architectures à tester ont été définies, il a été nécessaire de sélectionner les services à tester pour chaque type de solution. Pour sélectionner un service, plusieurs critères ont été pris en compte, notamment :
+Une fois que les architectures à tester ont été définies, il a été nécessaire de sélectionner les services à tester pour chaque type de solution. Pour sélectionner un service, 3 critères ont été pris en compte :
 1. L'existence d'un plan gratuit, pour pouvoir tester le service sans engager de frais
 2. Le fonctionnement du service, avec des paramètres dans l'URL pour répondre au prérequis d'agnosticité avancé dans la pré-étude
 3. La maturité de la documentation et l'adoption par la communauté (DX) pour une mise en place rapide respectant le temps prévu par le planning (3 semaines)
@@ -163,15 +163,30 @@ Concernant le choix d'imgproxy comme solution auto-hébergée, il est expliqué 
 
 === Procédure de test
 
-La procédure de test a été divisée en 2 parties: Une partie technique, pour tester les performances des services et une seconde partie pour tester la facilité d'intégration et la documentation. Le but était de créer une procédure de test reproductible. La marche à suivre se trouve en annexe (@annexe-test-procedure). 
+La procédure de test a été divisée en 2 parties: Une partie technique, pour tester les performances des services et une seconde partie pour tester le critère "charge d'intégration" et "maîtrise du déploiement et des coûts". Le but était de créer une procédure de test reproductible. La marche à suivre se trouve en annexe (@annexe-test-procedure). 
 
 Pour avoir des images à tester, une instance de WordPress a été déployée sur l'hébergement mutualisé d'infomaniak. Il s'agissait surtout de profiter d'un serveur web ("inclus" dans une instance de WordPress) pour servir les images de test. Ainsi, toutes les extensions de base Wordpress ont été déasctivées. Les images ont été ajoutées en FTP pour éviter que Wordpress n'applique son redimensionnement de base @Big_image_size_thresholdHookDeveloperWordPressorg2020 .  12 images ont été utilsées pour les tests. Le détail des poids et des formats se trouve en annexe (@taille-images-benchmark), mais le but était d'avoir un échantillon représentatif des contenus téléchargés par les clients d'Antistatique
 
-La partie technique a été réalisée en utilisant un script curl (@test-script-procedure) qui envoie des requêtes HTTP aux différentes URL à tester. Le script mesure le temps de réponse et la taille de l'image retournée. Il a été lancé 4 fois, depuis 4 endroits différents : un ordinateur portable à Lausanne, un petit serveur d'infomaniak à Genève, un petit serveur Digital Ocean à New York et un petit serveur Digital Ocean à Singapour. Le but en lançant le script depuis différents endroits était de mesurer l'impact de la localisation géographique sur les performances des services. Les résultats ont été enregistrés dans un fichier CSV pour être analysés par la suite. Pour avoir des valeurs représentatives, le script est lancé 11 fois pour chaque image: la première exécution sert à mesurer l'efficacité du service de redimensionnement et d'optimisation, tandis que les 10 exécutions suivantes servent à mesurer la performance du service de cache. Le but est de voir si le service est capable de mettre en cache les images redimensionnées et optimisées pour les servir plus rapidement lors des requêtes suivantes.
+La partie technique a été réalisée en utilisant un script bash et l'outil curl (@test-script-procedure) qui envoie des requêtes HTTP aux différentes URL à tester. Le script mesure le temps de réponse et la taille de l'image retournée. Il a été lancé 4 fois, depuis 4 endroits différents : un ordinateur portable à Lausanne, un petit serveur d'infomaniak à Genève, un petit serveur Digital Ocean à New York et un petit serveur Digital Ocean à Singapour. Le but en lançant le script depuis différents endroits était de mesurer l'impact de la localisation géographique sur les performances des services. Les résultats ont été enregistrés dans un fichier CSV pour être analysés par la suite. Pour avoir des valeurs représentatives, le script est lancé 11 fois pour chaque image: la première exécution sert à mesurer l'efficacité du service de redimensionnement et d'optimisation, tandis que les 10 exécutions suivantes servent à mesurer la performance du service de cache. Le but est de voir si le service est capable de mettre en cache les images redimensionnées et optimisées pour les servir plus rapidement lors des requêtes suivantes.
 
 Concernant les formats testés, le choix a été fait de laisser les services dans leur mode "par défaut" (en précisant par exemple "format=auto") afin de voir quel format serait choisi pour chaque image. Le but était de valider le fait que les services choisissent le format le plus approprié pour chaque image. 
 
+Le choix de l'outil curl pour réaliser ce test de performance se base sur deux raisons principales; premièrement, il s'agit d'un outil très répandu (>20 miliards d'installations @UsersCurlEverything) , très probablement installé sur les machines de test et peu gourmand en ressources. Deuxièmement, il permet de mesurer le temps de réponse d'une requête HTTP et la taille de la réponse @WriteOutEverything, ce qui est exactement ce qui est nécessaire pour ce benchmark.
+
+
+En ce qui concerne les critères "charge d'intégration/DX" et "maîtrise du déploiement et des coûts",..
+
+
 La partie plus théorique a été réalisée en lisant la documentation de chaque service et en analysant comment les services fonctionnent. Le but était de voir si la documentation était claire et si l'intégration était facile à réaliser. (WTF qu veut dire cett phrase?)
+
+
+=== Méthode de calcul
+
+Afin de pouvoir comparer les architectures entre elles, il est nécessaire de pouvoir comparer chaque point sur une échelle identique. Le choix de l'échelle a été fait de 1 à 10, où 10 est la meilleure note. Pour convertir les différentes valeurs de KPI en une note sur 10, chaque indicateur a été normalisé, au cas par cas selon le KPI. Cette normalisation se trouve en annexe (@annexe-normalisation-kpi).
+
+
+Pour évaluer les données obtenues de manière cohérente, une note a été attribuée à chaque service pour chaque KPI, en fonction du résultat obtenu. Cette note est comprise en 1 et 10 (10 est la meilleure note)
+
 
 
 
@@ -187,9 +202,9 @@ La partie plus théorique a été réalisée en lisant la documentation de chaqu
 
 === Révision du modèle
 
-Lors de cette analyse, il est apparu que les KPI définis plus tôt n'étaient pas toujours pertinents pour évaluer la facilité d'intégration ou comparer les services entre eux. Le cas où toutes les solutions obtiennent le même résultat à un KPI est aussi apparu, ce qui le rend inutile pour décider du choix d'une solution. La première version des KPI avait le but de comparer des *services*, mais le but de ce benchmark est de comparer des *architectures* et d'identifier la plus adaptée pour Antistatique.
+Lors de cette analyse, il est apparu que les KPI définis plus tôt n'étaient pas toujours pertinents pour évaluer l'agnosticité ou comparer les services entre eux. Le cas où toutes les solutions obtiennent le même résultat à un KPI est aussi apparu, ce qui le rend inutile pour décider du choix d'une solution. La première version des KPI avait le but de comparer des *services*, mais le but de ce benchmark est de comparer des *architectures* et d'identifier la plus adaptée pour Antistatique.
 
-Le modèle besoin/KPI s'est donc révélé inadapté tel quel : une partie des besoins relève de propriétés d'architecture non quantifiables, qu'aucun indicateur chiffré ne peut traduire fidèlement. Certains besoins sont également indispensables et élimineraient une solution d'office s'ils n'étaient pas respectés. La modèle a donc été révisé comme suit (@criteres-evaluation) : asdf
+Le modèle besoin/KPI associé s'est donc révélé inadapté tel quel : une partie des besoins relève de propriétés d'architecture non quantifiables, qu'aucun indicateur chiffré ne peut traduire fidèlement. Certains besoins sont également indispensables et élimineraient une solution d'office s'ils n'étaient pas respectés. La modèle a donc été révisé comme suit (@criteres-evaluation)
 
 /* L'évaluation distingue donc 
 Il a donc été décidé de redéfinir des KPIs, plus pertinents et plus adaptés à la comparaison des architectures (@moscow-matrix-v2) et d'utiliser les 3 services precédemment cités pour pouvoir comparer.
@@ -198,9 +213,9 @@ Il a donc été décidé de redéfinir des KPIs, plus pertinents et plus adapté
 
 #figure(
   table(
-    columns: (auto, auto, 1fr, 1fr, 1fr),
+    columns: (1fr, 1fr, 1fr, 1fr, 1fr),
     inset: 6pt,
-    align: (left, center, center, center, center),
+    align: (center+ horizon),
 
     // Header row
     table-header([Nom]),
@@ -212,42 +227,49 @@ Il a donc été décidé de redéfinir des KPIs, plus pertinents et plus adapté
     // Row 1: Périmètre
     [Centralisation de la logique d'optimisation],
     [Périmètre],
-    [], [], [],
+    table.cell(colspan: 3)[N/A],
 
     // Row 2: Prérequis
     [Agnosticité (indépendance vis-à-vis de la stack)],
     [Prérequis],
-    [], [], [],
+    table.cell(colspan: 3)[N/A],
 
     // Row 3: Critère 1
     [Performance],
     [Critère de choix],
-    [], [], [],
+    [*TTFB (cas du cache MISS)*[ms]], [*TTFB (cas du cache HIT)*[ms]], [*Ratio de compression* [%]],
 
     // Row 4: Critère 2
     [Maîtrise du déploiement et des coûts],
     [Critère de choix],
-    [], [], [],
+    [*TCO (coût total de propriété)*[CHF/an]], [*Niveau de gestion nécessaire de la part d’Antistatique* [1-4]], [],
 
     // Row 5: Critère 3
     [Charge d'intégration / DX],
     [Critère de choix],
-    [], [], [],
+    [*Friction d’intégration* [1-4]], [*Qualité de la documentation et de l'expérience développeur* [1-6]], [],
 
     // Row 6: Contrainte / Implémentation
     [Fiabilité, robustesse (Fallback)],
     [Contrainte d'implémentation],
-    [], [], [],
+ table.cell(colspan: 3)[N/A],
+
     [Réversibilité (Fallback)],
     [Contrainte d'implémentation],
-    [], [], [],
+ table.cell(colspan: 3)[N/A],
+
   ),
   caption: [Répartition des besoins d'Antistatique],
   kind: table,
 ) <criteres-evaluation>
+
 Concernant le besoin de centraliser la logique, il représente le but originel de ce travail, à savoir se séparer d'un modèle ou chaque projet réimplémente ses règles d'optimisation d'images. Il définit donc le cadre dans lequel les différentes architectures sont comparées, en étant le socle commun à chaque architecture. 
 
 Le besoin d'agnosticité est un prérequis indispensable pour qu'une architecture soit évaluable dans ce benchmark. Il n'est pas envisageable pour Antistatique de s'enfermer dans un écosystème propriétaire, pour des raisons de flexibilité et d'indépendance. Il est donc nécessaire que l'architecture choisie soit agnostique vis-à-vis de la stack utilisée par les clients d'Antistatique.
+
+Les besoins de performance, de maîtrise du déploiement et des coûts et de la charge d'intégration, sont eux des critères mesurables pour chaque type de solution. Ils permettent de comparer les architectures entre elles et de choisir la plus adaptée pour l'agence.
+
+Enfin, il a été décidé que le point sur les besoins de fiabilité et de réversibilité seraient traités grâce à un fallback vers l'image originale. Ces points ne sont donc pas des critères de choix (aucune architecure n'empêche ce fonctionnement) mais des contraintes d'implémentation qui devront être respectées lors de l'intégration.
 
 
 == Décision finale

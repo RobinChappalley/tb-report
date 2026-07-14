@@ -52,6 +52,12 @@ table(
  kind: "annexe",
 )<test-script-procedure>
 
+#figure(
+include("../annexes/normalisation.typ"),
+ caption: "Calculs normalisés pour comparer les services d'optimisation d'images",
+ supplement: [Annexe], 
+ kind: "annexe"
+)<annexe-normalisation-kpi>
 
 
 
