@@ -7,7 +7,9 @@
   ("Uniscribe","5","Retranscription de l'entretien avec Christian Stucki"),
   ("Gemini 3.1 Pro", "6", "Elaboration d'un script de test"),
   ("Claude Opus 4.8", "6", "Glissement du modèle besoin/KPI vers le modèle filtre/critères de décision pondérés"),
-  ("Gemini 3.5 Flash", "1","Définition du titre" )
+  ("Gemini 3.5 Flash", "1","Définition du titre" ),
+  ("Gemini 3.1 Pro", "2", "Découpage de l'intégration à un projet existant"),
+
 
   // ajoute tes lignes ici au fil du TB
 )

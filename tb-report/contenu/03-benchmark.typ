@@ -177,7 +177,7 @@ Le choix de l'outil curl pour réaliser ce test de performance se base sur deux 
 En ce qui concerne les critères "charge d'intégration/DX" et "maîtrise du déploiement et des coûts",..
 
 
-La partie plus théorique a été réalisée en lisant la documentation de chaque service et en analysant comment les services fonctionnent. Le but était de voir si la documentation était claire et si l'intégration était facile à réaliser. (WTF qu veut dire cett phrase?)
+La partie plus théorique a été réalisée en lisant la documentation de chaque service et en analysant comment les services fonctionnent. Le but était de voir si la documentation était claire et si l'intégration était facile à réaliser. (WTF qu veut dire cett phr'ase?)
 
 
 === Méthode de calcul
@@ -186,7 +186,7 @@ Afin de pouvoir comparer les architectures entre elles, il est nécessaire de po
 
 Le coût total de propriété (Total Cost of Ownership, TCO) a été calculé en prenant le projet sur lequel la solution choisie allait être implémentée. Il s'agit du site luxury-tribune.com, qui est composé d'un Wordpress Headless, consommé par un frontend en Next.js. 
 
-Pour estimer le nombre d'images contenues dans le site sans accès direct au serveur, l'analyse s'est basée sur l'API et le code source. L'API REST de WordPress recense 10 962 médias originaux. Du côté du code, le thème désactive les formats natifs du CMS pour imposer cinq recadrages sur mesure. L'ajout d'une image entraîne donc la création de six fichiers physiques (l'original et ses cinq déclinaisons), portant le total stocké sur le serveur à près de 65 772 fichiers.
+Pour estimer le nombre d'images contenues dans le site sans accès direct au serveur, l'analyse s'est basée sur l'API et le code source. L'API REST de WordPress recense 10 962 médias originaux. Du côté du code, le thème désactive les formats natifs du CMS pour imposer cinq recadrages sur mesure. L'ajout d'une image entraîne donc la création de six fichiers physiques (l'original et ses cinq déclinaisons), et porte le total stocké sur le serveur à près de 65 772 fichiers.
 
 Pour évaluer les données obtenues de manière cohérente, une note a été attribuée à chaque service pour chaque KPI, en fonction du résultat obtenu. Cette note est comprise en 1 et 10 (10 est la meilleure note)
 
@@ -271,6 +271,56 @@ Concernant le besoin de centraliser la logique, il représente le but originel d
 Le besoin d'agnosticité est un prérequis indispensable pour qu'une architecture soit évaluable dans ce benchmark. Il n'est pas envisageable pour Antistatique de s'enfermer dans un écosystème propriétaire, pour des raisons de flexibilité et d'indépendance. Il est donc nécessaire que l'architecture choisie soit agnostique vis-à-vis de la stack utilisée par les clients d'Antistatique.
 
 Les besoins de performance, de maîtrise du déploiement et des coûts et de la charge d'intégration, sont eux des critères mesurables pour chaque type de solution. Ils permettent de comparer les architectures entre elles et de choisir la plus adaptée pour l'agence.
+
+Les différents niveaux des critères "Niveau de gestion nécessaire de la part d’Antistatique","Friction d’intégration" et "Qualité de la documentation et de l'expérience développeur" sont détaillés dans le tableau ci-dessous. (@details-criteres-evaluation)
+
+#figure(
+  table(
+
+    columns: (1.5fr, auto, 3.5fr),
+    align: (col, row) => (
+      if col == 1 { center + horizon }
+      else { left + horizon }
+    ),
+    stroke: 0.5pt + luma(150),
+    fill: (col, row) => if row == 0 { luma(240) } else { none },
+    
+    // En-tête du tableau
+    [*KPI*], [*Score*], [*Correspondance / Critère d'évaluation*],
+    
+    // 1. Niveau de gestion
+    table.cell(rowspan: 4)[
+      *Niveau de gestion nécessaire* \
+      (de la part d'Antistatique)
+    ],
+    [1], [Entièrement géré (SaaS pur, aucune action technique requise post-déploiement).],
+    [2], [Maintenance applicative légère (mises à jour de dépendances NPM/Composer pour les connecteurs).],
+    [3], [Maintenance d'infrastructure Serverless/Edge (mise à jour des workers, gestion des limites de requêtes).],
+    [4], [Maintenance complète (OS, Docker, failles de sécurité, monitoring des ressources CPU/RAM).],
+    
+    // 2. Friction d'intégration
+    table.cell(rowspan: 4)[
+      *Friction d'intégration*
+    ],
+    [1], [Standards web purs (URL rewriting, attributs HTML natifs). Zéro dépendance, réversibilité totale.],
+    [2], [Dépendance logicielle légère (variable d'environnement, helper générique, petit SDK agnostique).],
+    [3], [Dépendance logicielle forte (SDK lourd, couplage au framework, vendor lock-in potentiel au niveau du code).],
+    [4], [Couplage d'infrastructure requis (CNAME, reverse proxy dédié, configuration Edge complexe qui sort du code).],
+    
+    // 3. Qualité de la doc / DX
+    table.cell(rowspan: 5)[
+      *Qualité de la documentation et de l'expérience développeur (DX)*
+    ],
+    [1--2], [Documentation absente ou de très mauvaise qualité.],
+    [3], [Documentation lacunaire, exemples rares, peu de support.],
+    [4], [Documentation acceptable, exemples partiels, support inégal.],
+    [5], [Documentation complète et claire, quelques exemples, communauté présente.],
+    [6], [Documentation exhaustive, exemples de code, tutoriels étape par étape, support actif.]
+
+  ),
+  caption: [Détails des échelles de notation pour les critères de choix],
+  kind: table,
+) <details-criteres-evaluation>
 
 Enfin, il a été décidé que le point sur les besoins de fiabilité et de réversibilité seraient traités grâce à un fallback vers l'image originale. Ces points ne sont donc pas des critères de choix (aucune architecure n'empêche ce fonctionnement) mais des contraintes d'implémentation qui devront être respectées lors de l'intégration.
 
