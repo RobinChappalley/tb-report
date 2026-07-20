@@ -1,0 +1,99 @@
+.featured-content {
+  figure {
+    p {
+      top: 3rem;
+      width: 9rem;
+      height: 9rem;
+      transform: translateX(-50%);
+
+      span {
+        span {
+          @apply block text-21;
+        }
+        @apply font-soehneKraftig text-12 uppercase leading-17 tracking-wide;
+      }
+
+      @apply absolute left-0 bg-white flex justify-center items-center rounded-full text-center z-10;
+    }
+
+    .img-container img {
+      max-height: var(--image-cover) !important;
+      @apply object-cover;
+    }
+    @apply relative;
+
+    @media only screen and (max-width: theme('screens.xl')) {
+      p {
+        top: 0;
+        left: 15px;
+        transform: translateY(-50%);
+      }
+    }
+
+    @media only screen and (max-width: theme('screens.md')) {
+      .img-container img {
+        max-height: var(--image-mobile-cover) !important;
+        max-height: var(--image-cover) !important;
+      }
+
+      p {
+        @apply left-auto top-auto bottom-0 z-10;
+
+        right: 15px;
+        width: 6rem;
+        height: 6rem;
+        transform: translateY(50%);
+
+        span,
+        span span {
+          @apply font-soehneKraftig text-12 leading-16;
+        }
+      }
+    }
+
+    @media only screen and (max-width: theme('screens.sm')) {
+      .img-container img {
+        height: var(--image-mobile-cover) !important;
+      }
+    }
+  }
+
+  .featured-post {
+    @apply md:w-1/2 pt-50 relative bg-sand-100 pl-15 xl:pl-0;
+
+    top: -120px;
+    margin-bottom: -120px;
+
+    > div:first-of-type {
+      @apply pr-50;
+    }
+
+    @media only screen and (max-width: theme('screens.lg')) {
+      top: 0;
+      margin-bottom: 0;
+
+      > div:first-of-type {
+        @apply pr-10;
+      }
+    }
+
+    @media only screen and (max-width: theme('screens.md')) {
+      @apply px-15 mb-60;
+
+      > div:first-of-type {
+        @apply pr-0;
+      }
+    }
+  }
+
+  .last-tribune {
+    @apply lg:mr-10 md:w-1/2 xl:mr-0;
+
+    margin-top: 10.6rem;
+    margin-bottom: 6rem;
+
+    @media only screen and (max-width: theme('screens.md')) {
+      margin-bottom: 6rem;
+    }
+  }
+}

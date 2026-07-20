@@ -1,6 +1,6 @@
 <?php
 
-$outputFile = $argv[1] ?? __DIR__ . '/images-urls';
+$outputFile = $argv[1] ?? __DIR__ . '/prdd-urls';
 
 $numberOfJpg = 8;
 $numberOfpng = 4;
@@ -14,17 +14,11 @@ $salt = pack("H*", $saltHex);
 
 $urls = [];
 
-for ($i = 1; $i <= $numberOfImages; $i++) {
-    if ($i <= $numberOfJpg) {
-        $format = "jpg";
-    } else {
-        $format = "png";
-    }
 
+$parameters = "/h:400/w:400";
     $timestamp = time();
     // L'image d'origine (Wikipedia)
-    $imageUrl = "https://image.chapi.ch/wp-content/uploads/raw/v-$timestamp/image-test-$i.$format";
-
+    $imageUrl = "https://content-staging.luxurytribune.com/app/uploads/2026/04/Baccarat-Crystal-Crypt-©-Emanuelle-Luciani-©-Southway-Studio-1.jpg";
     // On encode l'URL de l'image
     $encodedUrl = rtrim(strtr(base64_encode($imageUrl), '+/', '-_'), '=');
 
@@ -34,8 +28,8 @@ for ($i = 1; $i <= $numberOfImages; $i++) {
     // On calcule la signature
     $signature = rtrim(strtr(base64_encode(hash_hmac('sha256', $salt . $path, $key, true)), '+/', '-_'), '=');
 
-    $urls[] = "https://resize.chapi.ch/" . $signature . $path;
-}
+    $urls[] = "https://resize.chapi.ch/" . $signature . $parameters . $path;
+
 
 file_put_contents($outputFile, implode(PHP_EOL, $urls) . PHP_EOL);
 

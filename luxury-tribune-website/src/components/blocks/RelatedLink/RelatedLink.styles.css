@@ -1,0 +1,19 @@
+.related-link {
+  @apply mb-30 md:mb-50;
+
+  margin-top: 6.6rem;
+
+  @media only screen and (max-width: theme('screens.md')) {
+    margin-top: 4.6rem;
+  }
+
+  p {
+    @apply uppercase text-orange text-13 leading-17 mb-5;
+
+    letter-spacing: 0.07em;
+  }
+
+  a {
+    @apply text-18 sm:text-21 leading-31 tracking-normal hover:border-b hover:border-solid hover:border-brown-800;
+  }
+}

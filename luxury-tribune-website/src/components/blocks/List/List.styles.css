@@ -1,0 +1,33 @@
+.list {
+  & li + li {
+    @apply mt-15 md:mt-20;
+  }
+
+  ul {
+    @apply pl-40;
+  }
+
+  .is-style-check-mark {
+    @apply list-none pl-0;
+
+    li:before {
+      @apply inline-block absolute left-0;
+
+      content: '';
+      top: 10px;
+      width: 20px;
+      height: 15px;
+      background-image: url(/check-mark-red.svg);
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    li {
+      @apply font-soehneLeicht relative pl-40;
+    }
+
+    & strong {
+      @apply font-medium font-soehneKraftig;
+    }
+  }
+}

@@ -1,0 +1,38 @@
+.quote {
+  &-align-left {
+    @apply float-left;
+
+    width: 39rem;
+    margin: 2rem 3rem 4rem -17rem;
+
+    @media only screen and (max-width: theme('screens.lg')) {
+      @apply w-full float-none mx-0 my-30;
+
+      padding-bottom: 0.1rem;
+    }
+  }
+
+  &-align-right {
+    @apply float-right;
+
+    width: 39rem;
+    margin: 2rem -17rem 4rem 3rem;
+
+    @media only screen and (max-width: theme('screens.lg')) {
+      @apply w-full float-none mx-0 my-30;
+
+      padding-bottom: 0.1rem;
+    }
+  }
+
+  &-multiple-borders {
+    box-shadow:
+      0 1px 0 0 #dcd5cd,
+      0 3px 0 0 #fbf4eb,
+      0 4px 0 0 #dcd5cd,
+      0 6px 0 0 #fbf4eb,
+      0 7px 0 0 #dcd5cd,
+      0 9px 0 0 #fbf4eb,
+      0 10px 0 0 #dcd5cd;
+  }
+}

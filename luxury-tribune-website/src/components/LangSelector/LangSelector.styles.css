@@ -1,0 +1,10 @@
+.lang-selector {
+  li > span {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  li + li {
+    @apply ml-5;
+  }
+}

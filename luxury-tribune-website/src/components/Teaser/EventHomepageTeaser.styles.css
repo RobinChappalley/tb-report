@@ -1,0 +1,19 @@
+.event-teasers {
+  > div:first-of-type {
+    border-top-width: 1px;
+  }
+}
+
+.live-btn {
+  animation: blinking 1.5s steps(3, start) infinite;
+
+  > span {
+    padding: 6px 11px;
+  }
+}
+
+@keyframes blinking {
+  to {
+    visibility: hidden;
+  }
+}

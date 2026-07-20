@@ -1,0 +1,36 @@
+.currencies {
+  border-radius: 49px;
+
+  > button {
+    border-radius: 39px;
+  }
+}
+
+.subscription-card {
+  width: calc(33% - 30px);
+
+  &:not(:last-of-type) {
+    margin-right: 30px;
+  }
+
+  @media only screen and (max-width: theme('screens.lg')) {
+    width: calc(33% - 15px);
+
+    &:not(:last-of-type) {
+      margin-right: 15px;
+    }
+  }
+
+  @media only screen and (max-width: theme('screens.md')) {
+    width: 100%;
+
+    &:not(:last-of-type) {
+      margin-right: 0;
+      margin-bottom: 30px;
+    }
+  }
+
+  .subscription-currency-type {
+    margin-top: 6px;
+  }
+}

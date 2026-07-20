@@ -293,19 +293,20 @@ Les différents niveaux des critères "Niveau de gestion nécessaire de la part 
       *Niveau de gestion nécessaire* \
       (de la part d'Antistatique)
     ],
-    [1], [Entièrement géré (SaaS pur, aucune action technique requise post-déploiement).],
-    [2], [Maintenance applicative légère (mises à jour de dépendances NPM/Composer pour les connecteurs).],
-    [3], [Maintenance d'infrastructure Serverless/Edge (mise à jour des workers, gestion des limites de requêtes).],
-    [4], [Maintenance complète (OS, Docker, failles de sécurité, monitoring des ressources CPU/RAM).],
+    [1], [Maintenance complète (OS, Docker, failles de sécurité, monitoring des ressources CPU/RAM).],
+    [2], [Maintenance d'infrastructure Serverless/Edge (mise à jour des workers, gestion des limites de requêtes).],
+    [3], [Maintenance applicative légère (mises à jour de dépendances NPM/Composer pour les connecteurs).],
+    [4], [Entièrement géré (SaaS pur, aucune action technique requise post-déploiement).],
     
     // 2. Friction d'intégration
     table.cell(rowspan: 4)[
       *Friction d'intégration*
     ],
-    [1], [Standards web purs (URL rewriting, attributs HTML natifs). Zéro dépendance, réversibilité totale.],
-    [2], [Dépendance logicielle légère (variable d'environnement, helper générique, petit SDK agnostique).],
-    [3], [Dépendance logicielle forte (SDK lourd, couplage au framework, vendor lock-in potentiel au niveau du code).],
-    [4], [Couplage d'infrastructure requis (CNAME, reverse proxy dédié, configuration Edge complexe qui sort du code).],
+    [1], [Couplage d'infrastructure requis (CNAME, reverse proxy dédié, configuration Edge complexe qui sort du code).],
+    [2], [Dépendance logicielle forte (SDK lourd, couplage au framework, vendor lock-in potentiel au niveau du code).],
+    [3], [Dépendance logicielle légère (variable d'environnement, helper générique, petit SDK agnostique).],
+    [4], [Standards web purs (URL rewriting, attributs HTML natifs). Zéro dépendance, réversibilité totale.],
+
     
     // 3. Qualité de la doc / DX
     table.cell(rowspan: 5)[

@@ -1,0 +1,200 @@
+.digital-product-container {
+  @media only screen and (min-width: theme('screens.md')) {
+    margin: auto;
+    max-width: 1230px;
+  }
+}
+
+.digital-product {
+  background-color: #fff;
+  padding: 15px;
+  position: relative;
+  margin: 70px 0 60px 0;
+
+  @media only screen and (min-width: 500px) {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  @media only screen and (min-width: theme('screens.md')) {
+    margin: 60px 50px;
+    max-width: 1230px;
+  }
+  @media only screen and (min-width: theme('screens.lg')) {
+    padding: 60px;
+  }
+}
+
+.digital-product__content {
+  @media only screen and (min-width: 500px) {
+    flex: 2;
+  }
+}
+.digital-product__text-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.digital-product__sur-title {
+  color: #F24237;
+  font-family: 'Soehne Kraftig';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0.91px;
+  text-transform: uppercase;
+
+  margin: 0;
+
+  @media only screen and (min-width: theme('screens.lg')) {
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
+
+.digital-product__title {
+  color: #281D1D;
+  font-family: 'Cambon';
+  font-size: 21px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 30px;
+  width: 70%;
+
+  @media only screen and (min-width: theme('screens.lg')) {
+    font-size: 46px;
+    line-height: 56px;
+    margin-bottom: 25px;
+  }
+}
+
+.digital-product__description {
+  color: #281D1D;
+  font-family: "Milo Serif OT";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 450;
+  line-height: 26px;
+  letter-spacing: -0.1px;
+
+  @media only screen and (min-width: theme('screens.lg')) {
+    font-size: 25px;
+    line-height: 37px;
+  }
+}
+
+.digital-product__link {
+  margin-top: 10px;
+
+  color: var(--Brown-1, #281D1D);
+  font-family: 'Soehne Kraftig';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0.91px;
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-skip-ink: auto;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-underline-position: from-font;
+  text-transform: uppercase;
+
+  @media only screen and (min-width: theme('screens.lg')) {
+    font-size: 15px;
+    line-height: 20px;
+  }
+}
+
+.digital-product__ctas {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-top: 25px;
+
+  @media only screen and (min-width: theme('screens.lg')) {
+    margin-top: 30px;
+  }
+}
+.digital-product__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 15px;
+  height: 38px;
+
+  background-color: #F24237;
+  color: var(--White, #FFF);
+  font-family: 'Soehne Kraftig';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0.91px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+
+  @media only screen and (min-width: theme('screens.lg')) {
+    font-size: 15px;
+    line-height: 20px;
+
+    padding: 0px 20px;
+    height: 48px;
+  }
+}
+.digital-product__button:hover {
+  transition: background-color 0.3s ease;
+  background-color: #E1392F;
+}
+
+.digital-product__price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 15px;
+  height: 38px;
+
+  background-color: #FBF4EB;
+  color: #281D1D;
+  font-family: 'Soehne Kraftig';
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px;
+  letter-spacing: 0.91px;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+
+  @media only screen and (min-width: theme('screens.lg')) {
+    font-size: 15px;
+    line-height: 20px;
+
+    padding: 0px 20px;
+    height: 48px;
+  }
+}
+
+.digital-product__image {
+  position: absolute;
+  top: -50px;
+  right: 15px;
+
+  height: 130px;
+  aspect-ratio: 5/6;
+
+  @media only screen and (min-width: 500px) {
+    position: relative;
+    height: 100%;
+    max-height: 430px;
+    top: 0;
+    right: 0;
+    flex: 1;
+  }
+}
+.digital-product__image img {
+  height: 100%;
+  object-fit: cover;
+}

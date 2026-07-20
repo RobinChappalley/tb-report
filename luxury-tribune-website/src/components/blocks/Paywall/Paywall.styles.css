@@ -1,0 +1,20 @@
+.blur-text {
+  @apply absolute w-full;
+
+  top: -170px;
+  height: 150px;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(251, 244, 235, 0) 0%,
+      #fbf4eb 100%
+    );
+}
+
+.card-padding {
+  padding: 50px 50px 20px 50px;
+
+  @media only screen and (max-width: theme('screens.md')) {
+    padding: 50px 30px 20px 30px;
+  }
+}

@@ -1,0 +1,45 @@
+.img-style-default {
+  @apply figure-default !my-30 md:!my-50;
+}
+
+.img-style-large {
+  @apply figure-large !my-30 md:!my-60;
+}
+
+.img-style-full {
+  @apply figure-full !my-30 md:!my-80;
+}
+
+.img-align-left {
+  @apply float-left;
+
+  width: 28.5rem;
+  margin: 3rem 3rem 3rem -17rem;
+
+  @media only screen and (max-width: theme('screens.lg')) {
+    @apply w-full float-none mx-0 my-30;
+
+    img {
+      @apply object-cover;
+
+      height: var(--image-mobile-teaser-square);
+    }
+  }
+}
+
+.img-align-right {
+  @apply float-right;
+
+  width: 28.5rem;
+  margin: 3rem -17rem 3rem 3rem;
+
+  @media only screen and (max-width: theme('screens.lg')) {
+    @apply w-full float-none mx-0 my-30;
+
+    img {
+      @apply object-cover;
+
+      height: var(--image-mobile-teaser-square);
+    }
+  }
+}

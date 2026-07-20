@@ -8,7 +8,7 @@ NUMBER_OF_RUNS=11
 CLOUDINARY_CLOUD="di5rp4t2p"
 NUMBER_OF_JPG=8
 
-echo "solution,image_id,run,http_code,content_type,size_download,time_starttransfer,time_total" > "${OUTPUT_CSV}"
+echo "solution,image_id,run,http_code,content_type,size_download,time_starttransfer,time_total,cf_cache_status" > "${OUTPUT_CSV}"
 
 # Fonction de mélange d'un tableau (Fisher-Yates) - portable (pas besoin de shuf)
 shuffle_array() {
@@ -68,7 +68,7 @@ for i in {1..12}; do
                     target_url="${cloudflare_url}"
                     ;;
             esac
-            metrics=$(curl -s -H "${ACCEPT_HEADER}" -o /dev/null -w '%{http_code},%{content_type},%{size_download},%{time_starttransfer},%{time_total}' "${target_url}")
+            metrics=$(curl -s -H "${ACCEPT_HEADER}" -o /dev/null -w '%{http_code},%{content_type},%{size_download},%{time_starttransfer},%{time_total},%{header_cf-cache-status}' "${target_url}")
             echo "${sol},${image_name},${run},${metrics}" >> "${OUTPUT_CSV}"    
             sleep 0.5
         done

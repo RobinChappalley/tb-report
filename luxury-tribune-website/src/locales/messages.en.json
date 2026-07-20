@@ -1,0 +1,463 @@
+{
+  "header": {
+    "login": "Login",
+    "logout": "Logout",
+    "subscribe": "Subscribe",
+    "searchForm": {
+      "placeholder": "Search...",
+      "label": "Search by keywords",
+      "submit": "Search",
+      "mobile": {
+        "btnLabel": "Open the search"
+      }
+    },
+    "socials": {
+      "instagram": "https://www.instagram.com/luxury_tribune",
+      "linkedin": "https://www.linkedin.com/company/luxury-tribune",
+      "tiktok": "https://www.tiktok.com/@luxury_tribune",
+      "whatsapp": "https://www.whatsapp.com/channel/0029Vb6ABufL2AU5VAVYIJ0V",
+      "youtube": "https://www.youtube.com/channel/UCyLIGurPVt5gLi_xCiDWsOQ"
+    },
+    "mobile": {
+      "btnLabel": "Open the menu"
+    }
+  },
+  "footer": {
+    "madeBy": "Made by "
+  },
+  "footnotes": {
+    "references": "References"
+  },
+  "relatedLinks": {
+    "alsoRead": "Also read"
+  },
+  "studyLink": {
+    "completeStudy": "See the complete study",
+    "professors": "Professors",
+    "link": "Read the study",
+    "file": "Download the study"
+  },
+  "post": {
+    "sponsor": "Sponsored",
+    "keepReading": "Keep reading",
+    "share": "Share the post"
+  },
+  "featured": {
+    "featured": "featured",
+    "read": "Read the post",
+    "read_more": "Read more"
+  },
+  "brief": {
+    "brief": "Brief"
+  },
+  "newsletter": {
+    "register": "Register",
+    "title": "Newsletters",
+    "description": "Subscribe to our newsletters to receive the latest publications and analyses according to our 4 themes:",
+    "types": {
+      "news": "News",
+      "genz": "Gen Z",
+      "analyses": "Analyses",
+      "trends": "Trends to watch",
+      "descriptions": {
+        "news": "All the luxury news at a glance. Key facts, breaking news, and industry shifts.",
+        "genz": "A sharp focus on Gen Z's interests and how they are reshaping the future of luxury.",
+        "analyses": "In-depth articles analyzing major market shifts: strategic insights and key perspectives to better understand current challenges.",
+        "trends": "A focus on emerging markets, new creative scenes, and opportunities not to be missed."
+      },
+      "frequency": {
+        "news": "1x per week",
+        "genz": "1x per month",
+        "analyses": "2x per month",
+        "trends": "1x per month"
+      },
+      "pastEditionLink": "View a past edition",
+      "pastEditionUrl": {
+        "news": "https://createsend.com/t/t-99481E1E523F63A42540EF23F30FEDED",
+        "genz": "https://createsend.com/t/t-D7F433D7388D42D52540EF23F30FEDED",
+        "analyses": "https://createsend.com/t/t-4D0859674A57DA672540EF23F30FEDED",
+        "trends": "https://createsend.com/t/t-AD03B73FD15FE9A12540EF23F30FEDED"
+      }
+    },
+    "block": {
+      "title": "Do you like this article?",
+      "placeholder": "Enter your email address..."
+    },
+    "popup": {
+      "subtitle": "Newsletters",
+      "title": "Do you like this article?",
+      "description": "Subscribe to our newsletters to receive the latest publications and analyses according to our 4 themes:",
+      "placeholder": "Enter your email address...",
+      "button": "Register",
+      "close": "Close"
+    },
+    "page": {
+      "title": "Newsletters",
+      "lead": "Register and be notified of the latest publications and analyses",
+      "firstname": "Firstname",
+      "lastname": "Lastname",
+      "optout": {
+        "news_newsletter": "Also receive the Newsletter dedicated to the latest NEWS on the luxury industry"
+      },
+      "advantages": {
+        "title": "Advantages",
+        "items": {
+          "events": {
+            "emphasis": "Exclusive early registration",
+            "text": " for our events."
+          },
+          "dossiers": {
+            "emphasis": "Receive thematic reports and white papers",
+            "text": " written by international expert journalists."
+          },
+          "offers": {
+            "emphasis": "Benefit from exclusive offers",
+            "text": " on our subscriptions."
+          },
+          "community": {
+            "emphasis": "Join a community",
+            "text": " and access experiences related to luxury craftsmanship."
+          }
+        }
+      },
+      "response": {
+        "title": "A response to luxury challenges",
+        "paragraph1": "The luxury world is evolving fast. To give you a better understanding, we have created four thematic newsletters. Each week, receive the essentials directly in your inbox.",
+        "paragraph2": "Subscribing to our newsletters is completely free. However, some articles and investigations require <0>a paid subscription</0> to be read in full.",
+        "subscribeUrl": "/en/subscribe"
+      },
+      "subscribe": {
+        "title": "Subscribe",
+        "title2": "Subscribe to our newsletters",
+        "description": "Join us for the latest news and insights! Subscribe to discover a unique way to stay up to date with luxury industry."
+      }
+    }
+  },
+  "sclr": {
+    "partners": "Academic partners",
+    "filter": {
+      "all": "All",
+      "mobile": "Filter"
+    }
+  },
+  "about": {
+    "editors": "Editors",
+    "cristina": {
+      "position": "Founder and Editor-in-chief",
+      "description": "Editor of Luxury Tribune, Cristina d'Agostino founded the leading digital media Luxury Tribune in 2020. She is editor-in-chief and journalist specialised in the luxury industry and regularly moderates conferences and debates on major trends in the sector. Previously, she was deputy editor-in-chief of the Swiss business magazine Bilan and for seven years headed the luxury special issues. From 1994 to 2008, she held various management positions in communications and marketing for watch brands."
+    },
+    "aymeric": {
+      "position": "Correspondent for France, Paris",
+      "description": "Based in Paris, Aymeric Mantoux is an expert in communication strategy and content design. He is also a columnist and author of numerous essays. He worked as a journalist for 20 years, notably at LCI and TF1, has been Editor-in-Chief for a number of luxury magazines, and has published art books and brand feature books."
+    },
+    "bettina": {
+      "position": "Correspondent for Italy, Milan",
+      "description": "Born in Copenhagen, Bettina Mignanego Bush has lived mainly in Italy. She holds a degree in cultural heritage conservation. After a career in television production for the Mediaset group, she collaborated primarily with the Espresso group and today she covers economic and financial news for the leading Italian daily La Repubblica."
+    },
+    "morgane": {
+      "position": "Correspondent for the United Kingdom, London",
+      "description": "Fashion and culture writer with work published on Wallpaper*, ELLE UK, British Vogue and Dazed Digital, Morgane Nyfeler is passionate about sustainable fashion, from independent labels to ethical supply chains and innovative technologies."
+    },
+    "samia": {
+      "position": "Journalist",
+      "description": "After studying political philosophy at the University of Amsterdam, Samia Tawil worked as a philosophy teacher during several years, while pursuing a solid artistic career and publishing a first book called “De Bilal à Rostropovitch”. In each of these three fields, Samia Tawil cultivates a taste for words that move and testify, and offers a sharp perspective on the world’s events, enriched through her deep connection to North Africa, the Middle-East and Latin America. She has also regularly contributed to magazines such as the Magazine littéraire du Maroc, and to the collective work “Le temps des femmes libres”. More recently, her globetrotter and savvy urbanite spirit lead her to create the blog “Funky Geneva” and the website “Flights and Thoughts”."
+    },
+    "eva": {
+      "position": "Correspondent for France, Paris",
+      "description": "Eva Morletto is correspondent in Paris for the Italian magazine GRAZIA, she collaborates in Italy with the TV channel Mediaset in several reporting programs. In 2018 she won the Peace Reporter Award at the Forum of International Women Journalists."
+    },
+    "isabelle": {
+      "position": "Regular contributor for the United States",
+      "description": "A creative professional, creating cultural experiences and building stories with words and/or images... about people, art, culture, trends. She is turning one of those stories into a documentary: the life of the legendary Swiss artist Olivier Mosset. She is also a contributor to various magazines, writing about culture, art, and society. With a long marketing and communications experience, She also leverages the power of storytelling to bring brands the strategy and image needed in today's shifting channels. She conceptualizes, researches, writes, edits, directs, and produces content and stories that leverage the strength and nuances of various organizations."
+    },
+    "shilpa": {
+      "position": "Correspondent for India",
+      "description": "Shilpa currently spends her time building India's leading Luxury lifestyle Instagram blog - Luxuryvolt. She specialises in writing global, in-depth reports on Watches, Travel, Fine-dine, Business of luxury brands, Sustainability, Consumer tech and Web3. During her 20 year long stint as a journalist, she has held impactful senior leadership and creator roles in CNN IBN, CNBC TV18, NDTV and Times of India. She was also the leading producer of the highest rated English consumer tech show in the history of Indian TV."
+    },
+    "justine": {
+      "position": "Journalist",
+      "description": "Justine Offredi is a journalist with expertise in luxury and digital. She recently graduated from CELSA (Paris Sorbonne University) with a Master's degree in journalism. She joined Luxury Tribune's editorial team in April 2024 as a trainee journalist, then a permanent journalist a few months later. Previously, she was Digital Project Manager for Chanel in Paris for a year and a half, before returning to her passion, journalism. She also built up her experience with the Tamedia group in the web department for several titles. She now works alongside Cristina d'Agostino, founder and editor-in-chief, and is responsible for writing, editing, publishing news and also contributes to the title's development and communications."
+    },
+    "jacqueline": {
+      "position": "Journalist",
+      "description": "Jacqueline Chelliah is a journalist. Before launching her career in journalism, she worked in the private sector, the luxury industry, and for several international organizations. She began at Heidi News, then spent four years at Watson, writing from Mexico and the United States, and later joined Tamedia. She is also a recipient of the Genilem Award, given to entrepreneurs in French-speaking Switzerland."
+    },
+    "melissa": {
+      "position": "Journalist",
+      "description": "Born in Lausanne, Melissa Kilickaya studied curatorial theory at Central Saint Martins in London. She is interested in artistic and culinary practices as well as societal issues."
+    },
+    "amy": {
+      "position": "Correspondent for India",
+      "description": "Amy Weng is a China market expert and founder of Think East, a Zurich-based consultancy specialising in Chinese consumer strategy, branding, and social media for international brands. She advises luxury houses, consumer brands, Swiss institutions, and senior executives seeking a deeper understanding of the Chinese market. Amy speaks regularly on topics including China’s digital landscape, Young China, and the forces reshaping Chinese consumer culture. Her work bridges the gap between Western brands and one of the world’s most sophisticated consumer audiences."
+    },
+    "cecilia": {
+      "position": "Journalist",
+      "description": "Cécilia Pelloux is a freelance journalist working for several media, including Forbes."
+    }
+  },
+  "subscribe": {
+    "launch": "For the launch",
+    "offer": "Luxury Tribune offers",
+    "freeAccess": "free access",
+    "content": "to all its content"
+  },
+  "last_posts": "Last posts",
+  "more_posts": "See more posts",
+  "events": {
+    "title": "Events",
+    "future": {
+      "title": "To come"
+    },
+    "past": {
+      "title": "Past"
+    },
+    "more_events": "More past events"
+  },
+  "event": {
+    "homepage": {
+      "hours": "Hour",
+      "location": "Location",
+      "event": "Event"
+    },
+    "sponsorship": "In partnership with",
+    "share": "Share this event"
+  },
+  "author": {
+    "references": {
+      "title": "References"
+    },
+    "articles": {
+      "title": "{{name}}'s articles"
+    }
+  },
+  "stories": {
+    "title": "Worlds of luxury",
+    "discover": "Discover",
+    "sponsored": "In partnership with",
+    "copyright": "Copyright: {{credit}}",
+    "copyright_video": "Copyright: {{credit}}",
+    "see_all": "All worlds of luxury",
+    "view_fullscreen": "View fullscreen",
+    "exit_fullscreen": "Exit fullscreen"
+  },
+  "subscription": {
+    "title": "Subscription",
+    "lead": "You have selected this subscription:",
+    "charged_price": "You will be charged {{price}}.- CHF",
+    "gift": {
+      "title": "Gift subscription",
+      "lead": "The gift voucher you received gives you",
+      "complimentary": "12 months free",
+      "value_gift": "* Value of the gift : 99.- CHF"
+    },
+    "signup": "Signup",
+    "login": "I already have an account",
+    "price_in": "Price in",
+    "cta": "I subscribe",
+    "type": {
+      "yearly": "year",
+      "monthly": "month"
+    },
+    "post": {
+      "full": "Subscriber",
+      "abbr": "S"
+    },
+    "form": {
+      "general-information": {
+        "title": "General information",
+        "radio": {
+          "sir": "Sir",
+          "madam": "Madam"
+        },
+        "input": {
+          "first-name": "First name",
+          "last-name": "Last name",
+          "country": {
+            "label": "Country",
+            "default-option": "Select"
+          },
+          "city": "City"
+        }
+      },
+      "account": {
+        "title": "Account",
+        "input": {
+          "email": {
+            "label": "Email",
+            "help-text": "⚠️ Use your student email address in order to benefite from the student price."
+          },
+          "password": {
+            "label": "Password",
+            "placeholder": "*****"
+          },
+          "password-confirm": {
+            "label": "Confirm the password"
+          }
+        }
+      },
+      "payment-information": {
+        "title": "Payment information",
+        "input": {
+          "card-name": "Card full name",
+          "card-number": {
+            "label": "Card number",
+            "placeholder": "0000 0000 0000 00000"
+          },
+          "expiration-date": {
+            "label": "Expiration date",
+            "placeholder": "MM / AA"
+          },
+          "cryptogram": {
+            "label": "Cryptogram",
+            "placeholder": "123"
+          }
+        }
+      },
+      "coupon": {
+        "title": "Discount Code",
+        "input": {
+          "label": "Code",
+          "placeholder": "LTGIFT-GD9B"
+        },
+        "helptext": "Validate your code by entering it below."
+      },
+      "terms_conditions": {
+        "label": "Please accept",
+        "link": "the terms and conditions"
+      },
+      "submit": "Finalize my subscription",
+      "validation": {
+        "title": "This field is required.",
+        "firstName": "This field is required.",
+        "lastName": "This field is required.",
+        "country": "This field is required.",
+        "city": "This field is required.",
+        "email": {
+          "required": "This field is required.",
+          "format": "The email format is incorrect."
+        },
+        "password": "This field is required.",
+        "password-format": "The passwords don't match.",
+        "card-name": "This field is required.",
+        "card-number": {
+          "required": "This field is required.",
+          "format": "The card number format is incorrect."
+        },
+        "expiration-date": {
+          "required": "This field is required.",
+          "format": "The expiration date format is incorrect."
+        },
+        "cryptogram": {
+          "required": "This field is required.",
+          "format": "The cryptogram format is incorrect."
+        },
+        "coupon": "This field is required.",
+        "terms-conditions": "This field is required."
+      }
+    }
+  },
+  "error": {
+    "generic": "An error has occurred, please try again later.",
+    "account-exist": "An account with this email address already exist.",
+    "no-account": "No account exists with this email address.",
+    "wrong-credential": "The email address or the password is incorrect.",
+    "no-coupon": "The code is incorrect.",
+    "coupon-invalid": "The voucher is invalid.",
+    "coupon-invalid-subscription": "The voucher is invalid for the chosen subscription type."
+  },
+  "success": {
+    "subscription": "Your new subscription has been successfully registered. Login to have access to the premium articles."
+  },
+  "paywall": {
+    "title": "To continue reading this article, subscribe now",
+    "subscription": "CHF 10.- per month / CHF 99.- per year",
+    "cta": "Subscribe",
+    "list": {
+      "unlimited-access": "<strong>Unlimited access</strong> to all paid content",
+      "deep-analysis": "<strong>Industry analysis</strong> you won't find anywhere else.",
+      "studies": "<strong>In-depth case studies</strong> on key business challenges.",
+      "academic-articles": "<strong>Academic analyses, studies and publications</strong> written by professors and researchers from the Swiss Center for Luxury Research and some foreign universities.",
+      "events": "<strong>Members-only events</strong> to grow your knowledge and network."
+    }
+  },
+  "sign": {
+    "email": "Email",
+    "email_missing": "Please enter your Email",
+    "password": "Password",
+    "password_again": "Repeat password",
+    "password_missing": "Please enter your password",
+    "password_weak": "Please enter at least 8 characters",
+    "password_same": "Both passwords must be similar",
+    "signin_error": "Unknown user. Check spelling or try a different e-mail address",
+    "signin": "Login",
+    "forgot_password": "Forgot your password?",
+    "reset_password": "Reset password",
+    "Reset": "Reset",
+    "reset_error": "No user is registered with this email address",
+    "reset_success": "An email with the reset link has been sent to you.",
+    "new_password": "New password",
+    "save": "Save",
+    "save_error": "An error has occurred. Please try again later or contact an administrator",
+    "save_success": "The password has been successfully registered"
+  },
+  "404": {
+    "subtitle": "Error 404",
+    "title": "Page not found",
+    "description": "Oops, the page you are looking for cannot be found.",
+    "back": "Back",
+    "back_aria_label": "Return to previous page",
+    "button": "Go to homepage",
+    "button_aria_label": "Return to homepage",
+    "seo_title": "Error 404",
+    "links": [
+      {
+        "title": "Featured",
+        "subtitle": "Our latest publications.",
+        "href": "/en/category/news-en"
+      },
+      {
+        "title": "Newsletter", 
+        "subtitle": "Receive our latest publications and analyses.",
+        "href": "/en/newsletter-subscription"
+      },
+      {
+        "title": "About",
+        "subtitle": "Our vision, values and team.",
+        "href": "/en/about"
+      }
+    ]
+  },
+  "homepage": {
+    "seo_title": "Luxury Tribune: the leading media dedicated to the luxury industry",
+    "seo_description": "Find out about the latest news and challenges in the luxury industry. Read our analyses on trends and innovations of the sector, business, culture and sustainability."
+  },
+  "news": {
+    "listing_cta": "All news"
+  },
+  "search": {
+    "page_title": "Search",
+    "published": "Published on"
+  },
+  "cookie_banner": {
+    "description": "This website uses cookies to improve your experience. See the <a href=\"/en/data-protection-declaration\">terms of use</a>.",
+    "btn": {
+      "accept": "Accept",
+      "reject": "Reject",
+      "customise": "Customise",
+      "save": "Save"
+    },
+    "settings": {
+      "analytics_storage": {
+        "title": "Google analytics",
+        "description": "Google Analytics allows to measure and analyze the behavior of visitors to a website by providing key data about their origin, navigation, and engagement, in order to help optimize the site and enhance the user experience."
+      },
+      "ad_storage": {
+        "title": "Marketing",
+        "description": "Marketing cookies are used to track visitors across websites. The intention is to display ads that are relevant and engaging for the individual user and thereby more valuable for publishers and third party advertisers."
+      }
+    }
+  },
+  "ads_campagin": {
+    "legend": "Ads"
+  }
+}

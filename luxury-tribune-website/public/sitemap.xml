@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <sitemap>
+  <loc>https://www.luxurytribune.com/api/wordpress-sitemap/post</loc>
+  <loc>https://www.luxurytribune.com/api/wordpress-sitemap/stories</loc>
+  <loc>https://www.luxurytribune.com/api/wordpress-sitemap/page</loc>
+  <loc>https://www.luxurytribune.com/api/wordpress-sitemap/events</loc>
+  <loc>https://www.luxurytribune.com/api/wordpress-sitemap/authors</loc>
+  <loc>https://www.luxurytribune.com/category/tribune-libre</loc>
+  <loc>https://www.luxurytribune.com/en/category/opinion</loc>
+  <loc>https://www.luxurytribune.com/category/business-tendances</loc>
+  <loc>https://www.luxurytribune.com/en/category/business-trends</loc>
+  <loc>https://www.luxurytribune.com/category/style-evasion</loc>
+  <loc>https://www.luxurytribune.com/en/category/style-experiences</loc>
+  <loc>https://www.luxurytribune.com/category/durabilite</loc>
+  <loc>https://www.luxurytribune.com/en/category/sustainability</loc>
+  <loc>https://www.luxurytribune.com/type/academique</loc>
+  <loc>https://www.luxurytribune.com/en/category/academic</loc>
+ </sitemap>
+</sitemapindex>

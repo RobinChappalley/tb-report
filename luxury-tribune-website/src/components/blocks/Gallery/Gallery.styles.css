@@ -1,0 +1,28 @@
+.gallery {
+  @apply md:flex justify-between items-start flex-shrink;
+
+  figure {
+    max-width: 32.5rem;
+  }
+
+  figcaption {
+    @apply font-soehneLeicht text-15 leading-22 mt-10;
+  }
+
+  @media only screen and (max-width: theme('screens.md')) {
+    figure {
+      max-width: 43rem;
+      margin: 0 auto;
+
+      img {
+        @apply w-full object-cover;
+
+        height: var(--image-mobile-teaser-portrait);
+      }
+    }
+
+    figure + figure {
+      @apply mt-30;
+    }
+  }
+}

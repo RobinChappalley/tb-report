@@ -1,0 +1,35 @@
+@font-face {
+  font-family: 'Cambon';
+  src:
+    url('/fonts/cambon/Cambon-Bold.woff2') format('woff2'),
+    url('/fonts/cambon/Cambon-Bold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Milo Serif';
+  src:
+    url('/fonts/milo-serif/3B324E_0_0.woff2') format('woff2'),
+    url('/fonts/milo-serif/3B324E_0_0.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Soehne Kraftig';
+  src:
+    url('/fonts/soehne/kraftig/soehne-web-kraftig.woff2') format('woff2'),
+    url('/fonts/soehne/kraftig/soehne-web-kraftig.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Soehne Leicht';
+  src:
+    url('/fonts/soehne/leicht/soehne-web-leicht.woff2') format('woff2'),
+    url('/fonts/soehne/leicht/soehne-web-leicht.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
