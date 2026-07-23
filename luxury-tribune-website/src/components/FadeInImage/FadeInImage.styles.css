@@ -1,8 +1,0 @@
-.fix-image,
-.fix-image * {
-  display: block !important;
-  position: relative !important;
-  width: 100% !important;
-  height: auto !important;
-  overflow: visible !important;
-}
