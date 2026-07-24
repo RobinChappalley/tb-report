@@ -1,0 +1,17 @@
+{% set breadcrumbs = get_breadcrumbs() %}
+
+<div class="flex flex-wrap gap-x-5 gap-y-2 text-sm items-center">
+
+  {# Home #}
+  <a class="text-white link no-underline" href="{{ breadcrumbs.home.url }}">{{ breadcrumbs.home.title }}</a>
+
+  {# Parents pages #}
+  {% for item in breadcrumbs.pages %}
+    <div class="bg-neutral-100 w-[7px] h-px"></div>
+    <a class="text-white link no-underline" href="{{ item.url }}">{{ item.title }}</a>
+  {% endfor %}
+
+  {# Current page #}
+  <div class="bg-neutral-100 w-[7px] h-px"></div>
+  <span class="text-theme-200">{{ breadcrumbs.current.title }}</span>
+</div>

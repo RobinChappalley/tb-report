@@ -1,0 +1,31 @@
+.testimonials-slider {
+  @apply xl:mx-0! lg:mb-30 mb-24 xl:grid grid-cols-[1fr_10fr_1fr];
+}
+
+.testimonials-slider .title {
+  @apply lg:mb-8 mb-6 text-white col-start-2 col-end-3 row-start-1;
+}
+
+.testimonials-slider .embla-testimonials-slider {
+  @apply col-start-2 col-end-3 row-start-2;
+}
+
+.testimonials-slider .embla__container {
+  @apply -ml-8 mr-8 max-md:items-start transition-[height] duration-200;
+}
+
+.testimonials-slider .testimonials-container .testimonial {
+  @apply pl-8 min-w-0 shrink-0 w-1/2 basis-11/12 md:basis-1/2;
+}
+
+.testimonials-slider .navigation {
+  @apply max-md:hidden flex justify-end gap-2 mt-8 mr-8;
+}
+
+.testimonials-slider .navigation button {
+  @apply rounded-full bg-theme-700 hover:bg-theme-900 cursor-pointer;
+}
+
+.testimonials-slider .navigation button svg {
+  @apply size-[32px] text-white;
+}

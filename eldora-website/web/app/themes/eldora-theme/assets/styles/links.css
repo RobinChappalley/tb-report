@@ -1,0 +1,16 @@
+a.link,
+.gutenberg-blocks p a {
+  @apply hover:no-underline;
+  @apply active:outline-none;
+  @apply focus:no-underline focus:outline-dashed focus:rounded-lg  focus:outline-1 focus:outline-white;
+}
+
+a.link:not(.no-underline),
+.gutenberg-blocks p a {
+  @apply underline underline-offset-6;
+}
+
+a.link:not(.no-focus-padding),
+.gutenberg-blocks p a {
+  @apply focus:outline-offset-4;
+}

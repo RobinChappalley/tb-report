@@ -1,0 +1,74 @@
+.full-screen-image-preview {
+  position: relative;
+}
+
+.full-screen-image-preview .video-container iframe {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  pointer-events: none; // To block the start on the video when clicking and instead opening Gutenberg block settings
+}
+
+.full-screen-image-preview .image-container {
+  height: 720px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.full-screen-image-preview .image {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  object-fit: cover;
+}
+
+.full-screen-image-sidebar-iframe {
+  width: 100%;
+  height: 100%;
+  margin-bottom: 30px;
+}
+
+.full-screen-image-preview .gradient {
+  position: relative;
+  overflow: hidden;
+}
+
+.full-screen-image-preview .gradient::before {
+  z-index: 10;
+  content: "";
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.full-screen-image-preview .gradient-direction-up::before {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.full-screen-image-preview .gradient-direction-down::before {
+  background: linear-gradient(
+    360deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.full-screen-image-preview .gradient-direction-left::before {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+.full-screen-image-preview .gradient-direction-right::before {
+  background: linear-gradient(
+    270deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}

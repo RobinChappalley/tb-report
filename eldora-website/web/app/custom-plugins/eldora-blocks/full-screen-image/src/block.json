@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "eldora/full-screen-image",
+  "version": "0.1.0",
+  "title": "Grande image / Grande vidéo",
+  "category": "media",
+  "icon": "format-image",
+  "description": "Bloc Grande image / Grande vidéo",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "id": {
+      "type": "string"
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "imageAlt": {
+      "type": "string"
+    },
+    "focalPoint": {
+      "type": "object",
+      "default": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "videoUrl": {
+      "type": "string"
+    },
+    "mediaSize": {
+      "type": "object"
+    },
+    "gradientDirection": {
+      "type": "enum",
+      "default": "down",
+      "enum": ["up", "down", "left", "right"]
+    }
+  },
+  "textdomain": "eldora-full-screen-image",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "viewScript": "file:./view.js"
+}

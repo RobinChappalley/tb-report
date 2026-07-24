@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "eldora/action",
+  "version": "0.1.0",
+  "title": "Action",
+  "category": "design",
+  "icon": "button",
+  "description": "Bloc action pour Guttenberg.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "default": "link",
+      "enum": ["link", "file"]
+    },
+    "label": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string"
+    },
+    "file": {
+      "type": "string"
+    },
+    "isBlank": {
+      "type": "boolean"
+    },
+    "iconLeft": {
+      "type": "string"
+    },
+    "iconRight": {
+      "type": "string"
+    }
+  },
+  "textdomain": "eldora",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "viewScript": "file:./view.js",
+  "render": "file:./render.php"
+}

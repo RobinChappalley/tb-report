@@ -1,0 +1,60 @@
+{
+    "key": "group_6877627faff80",
+    "title": "Couleur du thème",
+    "fields": [
+        {
+            "key": "field_6877627ffc757",
+            "label": "Couleur du thème",
+            "name": "theme_color",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "eldora": "Eldora",
+                "school": "Ecole",
+                "education": "Enseignement",
+                "entreprise": "Entreprise",
+                "health": "Santé"
+            },
+            "default_value": "eldora",
+            "return_format": "value",
+            "multiple": 0,
+            "translations": "copy_once",
+            "allow_null": 0,
+            "allow_in_bindings": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "create_options": 0,
+            "save_options": 0,
+            "pll_default_value": "eldora"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "sectors"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "pll_display_field_instructions": 1,
+    "modified": 1754316840
+}

@@ -1,0 +1,1 @@
+.gradient-container-preview{margin-left:-16px;margin-right:-32px;padding:25px 32px 0 16px;position:relative;z-index:0}.gradient-container-preview:after{background:linear-gradient(180deg,#171b23,rgba(23,27,35,0));content:"";height:100%;left:0;position:absolute;top:0;width:100%}.gradient-container-preview>.block-editor-inner-blocks{position:relative;z-index:10}

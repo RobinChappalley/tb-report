@@ -1,0 +1,22 @@
+.container-grid,
+.gutenberg-blocks,
+.gradient-container .blocks-container {
+  @apply grid-cols-[minmax(0,auto)_minmax(1600px,1600px)_minmax(0,auto)] min-[1600px]:grid;
+}
+
+/* All element inside of grid container on first level is in a smaller container by default */
+.container-grid > *,
+.gutenberg-blocks > *,
+.gradient-container .blocks-container > * {
+  @apply col-start-2;
+}
+
+.container-grid > *:not(.gutenberg-blocks),
+.gutenberg-blocks > *:not(.gradient-container),
+.gradient-container .blocks-container > * {
+  @apply max-[1630px]:mx-4;
+}
+
+.gutenberg-blocks {
+  @apply col-start-1 col-end-4 overflow-x-clip;
+}

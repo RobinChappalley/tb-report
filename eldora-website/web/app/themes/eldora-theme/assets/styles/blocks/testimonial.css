@@ -1,0 +1,11 @@
+.testimonial {
+  @apply mb-8 text-neutral-50;
+}
+
+.testimonial .testimonial-content {
+  @apply text-lg mb-3;
+}
+
+.testimonial .author {
+  @apply text-base;
+}

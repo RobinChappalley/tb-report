@@ -1,0 +1,57 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+  <div class="gutenberg-blocks container-grid mb-24 xl:mb-31">
+    <div class="lg:grid grid-cols-12">
+      <div class="col-span-6 col-start-4 single-news-content">
+      {{ post.content }}
+      </div>
+    </div>
+  </div>
+
+  {% if related_news and related_news|length > 0 %}
+  <div class="m-0 mb-16 xl:grid grid-cols-12">
+    <div class="grid grid-cols-1 xl:col-span-10 xl:col-start-2 sm:grid-cols-2">
+      <div class="max-xl:ml-4 text-h-4xl font-bricolage mb-9">{{ __('single-news.realted-news-title', 'eldora-theme') }}</div>
+      <div class="max-xl:ml-4 order-3 text-sm underline underline-offset-7 sm:mt-2.5 sm:text-end sm:mr-4 xl:mr-0">
+        <a href="{{ news_archive_link }}">{{ __('single-news.see-all-news-link', 'eldora-theme') }}</a>
+      </div>
+      <div class="embla-mobile-slider mb-8 sm:col-span-2 sm:order-3">
+        <div class="embla__container gap-4 max-xl:ml-4 sm:max-xl:mr-4">
+          {% for news in related_news %}
+            {% set news_categories = news.terms({taxonomy: 'post_categories'}) %}
+            <div class="embla__slide sm:flex-initial! sm:w-full sm:h-full">
+              <div class="rounded-lg overflow-hidden bg-eldora-700">
+                <a href="{{ news.link }}">
+                  
+                  <div class="aspect-4/3">
+                        {% if news.thumbnail %}
+                      <picture>
+                        <source srcset="{{ imgproxy(news.thumbnail.src('large'), 'resize:fit:1200:0/auto:format/quality:75') }}" media="(min-width: 768px)" />
+                        <img class="w-full h-full object-cover" src="{{ imgproxy(news.thumbnail.src('medium-large'), 'resize:fit:800:0/auto:format/quality:75') }}" alt="{{ news.thumbnail.alt }}" />
+                      </picture>
+                    {% endif %}
+                  </div>
+                  
+                  <div class="pt-4 px-5 pb-6">
+                    <div class="flex gap-2">
+                      {% if news_categories %}
+                        {% for category in news_categories %}
+                          <div class="text-xs uppercase mb-1">{{ category.name }}</div>
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+                    <div class="text-xl font-bricolage font-semibold mb-8 line-clamp-3">{{ news.title }}</div>
+                    <div class="text-sm">{{ news.date|date('j F Y', null, function('pll_current_language')) }}</div>
+                  </div>
+                  
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

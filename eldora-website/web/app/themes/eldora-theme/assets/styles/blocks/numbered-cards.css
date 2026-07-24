@@ -1,0 +1,51 @@
+/* Parent block */
+.numbered-cards-container {
+  @apply mb-24 md:mb-30 xl:grid grid-cols-12;
+}
+
+.numbered-cards-container .titre-text-container {
+  @apply col-start-2 col-end-12 grid md:grid-cols-2 gap-x-4 gap-y-7 md:mb-14 mb-18;
+}
+
+.numbered-cards-container .titre-text-container .text {
+  @apply text-theme-50 text-sm md:text-lg md:mt-2;
+}
+
+.numbered-cards-container .children-container {
+  @apply col-start-2 col-end-12 grid md:grid-cols-2 gap-4 md:auto-rows-fr;
+}
+
+.numbered-cards-container .mobile-show-all-cards {
+  @apply md:hidden bg-theme-primary px-4 py-3 text-sm text-center rounded-sm mt-4 cursor-pointer;
+}
+
+.numbered-cards-container
+  .children-container:not(.show-all-cards)
+  > div:nth-child(n + 4) {
+  @apply max-md:hidden;
+}
+
+/* Children blocks */
+.numbered-card {
+  @apply bg-theme-primary rounded-lg p-7;
+}
+
+.numbered-card .number-title-card {
+  @apply flex mb-3 font-bricolage items-baseline;
+}
+
+.numbered-card .number-title-card .number {
+  @apply text-theme-500;
+}
+
+.theme-eldora .numbered-card .number-title-card .number {
+  @apply text-theme-400;
+}
+
+.numbered-card .number-title-card .title {
+  @apply -ml-3;
+}
+
+.numbered-card .text {
+  @apply text-lg;
+}

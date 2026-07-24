@@ -1,0 +1,5 @@
+/composer.lock
+/vendor/
+/wordpress/
+.phpunit.result.cache
+/assets/styles/output.css

@@ -1,0 +1,16 @@
+{
+  "name": "eldora-theme",
+  "author": "Antistatique",
+  "devDependencies": {
+    "svg-sprite": "^2.0.4",
+    "tailwindcss": "^4.2.2"
+  },
+  "chan": {
+    "release-prefix": ""
+  },
+  "scripts": {
+    "build:icons": "rm -f web/app/themes/eldora-theme/assets/icons/icons.svg && svg-sprite -s --symbol-inline --symbol-dest web/app/themes/eldora-theme/assets/icons --symbol-sprite icons.svg web/app/themes/eldora-theme/assets/icons/*.svg",
+    "dev": "npx @tailwindcss/cli -i web/app/themes/eldora-theme/assets/styles/global.css -o web/app/themes/eldora-theme/assets/styles/output.css --watch --no-timeout",
+    "build": "npx @tailwindcss/cli -i web/app/themes/eldora-theme/assets/styles/global.css -o web/app/themes/eldora-theme/assets/styles/output.css --minify"
+  }
+}

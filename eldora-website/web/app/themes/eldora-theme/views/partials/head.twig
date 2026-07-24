@@ -1,0 +1,54 @@
+<head>
+    <meta charset="{{ site.charset }}" />
+    <link rel="stylesheet" href="{{ site.theme.link }}/style.css" type="text/css" media="screen" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="author" href="{{ site.theme.link }}/humans.txt" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ site.theme.link }}/assets/images/favicon.ico" type="image/x-icon" />
+
+    {# Alpine.js #}
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.3/dist/cdn.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.3/dist/cdn.min.js"></script>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MKVFSQP8');</script>
+    <!-- End Google Tag Manager -->
+
+    <script>
+      window.leckerliSettings = {
+        banner: {
+          title: "{{ __('leckerli.title', 'eldora-theme') }}",
+          description: "{{ __('leckerli.description', 'eldora-theme') }}",
+          accept: "{{ __('leckerli.accept', 'eldora-theme') }}",
+          reject: "{{ __('leckerli.reject', 'eldora-theme') }}",
+          customise: "{{ __('leckerli.customise', 'eldora-theme') }}",
+          customiseDescription: "{{ __('leckerli.customiseDescription', 'eldora-theme') }}",
+          save: "{{ __('leckerli.save', 'eldora-theme') }}",
+          settings: [
+            {
+              slug: 'analytics_storage',
+              title: "{{ __('leckerli.settings.analytics_storage.title', 'eldora-theme') }}",
+              description: "{{ __('leckerli.settings.analytics_storage.description', 'eldora-theme') }}",
+            },
+            {
+              slug: 'personalization_storage',
+              title: "{{ __('leckerli.settings.personalization_storage.title', 'eldora-theme') }}",
+              description: "{{ __('leckerli.settings.personalization_storage.description', 'eldora-theme') }}",
+            },
+          ],
+        },
+        permissions: [
+          'analytics_storage',
+          'personalization_storage',
+        ],
+      }
+    </script>
+
+    {% do action('get_header') %}
+    {{ function('wp_head') }}
+</head>

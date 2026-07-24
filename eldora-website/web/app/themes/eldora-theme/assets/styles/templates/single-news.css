@@ -1,0 +1,4 @@
+.single-news-content .wp-block-image,
+.single-news-content .wp-block-eldora-media {
+    @apply lg:-mx-12!;
+}

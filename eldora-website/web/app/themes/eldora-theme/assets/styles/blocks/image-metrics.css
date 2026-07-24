@@ -1,0 +1,48 @@
+/* Parent block */
+.image-metrics {
+  @apply relative pb-31 col-start-1 col-end-4 mx-0! bg-theme-primary;
+}
+
+.image-metrics .image {
+  @apply w-full aspect-375/667 sm:aspect-2/1 object-cover max-sm:max-h-[700px];
+}
+
+.image-metrics .gradient-direction-right,
+.image-metrics .gradient-direction-left {
+  @apply relative;
+}
+
+.image-metrics .gradient-direction-right::after {
+  @apply content-[''] w-full h-full absolute top-0 left-0;
+  @apply bg-gradient-to-b sm:bg-linear-to-l from-transparent to-theme-primary;
+}
+
+.image-metrics .gradient-direction-left::after {
+  @apply content-[''] w-full h-full absolute top-0 left-0;
+  @apply bg-gradient-to-b sm:bg-linear-to-r from-transparent to-theme-primary;
+}
+
+/* Children blocks */
+.image-metrics .image-metrics-number-grid {
+  @apply absolute top-0 left-0 w-full h-full z-10 grid grid-cols-12 items-end max-w-[1600px] min-[1600px]:ml-[calc(50%-800px)];
+}
+
+.image-metrics .image-metrics-number-container {
+  @apply col-start-2 md:col-start-7 xl:col-start-8 col-end-12 grid grid-cols-4 gap-4 mb-12 lg:mb-30 rotate-180;
+}
+
+.image-metrics .image-metrics-number-container .image-metrics-number {
+  @apply rotate-180 text-white col-span-2;
+}
+
+.image-metrics .image-metrics-number .number {
+  @apply text-h-6xl lg:text-h-7xl font-bricolage mb-2 break-words;
+}
+
+.image-metrics .image-metrics-number .legend {
+  @apply sm:text-base text-sm;
+}
+
+.image-metrics .gradient-direction-right .image-metrics-number-container {
+  @apply col-start-2 col-end-12 md:col-end-7;
+}

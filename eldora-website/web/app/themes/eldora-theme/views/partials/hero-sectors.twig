@@ -1,0 +1,29 @@
+<div class="hero-sectors container-grid max-xl:px-4 mt-14 xl:mt-12 mb-33 xl:mb-39">
+  <div class="flex flex-col-reverse grid-cols-12 lg:items-center lg:grid gap-x-4 gap-y-8 max-lg:mx-0!">
+    <div class="hero-sectors-content col-start-2 col-end-7">
+      {% include 'partials/breadcrumbs.twig' %}
+      
+      <h1 class="h4 mt-8 lg:mt-16">{{ post.hero_title }}</h1>
+      <h4 class="h6 mt-4 lg:mt-5">{{ post.hero_text }}</h4>
+      {% if post.hero_file %}
+        {% include "partials/button.twig" with {
+          text: post.hero_file.title,
+          link: post.hero_file.url,
+          is_blank: true,
+          is_download: true,
+          type: "secondary",
+          size: "large",
+          additional_classes: "mt-8",
+          icon_left: "sim-card",
+        } %}
+      {% endif %}
+    </div>
+
+    <div class="hero-sectors-image col-start-7 col-end-13">
+      <picture>
+        <source srcset="{{ imgproxy(post.hero_image.sizes.large, 'resize:fit:1600:0/auto:format/quality:75') }}" media="(min-width: 1024px)">
+        <img src="{{ imgproxy(post.hero_image.url, 'resize:fit:800:0/auto:format/quality:75') }}" alt="{{ post.hero_image.alt }}" class="w-full aspect-4/3 object-cover rounded-tl-3xl rounded-br-3xl">
+      </picture>
+    </div>
+  </div>
+</div>

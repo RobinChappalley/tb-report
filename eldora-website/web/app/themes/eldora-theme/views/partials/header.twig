@@ -1,0 +1,269 @@
+<header
+  class="container-grid xl:pt-11 max-xl:px-4 max-xl:top-0 max-xl:left-0 max-xl:w-full z-50 relative"
+  :class="{
+    'gradient-up overflow-y-scroll max-xl:z-50 max-xl:absolute!': mobileIsOpen,
+    '{{ theme_color == 'eldora' ? 'max-xl:bg-theme-900' : 'max-xl:bg-theme-800' }}': mobileIsOpen
+  }"
+>
+  <div class="grid-cols-12 xl:grid">
+    <div
+      class=" max-xl:pt-8 xl:col-start-2 xl:col-end-12 xl:grid xl:grid-cols-[max-content_auto_max-content_max-content] xl:items-center gap-x-4"
+      :class="{
+        'max-xl:grid max-xl:h-dvh': mobileIsOpen,
+        'max-xl:flex max-xl:justify-between': !mobileIsOpen,
+      }"
+      x-data="{
+        activeSubmenu: null,
+        isMobile: window.innerWidth < 1280
+      }"
+      @resize.window="
+        isMobile = window.innerWidth < 1280;
+        if (!isMobile && mobileIsOpen) {
+          mobileIsOpen = false;
+          activeSubmenu = null;
+        }
+        if (isMobile) {
+          document.querySelectorAll('[x-data]').forEach(el => {
+            if (el._x_dataStack && el._x_dataStack[0] && el._x_dataStack[0].isOpen) {
+              el._x_dataStack[0].isOpen = false;
+            }
+          });
+        }
+      "
+    >
+
+      {# Logo / Back Button #}
+      <div class="xl:col-start-1 flex pt-2">
+        {# Logo - Hidden on mobile when submenu is active #}
+        <a
+          href="{{ current_language_home_url }}"
+          class="shrink-0 link no-underline"
+          :class="{ 'hidden': activeSubmenu !== null && window.innerWidth < 1280 }"
+        >
+          <img class="{{ theme_color == 'education' ? 'w-[110px]' : 'w-[89px]' }}  xl:w-[143px] xl:mr-4 xl:mb-2" src="{{ theme.path }}/assets/images/logo-{{ theme_color }}-{{ current_language }}.svg" alt="Eldora" />
+        </a>
+
+        {# Back Button - Shown on mobile when submenu is active #}
+        <button
+          @click="activeSubmenu = null"
+          class="xl:hidden flex text-theme-50 cursor-pointer"
+          x-show="activeSubmenu !== null && window.innerWidth < 1280"
+        >
+          <svg class="size-8 rotate-180">
+            <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#arrow-right" />
+          </svg>
+          <span class="text-sm pt-2">{{ __('header.back', 'eldora-theme') }}</span>
+        </button>
+      </div>
+
+      {# Mobile Menu Toggle #}
+      <div class="xl:hidden col-start-2 justify-self-end flex h-full">
+        <div
+          class="flex items-center gap-3 cursor-pointer"
+          @click="mobileIsOpen = true; window.scrollTo(0, 0)"
+          x-show="!mobileIsOpen"
+        >
+          <span class="text-sm">{{ __('header.menu', 'eldora-theme') }}</span>
+          <svg class="size-8 shrink-0">
+            <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#menu" />
+          </svg>
+        </div>
+
+        <div
+          class="cursor-pointer pt-2"
+          @click="mobileIsOpen = false; activeSubmenu = null"
+          x-show="mobileIsOpen"
+          x-cloak
+        >
+          <svg class="size-8 shrink-0 mr-2 bg-theme-800 rounded-[4px] p-2">
+            <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#close" />
+          </svg>
+        </div>
+      </div>
+
+      {# Nav #}
+      <div
+        class="xl:col-start-2 flex gap-10 max-xl:col-span-2 max-xl:mb-10 xl:!flex"
+        :class="{ 'max-xl:hidden': !mobileIsOpen && isMobile }"
+        x-show="!isMobile || mobileIsOpen"
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="-translate-x-5 opacity-0"
+        x-transition:enter-end="translate-x-0 opacity-100"
+        x-cloak
+      >
+        {% if header.nav %}
+          {# Main Navigation #}
+          <div
+            class="gap-11 xl:gap-10 flex max-xl:flex-col w-full xl:items-center"
+            x-show="activeSubmenu === null || window.innerWidth >= 1280"
+          >
+            {% for item in header.nav.get_items %}
+              {% set has_children = item.children|length > 0 %}
+              {% set item_index = loop.index0 %}
+              {% set is_current = item.current %}
+              {% set arrow_bg_class = not is_current and theme_color == 'eldora' ? 'bg-theme-700' : (not is_current ? 'bg-theme-800' : '') %}
+
+              <div class="xl:relative" x-data="{ isOpen: false }" @click.away="isOpen = false">
+                {% if has_children %}
+                  {# Parent with children #}
+                  <div class="flex gap-3 items-center max-xl:justify-between">
+                    <a
+                      href="{{ item.link }}"
+                      class="text-xl xl:h-fit xl:text-base text-theme-50 flex items-center link {{ is_current ? 'xl:underline decoration-1 underline-offset-8' : 'no-underline' }}"
+                      @click.prevent="if (window.innerWidth < 1280) { activeSubmenu = {{ item_index }} } else { isOpen = !isOpen }"
+                    >
+                      {{ item.title }}
+                    </a>
+
+                    {# Mobile arrow icon #}
+                    <svg
+                      class="xl:hidden size-8 mr-2 shrink-0 cursor-pointer rounded-full {{ arrow_bg_class }}"
+                      @click="activeSubmenu = {{ item_index }}"
+                    >
+                      <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#arrow-right" />
+                    </svg>
+
+                    {# Desktop arrow icon #}
+                    <svg
+                      class="hidden xl:block size-6 shrink-0 cursor-pointer rounded-full transition-all duration-200"
+                      :class="isOpen ? ('{{ theme_color == 'eldora' ? 'bg-theme-400 -rotate-90' : 'bg-theme-800 -rotate-90' }}') : 'rotate-90'"
+                      @click="isOpen = !isOpen"
+                    >
+                      <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#arrow-right" />
+                    </svg>
+                  </div>
+
+                  {# Desktop Dropdown Background Overlay #}
+                  <div
+                    x-show="isOpen && window.innerWidth >= 1280"
+                    class="fixed top-0 left-0 w-screen h-[20vh] min-h-[450px] bg-gradient-to-b from-theme-800 to-theme-700 -z-1"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 translate-y-1"
+                  >
+                  </div>
+                  {# Desktop Dropdown Background Overlay opacity 80#}
+                  <div
+                    x-show="isOpen && window.innerWidth >= 1280"
+                    class="fixed top-0 left-0 w-screen h-screen bg-theme-900 opacity-80 -z-2"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="translate-y-1"
+                    x-transition:enter-end="translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="translate-y-0"
+                    x-transition:leave-end="translate-y-1"
+                  >
+                  </div>
+
+                  {# Desktop Dropdown Content #}
+                  <div
+                    x-show="isOpen && window.innerWidth >= 1280"
+                    x-transition:enter="transition ease-out duration-200"
+                    x-transition:enter-start="opacity-0 translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave-start="opacity-100 translate-y-0"
+                    x-transition:leave-end="opacity-0 translate-y-1"
+                    class="xl:absolute xl:top-12 xl:left-4 xl:min-w-[400px] flex flex-col gap-5"
+                    @click.stop
+                  >
+                    {% for child in item.children %}
+                      <a
+                        href="{{ child.link }}"
+                        class="block text-base text-theme-50 no-underline hover:underline! underline-offset-8 link decoration-1 {{ child.current ? 'underline' : 'no-underline' }}"
+                        @click="isOpen = false"
+                      >
+                        {{ child.title }}
+                      </a>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {# Parent without children #}
+                  <a
+                    href="{{ item.link }}"
+                    class="text-xl xl:h-fit xl:text-base text-theme-50 flex items-center justify-between link {{ is_current ? 'xl:underline decoration-1 underline-offset-8' : 'no-underline' }}"
+                  >
+                    {{ item.title }}
+                    <svg class="xl:hidden size-8 mr-2 shrink-0 rounded-full {{ arrow_bg_class }}">
+                      <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#arrow-right" />
+                    </svg>
+                  </a>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+
+          {# Mobile Submenu Navigation #}
+          {% for item in header.nav.get_items %}
+            {% set has_children = item.children|length > 0 %}
+            {% set item_index = loop.index0 %}
+            {% if has_children %}
+              <div
+                class="max-xl:flex max-xl:flex-col max-xl:w-full"
+                x-show="activeSubmenu === {{ item_index }} && window.innerWidth < 1280"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="-translate-x-5 opacity-0"
+                x-transition:enter-end="translate-x-0 opacity-100"
+              >
+                <div class="flex flex-col gap-11">
+                  {% for child in item.children %}
+                    {% set child_bg_class = not child.current and theme_color == 'eldora' ? 'bg-theme-700' : (not child.current ? 'bg-theme-800' : '') %}
+                    <a
+                      href="{{ child.link }}"
+                      class="text-xl text-theme-50 flex items-center justify-between link no-underline"
+                    >
+                      {{ child.title }}
+                      <svg class="size-8 shrink-0 rounded-full mr-2 {{ child_bg_class }}">
+                        <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#arrow-right" />
+                      </svg>
+                    </a>
+                  {% endfor %}
+                </div>
+              </div>
+            {% endif %}
+          {% endfor %}
+        {% endif %}
+      </div>
+
+      {# Language Selector & Contact Button #}
+      <div
+        class="max-xl:pb-8 xl:justify-self-end max-xl:self-end xl:col-start-3 col-span-2 flex items-center max-xl:flex-row-reverse max-xl:justify-between max-xl:w-full gap-6"
+        :class="{ 'max-xl:opacity-0 max-xl:hidden': !mobileIsOpen, 'max-xl:opacity-100': mobileIsOpen }"
+        x-cloak
+      >
+        {% if languages|length > 1 %}
+          <div class="flex items-center gap-1 max-xl:h-full">
+            <select
+              name="languages"
+              class="text-sm cursor-pointer appearance-none uppercase"
+              onchange="location = this.value"
+            >
+              {% for code, language in languages %}
+                <option value="{{ language.url }}" {{ current_language == code ? 'selected' }}>
+                  {{ code }}
+                </option>
+              {% endfor %}
+            </select>
+            <svg class="size-[20px]">
+              <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#world" />
+            </svg>
+          </div>
+        {% endif %}
+
+        <div>
+          {% include "partials/button.twig" with {
+            text: header.contact_link.title,
+            link: header.contact_link.url,
+            is_blank: header.contact_link.target ? true : false,
+            type: "primary",
+            size: "medium",
+          } %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</header>

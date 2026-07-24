@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "eldora/gradient-container",
+  "version": "0.1.0",
+  "title": "Gradient",
+  "category": "design",
+  "icon": "tide",
+  "description": "Bloc gradient pour Guttenberg.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "id": {
+      "type": "string"
+    }
+  },
+  "textdomain": "eldora",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "viewScript": "file:./view.js"
+}

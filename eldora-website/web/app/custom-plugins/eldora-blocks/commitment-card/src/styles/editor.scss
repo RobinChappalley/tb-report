@@ -1,0 +1,40 @@
+.commitment-card-preview {
+  box-sizing: border-box;
+  background-color: #171b23;
+  border-radius: 8px;
+  padding: 28px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.commitment-card-preview .header-title {
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.commitment-card-preview .title {
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 125%;
+}
+
+.commitment-card-preview .description {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 125%;
+}
+
+.commitment-card-preview .commitment-card-arrow {
+  background: #212631;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html {{ site.language_attributes }}>
+    {% block head %}
+        {% include 'partials/head.twig' %}
+    {% endblock %}
+
+    <body class="theme-{{ theme_color }} {{ body_class }} {{ theme_color == 'eldora' ? 'bg-eldora-500' : 'bg-theme-800' }}" x-data="{ mobileIsOpen: false }" :class="{ 'overflow-hidden': mobileIsOpen }">
+        {{ function('wp_body_open') }}
+        
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MKVFSQP8"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+
+        <a class="skip-link screen-reader-text" href="#content">{{ _e('Skip to content') }}</a>
+        
+        <div :class="{ '{{ is_404 ? '' : 'gradient-up' }}': !mobileIsOpen }">
+            {% block header %}
+                {% include 'partials/header.twig' %}
+            {% endblock %}
+
+            {% block hero %}
+                {% if not is_404 %}
+                    {% if is_homepage %}
+                        {% include 'partials/hero-homepage.twig' %}
+                    {% elseif is_hero_single %}
+                        {% include 'partials/hero-sectors.twig' %}
+                    {% elseif is_hero_news %}
+                        {% include 'partials/hero-news.twig' %}
+                    {% else %}
+                        {% include 'partials/hero-text-center.twig' %}
+                    {% endif %}
+                {% endif %}
+            {% endblock %}
+
+        </div>
+
+        {% if popup.is_visible == true %}
+            {% include 'partials/pop-up.twig' %}
+        {% endif %}
+
+        <section id="content" class="content-wrapper">
+            <div class="wrapper">
+                {% block content %}
+                    Sorry, no content
+                {% endblock %}
+            </div>
+        </section>
+
+        {% block footer %}
+            {% include 'partials/footer.twig' %}
+        {% endblock %}
+        {{ function('wp_footer') }}
+        {% do action('get_footer') %}
+    </body>
+</html>

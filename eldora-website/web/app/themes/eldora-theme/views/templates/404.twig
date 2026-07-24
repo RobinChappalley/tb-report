@@ -1,0 +1,23 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+    <div class="container-grid text-center mt-20 mb-50">
+        <div>
+            <img class="w-[168px] mx-auto" src="{{ theme.path }}/assets/images/404.svg" alt="404" />
+        </div>
+        <div class="my-9">
+            <div class="text-white text-lg">{{ __('404.title', 'eldora-theme') }}</div>
+            <div class="text-eldora-100 text-base mt-2 max-w-[470px] mx-auto">{{ __('404.text', 'eldora-theme') }}</div>
+        </div>
+        <div>
+            {% include "partials/button.twig" with {
+                text: __('404.button', 'eldora-theme'),
+                link: site.url,
+                is_blank: false,
+                type: "primary",
+                size: "medium",
+                additional_classes: "mx-auto",
+            } %}
+        </div>
+    </div>
+{% endblock %}

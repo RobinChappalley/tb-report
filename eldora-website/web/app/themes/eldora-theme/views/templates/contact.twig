@@ -1,0 +1,116 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+    <div class="container-grid mb-22">
+        <div class="xl:grid grid-cols-12">
+            <div class="xl:col-span-10 xl:col-start-2 lg:grid grid-cols-2 gap-20">
+                <h2 class="text-h-4xl font-bricolage">
+                    {{ __('contact.title', 'eldora-theme') }}
+                </h2>
+                {# Address  & contact#}
+                <div>
+                    <h3 class="text-h-2xl font-bricolage mb-4">
+                        {{ __('contact.address.title', 'eldora-theme') }}
+                    </h3>
+                    <div class="space-y-6 mb-11">
+                        <div class="text-neutral-100">
+                            <div>
+                                {{ __('contact.address.content.title', 'eldora-theme') }}
+                            </div>
+                            <div>
+                                {{ __('contact.address.content.road', 'eldora-theme') }}
+                            </div>
+                            <div>
+                                {{ __('contact.address.content.place', 'eldora-theme') }}
+                            </div>
+                            <div>
+                                {{ __('contact.address.content.country', 'eldora-theme') }}
+                            </div>
+                        </div>
+                        <div>
+                        {% set contact_email = __('contact.button-mail.email', 'eldora-theme') %}
+                        {% include 'partials/button.twig' with {
+                            text: __('contact.button-mail.text', 'eldora-theme'),
+                            link: "mailto:" ~ contact_email,
+                            is_blank: false,
+                            type: "primary",
+                            size: "medium",
+                            icon_left: "mail",
+                        } %}
+                        </div>
+                        <div>
+                        {% set contact_phone = __('contact.button-tel.phone', 'eldora-theme') %}
+                        {% include 'partials/button.twig' with {
+                            text: __('contact.button-tel.text', 'eldora-theme'),
+                            link: "tel:" ~ contact_phone,
+                            is_blank: false,
+                            type: "secondary",
+                            size: "medium",
+                            icon_left: "phone",
+                        } %}
+                        </div>
+                        <div>
+                        {% set contact_sms = __('contact.button-sms.phone', 'eldora-theme') %}
+                        {% include 'partials/button.twig' with {
+                            text: __('contact.button-sms.text', 'eldora-theme'),
+                            link: "sms:" ~ contact_sms,
+                            is_blank: false,
+                            type: "secondary",
+                            size: "medium",
+                            icon_left: "chat",
+                        } %}
+                        </div>
+                    </div>
+                    {# social media #}
+                    <h3 class="text-h-2xl font-bricolage mb-4">
+                        {{ __('contact.social-media.title', 'eldora-theme') }}
+                    </h3>
+                    <div class="gap-4 flex mb-11">
+                        {% include 'partials/button.twig' with {
+                            text: "",
+                            link: socials.facebook,
+                            is_blank: true,
+                            type: "secondary",
+                            size: "icon-only",
+                            icon_left: "facebook",
+                        } %}
+                        {% include 'partials/button.twig' with {
+                            text: "",
+                            link: socials.instagram,
+                            is_blank: true,
+                            type: "secondary",
+                            size: "icon-only",
+                            icon_left: "instagram",
+                        } %}
+                        {% include 'partials/button.twig' with {
+                            text: "",
+                            link: socials.linkedin,
+                            is_blank: true,
+                            type: "secondary",
+                            size: "icon-only",
+                            icon_left: "linkedin",
+                        } %}
+                        {% include 'partials/button.twig' with {
+                            text: "",
+                            link: socials.youtube,
+                            is_blank: true,
+                            type: "secondary",
+                            size: "icon-only",
+                            icon_left: "youtube",
+                        } %}
+                    </div>
+                    {# map #}
+                    <h3 class="text-h-2xl font-bricolage mb-4">
+                        {{ __('contact.map.title', 'eldora-theme') }}
+                    </h3>
+                    <div class="mb-8 lg:mb-10 aspect-square overflow-hidden rounded-lg">
+                        <img src="{{ imgproxy(post.map_image.sizes.large, 'resize:fit:1200:0/auto:format/quality:75') }}" alt="{{ post.map_image.alt }}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="bg-eldora-700 rounded-lg px-6 py-7 flex flex-col justify-between gap-10">
+                        {% include 'partials/newsletter.twig' %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

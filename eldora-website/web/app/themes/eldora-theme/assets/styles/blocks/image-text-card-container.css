@@ -1,0 +1,7 @@
+.image-text-card-container {
+  @apply xl:grid grid-cols-12 mb-24;
+}
+
+.image-text-card-container .children-container {
+  @apply xl:col-span-10 xl:col-start-2 md:grid grid-cols-2 gap-13 max-md:flex max-md:flex-col max-md:gap-14;
+}

@@ -1,0 +1,30 @@
+.gutenberg-blocks ul,
+.gutenberg-blocks ol {
+  @apply mb-12 ml-5 text-base text-neutral-100;
+}
+
+.gutenberg-blocks ul:has(+ ul),
+.gutenberg-blocks ol:has(+ ol),
+.gutenberg-blocks ul:has(+ ol),
+.gutenberg-blocks ol:has(+ ul),
+.gutenberg-blocks ul:has(+ p),
+.gutenberg-blocks ol:has(+ p) {
+  @apply mb-4;
+}
+
+.gutenberg-blocks ul {
+  @apply list-disc;
+}
+.gutenberg-blocks ol {
+  @apply list-decimal;
+}
+
+.gutenberg-blocks ul li,
+.gutenberg-blocks ol li {
+  @apply mb-2 last:mb-0;
+}
+
+.gutenberg-blocks ul li ul,
+.gutenberg-blocks ol li ol {
+  @apply mt-2 mb-0;
+}

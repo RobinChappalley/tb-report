@@ -1,0 +1,7 @@
+.pole-card-container {
+  @apply flex max-md:flex-col gap-4 mb-8;
+}
+
+.pole-card-container > div {
+  @apply flex-1;
+}

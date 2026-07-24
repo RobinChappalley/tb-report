@@ -1,0 +1,28 @@
+.accordion {
+  @apply bg-theme-primary p-5 lg:p-6 rounded-lg mb-4;
+}
+
+.accordion .header-area {
+  @apply flex justify-between gap-5 cursor-pointer w-full text-left;
+}
+
+.accordion .header-area .subtitle {
+  @apply mt-2 text-theme-300;
+}
+
+.accordion .header-area .icon {
+  @apply size-8 text-white transition-transform bg-theme-800 rounded-full;
+}
+
+/* Added like that so the accordion opening / closing animation don't "jump" */
+.accordion .inner-blocks-area > *:first-child {
+  @apply mt-5 lg:mt-6;
+}
+
+.accordion .inner-blocks-area > *:last-child {
+  @apply mb-0!;
+}
+
+.accordion.open .header-area .icon {
+  @apply -rotate-45 bg-transparent;
+}

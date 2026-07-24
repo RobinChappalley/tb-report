@@ -1,0 +1,35 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "eldora/media",
+  "version": "0.1.0",
+  "title": "Média",
+  "category": "media",
+  "icon": "format-image",
+  "description": "Bloc Média pour Gutenberg",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "id": {
+      "type": "string"
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "imageAlt": {
+      "type": "string"
+    },
+    "mediaSize": {
+      "type": "object"
+    },
+    "videoUrl": {
+      "type": "string"
+    }
+  },
+  "textdomain": "eldora",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "viewScript": "file:./view.js"
+}

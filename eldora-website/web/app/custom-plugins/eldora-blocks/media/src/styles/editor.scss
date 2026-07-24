@@ -1,0 +1,11 @@
+.media-preview .image,
+.media-preview .video-container iframe {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.media-preview .video-container iframe {
+  pointer-events: none; // To block the start on the video when clicking and instead opening Gutenberg block settings
+}

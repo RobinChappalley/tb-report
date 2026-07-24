@@ -1,0 +1,71 @@
+.social-post-cards-container {
+    @apply xl:grid grid-cols-12 mb-32;
+}
+
+.social-post-cards {
+    @apply md:grid grid-cols-10 gap-5 xl:col-span-10 xl:col-start-2;
+}
+
+.social-post-cards-title {
+    @apply col-span-4 text-h-4xl font-bricolage max-md:mb-10;
+}
+
+.social-post-cards-list-content {
+    @apply col-span-6;
+}
+
+.social-post-cards-list {
+    @apply flex flex-col gap-4;
+}
+
+.social-post-card {
+    @apply md:grid grid-cols-2 bg-eldora-700 rounded-lg overflow-hidden;
+}
+
+.social-post-card-image {
+    @apply max-md:aspect-3/2 w-full md:h-55 relative;
+}
+
+.social-post-card-image img {
+    @apply w-full h-full object-cover;
+}
+
+.social-post-card-image svg {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-8 drop-shadow-lg;
+}
+
+.social-post-card-content {
+    @apply pt-5 pl-5 pb-10 pr-11 flex flex-col gap-2.5 relative;
+}
+
+.social-post-card-category {
+    @apply text-xs uppercase font-medium tracking-widest;
+}
+
+.social-post-card-text {
+    @apply line-clamp-4 text-sm;
+}
+
+.social-post-card-link-container {
+    @apply flex items-center gap-2;
+}
+
+.social-post-card-icon svg {
+    @apply size-10;
+}
+
+.social-post-card-link-container svg {
+    @apply size-2.5;
+}
+
+.social-post-card-link {
+    @apply text-sm text-eldora-100;
+}
+
+.social-post-card-icon {
+    @apply absolute bottom-3.5 right-3.5 text-eldora-50;
+}
+
+.social-post-cards-show-more {
+    @apply text-sm mt-6 underline underline-offset-7;
+}

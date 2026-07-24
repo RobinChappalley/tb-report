@@ -1,0 +1,38 @@
+.accordion-preview .block-list-appender {
+  position: initial;
+}
+
+.accordion-preview {
+  background-color: #171b23;
+  padding: 24px;
+  position: relative;
+  border-radius: 8px;
+}
+
+.accordion-preview .title {
+  font-family: "Bricolage";
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.accordion-preview .subtitle {
+  font-family: "Bricolage";
+  font-size: 20px;
+  font-weight: 600;
+  color: #6a6e75;
+  padding-left: 0;
+  margin-bottom: 24px;
+}
+
+.accordion-preview .icon {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 32px;
+  height: 32px;
+}
+
+.accordion-preview .icon svg {
+  fill: white;
+}

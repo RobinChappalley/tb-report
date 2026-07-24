@@ -1,0 +1,40 @@
+.h1,
+.gutenberg-blocks h1.wp-block-heading {
+  @apply text-h-7xl font-bricolage;
+  word-break: break-word;
+}
+
+.h2,
+.gutenberg-blocks h2.wp-block-heading {
+  @apply text-h-6xl font-bricolage;
+  word-break: break-word;
+}
+
+.h3,
+.gutenberg-blocks h3.wp-block-heading {
+  @apply text-h-5xl font-bricolage;
+  word-break: break-word;
+}
+
+.h4,
+.gutenberg-blocks h4.wp-block-heading {
+  @apply text-h-4xl font-bricolage;
+  word-break: break-word;
+}
+
+.h5,
+.gutenberg-blocks h5.wp-block-heading {
+  @apply text-h-3xl font-bricolage;
+  word-break: break-word;
+}
+
+.h6,
+.gutenberg-blocks h6.wp-block-heading {
+  @apply text-h-2xl font-bricolage;
+  word-break: break-word;
+}
+
+.h7 {
+  @apply text-h-xl font-bricolage block; /* Block because h7 doesn't exist normally and it's has no default display and since we generally need to add margin-bottom */
+  word-break: break-word;
+}

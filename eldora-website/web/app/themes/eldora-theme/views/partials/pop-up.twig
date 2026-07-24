@@ -1,0 +1,72 @@
+<div
+  x-data="{ 
+    popupOpen: !sessionStorage.getItem('popupShown'),
+    closePopup() {
+      this.popupOpen = false;
+      sessionStorage.setItem('popupShown', 'true');
+    }
+  }"
+  x-show="popupOpen"
+  x-transition:leave="transition ease-in duration-200"
+  x-transition:leave-start="opacity-100"
+  x-transition:leave-end="opacity-0"
+  class="fixed inset-0 bg-eldora-900/70 z-50"
+  data-popup-type="{{ popup.has_video ? 'video' : 'image' }}"
+>
+  <div class="px-4 py-6 w-full h-full flex justify-end items-end">
+    <div class="bg-linear-to-b from-eldora-500 to-eldora-700 w-full h-full rounded-lg max-w-115 p-2 relative flex flex-col overflow-hidden">
+      <div class="flex-1 overflow-y-auto">
+        {% if popup.image %}
+            <div class="rounded-md overflow-hidden relative {{ popup.has_video ? 'aspect-video' : 'aspect-square' }}">
+            <img
+              src="{{ imgproxy(popup.image.url, 'resize:fit:1200:0/auto:format/quality:75') }}"
+              alt="{{ popup.image.alt ?: popup.title }}"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            >
+            {% if popup.has_video %}
+              <a @click="closePopup()" href="{{ popup.button.url }}" class="absolute inset-0 flex items-center justify-center">
+                <svg class="size-12">
+                  <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#play" />
+                </svg>
+              </a>
+            {% endif %}
+            <button @click="closePopup()" class="absolute top-2 right-2 p-2 bg-eldora-500 rounded-md flex items-center justify-center cursor-pointer">
+              <svg class="size-4">
+                <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#close" />
+              </svg>
+            </button>
+          </div>
+        {% endif %}
+
+        <div class="px-4 md:px-6 {{ popup.image ? 'pt-8' : 'pt-16' }}">
+          <div class="mb-4 space-y-2 font-bricolage">
+          {% if popup.title %}
+            <h2 class="text-h-3xl">{{ popup.title }}</h2>
+          {% endif %}
+
+          {% if popup.subtitle %}
+            <h3 class="text-h-xl">{{ popup.subtitle }}</h3>
+          {% endif %}
+          </div>
+
+          {% if popup.text %}
+            <p class="text-base">{{ popup.text }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% if popup.button and popup.button.url %}
+        <div @click="closePopup()" class="p-4 mt-auto shrink-0 bg-linear-to-t from-eldora-700/60 to-transparent">
+          {% include 'partials/button.twig' with {
+            text: popup.button.title ?: popup.title,
+            link: popup.button.url,
+            type: 'primary',
+            size: 'large',
+            additional_classes: 'w-full flex justify-center',
+            is_blank: popup.button.target == '_blank',
+          } %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

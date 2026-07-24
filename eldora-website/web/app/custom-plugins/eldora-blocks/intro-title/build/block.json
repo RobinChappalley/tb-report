@@ -1,0 +1,29 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "eldora/intro-title",
+  "version": "0.1.0",
+  "title": "Titre d'introduction",
+  "category": "text",
+  "icon": "location",
+  "description": "Bloc titre d'introduction pour Guttenberg.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "id": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "anchor": {
+      "type": "string"
+    }
+  },
+  "textdomain": "eldora",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "viewScript": "file:./view.js"
+}

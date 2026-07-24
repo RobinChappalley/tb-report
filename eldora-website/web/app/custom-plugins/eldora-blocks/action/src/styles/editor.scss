@@ -1,0 +1,22 @@
+.action-preview {
+  padding: 8px 12px;
+  background-color: #171b23;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  .icon {
+    width: 21px;
+    height: 21px;
+  }
+
+  .add-image-button {
+    height: 28px;
+    box-shadow: none;
+  }
+
+  .add-image-button span {
+    margin-right: 4px;
+  }
+}

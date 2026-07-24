@@ -1,0 +1,21 @@
+.embla,
+.embla-mobile-slider {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+}
+
+.embla__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.embla-mobile-slider .embla__slide {
+  @apply max-sm:pr-8 sm:pr-4 sm:basis-1/2 lg:pr-8;
+}
+
+.embla-mobile-slider .embla__slide:not(:first-child) {
+  @apply max-sm:-ml-8;
+}

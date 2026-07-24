@@ -1,0 +1,47 @@
+services:
+  dev:
+    build: .
+    command: docker-as-wait db:3306 -- docker-as-wordpress apache-server
+    depends_on:
+      - db
+      - mail
+    environment:
+      WP_ENV: "development"
+      WP_HOME: "http://localhost:8080"
+      WP_SITEURL: "http://localhost:8080/wp"
+      IMGPROXYURL: "${IMGPROXYURL}"
+      IMGPROXYKEY: "${IMGPROXYKEY}"
+      IMGPROXYSALT: "${IMGPROXYSALT}"
+      DATABASE_URL: "mysql://wp:wp@db/wp_development"
+      AUTH_KEY: "gH_BGI4H>oq|l>;EcgfQ+F)FGo`U:Gsx7`IN4=.wJl%at;9ZG@9XQ=VjcIT;|V)}"
+      SECURE_AUTH_KEY: "f`B`&CWfmfmWlg^vGXk{Itu9,m!I?P0mh|vAUTrx>0RMbfhIuM}s*/+ZWEX7rX>e"
+      LOGGED_IN_KEY: "eHgkvCqk_/rA+BH,hbSS%.5>#J90@Bi{d`GwjK3jj16RNR^.a:apuR#fY{=Rn3rP"
+      NONCE_KEY: "X6RWC|KmQB0^--*1Cr4*d;U2LeYZGOM[6rHE@OBqu5Ulziq=Ecdp5oyd!Mo#o3:7"
+      AUTH_SALT: "Ap`B#C+jFZMBnAL48oVhU&F>lX*w@O{/wN+rjp|A.`<|nmAN<G>J@I@K)UzRfLst"
+      SECURE_AUTH_SALT: "`a#]0.^zKI(Y!/iw0Zi(uQ7SwbeYZzu9j2uYFqR2%E1-wj+y`N7c8r9tCrr#{IDuj"
+      LOGGED_IN_SALT: "Wl|qgQaEB-sFHJ_wmJ^3DYvOd5IE/M`330iEO4n{zmu5`QF6lj>KJ{!q?h2d@u1l"
+      NONCE_SALT: "Br!Jf%_B_>sVo,qnM/yht@mgl*g-nng&PTJy-8LB<!Cd9cdM);;8YlXfMiZdf5-W"
+    restart: "no"
+    volumes:
+      - backups:/var/backups
+
+  # Database
+  db:
+    image: mariadb:10.4
+    environment:
+      MYSQL_USER: wp
+      MYSQL_PASSWORD: wp
+      MYSQL_DATABASE: wp_%
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    volumes:
+      - database:/var/lib/mysql
+
+  # Mail
+  mail:
+    image: schickling/mailcatcher
+    restart: always
+
+volumes:
+  database:
+  backups:

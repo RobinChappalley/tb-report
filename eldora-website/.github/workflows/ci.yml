@@ -1,0 +1,71 @@
+name: CI
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PHP_VERSION: 8.2
+  COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+  ACF_PRO_KEY: ${{ secrets.ACF_PRO_KEY }}
+
+jobs:
+  phpcs:
+    name: phpcs
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
+          tools: cs2pr, composer:v2
+      - uses: actions/checkout@v4
+      - run: composer install
+      - run: ./vendor/bin/phpcs --report=checkstyle | cs2pr
+
+  php-cs-fixer:
+    name: php-cs-fixer
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: mbstring, intl, gd, xml, dom, json, fileinfo, curl, zip, iconv
+          tools: cs2pr, composer:v2
+      - uses: actions/checkout@v4
+      - run: cd tools/php-cs-fixer && composer install --prefer-dist
+      - run: ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --using-cache=no --dry-run --format=checkstyle | cs2pr
+
+  check-plugins:
+    name: check-plugins
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+          bundler-cache: true
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        with:
+          files: web/app/custom-plugins/**
+      - name: Build wordpress plugins that have changes
+        if: steps.changed-files.outputs.any_changed  == 'true'
+        run: bundle exec cap staging wordpress:plugins:blocks:build CHANGED_PATHS="${{ steps.changed-files.outputs.all_changed_files }}"
+      - name: Check missing build update
+        if: steps.changed-files.outputs.any_changed  == 'true'
+        run: |
+          git add -N web/app/custom-plugins
+          git diff --exit-code --stat web/app/custom-plugins

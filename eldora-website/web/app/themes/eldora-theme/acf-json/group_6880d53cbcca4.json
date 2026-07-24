@@ -1,0 +1,106 @@
+{
+    "key": "group_6880d53cbcca4",
+    "title": "Réseaux sociaux",
+    "fields": [
+        {
+            "key": "field_6880d53cef7be",
+            "label": "Facebook",
+            "name": "facebook",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "translations": "copy_once",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "pll_default_value": ""
+        },
+        {
+            "key": "field_6880d566ef7c0",
+            "label": "Instagram",
+            "name": "instagram",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "translations": "copy_once",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "pll_default_value": ""
+        },
+        {
+            "key": "field_6880d55bef7bf",
+            "label": "Linkedin",
+            "name": "linkedin",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "translations": "copy_once",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "pll_default_value": ""
+        },
+        {
+            "key": "field_6887322b250b2",
+            "label": "Youtube",
+            "name": "youtube",
+            "aria-label": "",
+            "type": "url",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "translations": "copy_once",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "pll_default_value": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-reseaux-sociaux"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "pll_display_field_instructions": 1,
+    "modified": 1756715183
+}

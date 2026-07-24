@@ -1,0 +1,3 @@
+.gradient-container {
+  @apply col-start-1 col-end-4;
+}

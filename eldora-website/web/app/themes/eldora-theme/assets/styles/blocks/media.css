@@ -1,0 +1,4 @@
+.eldora-media iframe,
+.eldora-media .image {
+  @apply w-full aspect-video rounded-lg mb-10 object-cover;
+}

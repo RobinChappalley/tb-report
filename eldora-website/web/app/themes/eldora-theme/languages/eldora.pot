@@ -1,0 +1,425 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Eldora (ELD) Theme\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-14 12:34+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.1; php-8.2.13\n"
+"X-Domain: eldora-theme"
+
+#: Author of the theme
+msgid "Antistatique SA"
+msgstr ""
+
+#: Header
+msgid "header.menu"
+msgstr ""
+
+#: Header
+msgid "header.back"
+msgstr ""
+
+#: Footer
+msgid "footer.contact.title"
+msgstr ""
+
+#: Footer
+msgid "newsletter.title"
+msgstr ""
+
+#: Footer
+msgid "newsletter.subtitle"
+msgstr ""
+
+#: Footer
+msgid "newsletter.form.placeholder"
+msgstr ""
+
+#: Footer
+msgid "newsletter.form.button"
+msgstr ""
+
+#: Footer
+msgid "footer.website_author"
+msgstr ""
+
+#: 404
+msgid "404.title"
+msgstr ""
+
+#: 404
+msgid "404.text"
+msgstr ""
+
+#: 404
+msgid "404.button"
+msgstr ""
+
+#: Breadcrumbs
+msgid "breadcrumbs.home"
+msgstr ""
+
+#: Block numbered cards
+msgid "block.numbered-cards.show-all-cards"
+msgstr ""
+
+#: news archive form
+msgid "news.form.select"
+msgstr ""
+
+#: news archive form
+msgid "news.form.select-placeholder"
+msgstr ""
+
+#: news archive form
+msgid "news.form.select"
+msgstr ""
+
+#: news archive form
+msgid "news.form.select-placeholder"
+msgstr ""
+
+#: jobs post type
+msgid "jobs.labels.name"
+msgstr ""
+
+#: jobs post type
+msgid "jobs.labels.singular_name"
+msgstr ""
+
+#: jobs post type
+msgid "jobs.labels.add_new_item"
+msgstr ""
+
+#: jobs archive
+msgid "jobs.archive-page.title"
+msgstr ""
+
+#: jobs archive
+msgid "jobs.archive-page.description"
+msgstr ""
+
+#: publications post type
+msgid "publications.labels.name"
+msgstr ""
+
+#: publications post type
+msgid "publications.labels.singular_name"
+msgstr ""
+
+#: publications post type
+msgid "publications.labels.add_new_item"
+msgstr ""
+
+#: publications archive
+msgid "publications.archive-page.title"
+msgstr ""
+
+#: publications archive
+msgid "publications.archive-page.description"
+msgstr ""
+
+#: publications card
+msgid "publications.archive-page.read-more"
+msgstr ""
+
+#: publicationss archive
+msgid "publications.archive-page.no-items"
+msgstr ""
+
+#: presses post type
+msgid "presses.labels.name"
+msgstr ""
+
+#: presses post type
+msgid "presses.labels.singular_name"
+msgstr ""
+
+#: presses post type
+msgid "presses.labels.add_new_item"
+msgstr ""
+
+#: presses card
+msgid "presses.archive-page.read-more"
+msgstr ""
+
+#: presses archive
+msgid "presses.archive-page.no-items"
+msgstr ""
+
+#: presses archive
+msgid "presses.archive-page.title"
+msgstr ""
+
+#: presses archive
+msgid "presses.archive-page.description"
+msgstr ""
+
+#: single news
+msgid "single-news.realted-news-title"
+msgstr ""
+
+#: single news
+msgid "single-news.see-all-news-link"
+msgstr ""
+
+#: news card block
+msgid "news-card.no-news-available"
+msgstr ""
+
+#: sectors post type
+msgid "sectors.labels.name"
+msgstr ""
+
+#: sectors post type
+msgid "sectors.labels.singular_name"
+msgstr ""
+
+#: sectors post type
+msgid "sectors.labels.add_new_item"
+msgstr ""
+
+#: social_posts post type
+msgid "social_posts.labels.name"
+msgstr ""
+
+#: social_posts post type
+msgid "social_posts.labels.singular_name"
+msgstr ""
+
+#: social_posts post type
+msgid "social_posts.labels.add_new_item"
+msgstr ""
+
+#: testimonials post type
+msgid "testimonials.labels.name"
+msgstr ""
+
+#: testimonials post type
+msgid "testimonials.labels.singular_name"
+msgstr ""
+
+#: testimonials post type
+msgid "testimonials.labels.add_new_item"
+msgstr ""
+
+#: post_categories post type
+msgid "post_categories.labels.name"
+msgstr ""
+
+#: post_categories post type
+msgid "post_categories.labels.singular_name"
+msgstr ""
+
+#: post_categories post type
+msgid "post_categories.labels.add_new_item"
+msgstr ""
+
+#: contact page
+msgid "contact.title"
+msgstr ""
+
+#: contact page
+msgid "contact.address.title"
+msgstr ""
+
+#: contact page
+msgid "contact.address.content.title"
+msgstr ""
+
+#: contact page
+msgid "contact.address.content.road"
+msgstr ""
+
+#: contact page
+msgid "contact.address.content.place"
+msgstr ""
+
+#: contact page
+msgid "contact.address.content.country"
+msgstr ""
+
+#: contact page
+msgid "contact.button-mail.text"
+msgstr ""
+
+#: contact page
+msgid "contact.button-mail.email"
+msgstr ""
+
+#: contact page
+msgid "contact.button-tel.text"
+msgstr ""
+
+#: contact page
+msgid "contact.button-tel.phone"
+msgstr ""
+
+#: contact page
+msgid "contact.button-sms.text"
+msgstr ""
+
+#: contact page
+msgid "contact.button-sms.phone"
+msgstr ""
+
+#: contact page
+msgid "contact.social-media.title"
+msgstr ""
+
+#: contact page
+msgid "contact.map.title"
+msgstr ""
+
+#: contact page
+msgid "contact.map.image.url"
+msgstr ""
+
+#: contact page
+msgid "contact.map.image.alt"
+msgstr ""
+
+#: contact page
+msgid "password-page.title"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.title"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.description"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.accept"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.reject"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.customise"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.customiseDescription"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.save"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.settings.analytics_storage.title"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.settings.analytics_storage.description"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.settings.personalization_storage.title"
+msgstr ""
+
+#: leckerli
+msgid "leckerli.settings.personalization_storage.description"
+msgstr ""
+
+#: archive page title
+msgid "post.archive-page.title"
+msgstr ""
+
+#: recettes archive
+msgid "recettes.archive-page.no-posts"
+msgstr ""
+
+#: recettes archive form
+msgid "recettes.form.select"
+msgstr ""
+
+#: recettes archive form
+msgid "recettes.form.select-placeholder"
+msgstr ""
+
+#: recettes archive form
+msgid "recettes.post.tag"
+msgstr ""
+
+#: blog archive (fallback)
+msgid "blog.archive-page.no-posts"
+msgstr ""
+
+#: blog archive form (fallback)
+msgid "blog.form.select"
+msgstr ""
+
+#: blog archive form (fallback)
+msgid "blog.form.select-placeholder"
+msgstr ""
+
+#: blog post tag
+msgid "blog.post.tag"
+msgstr ""
+
+#: actualites archive
+msgid "actualites.archive-page.no-posts"
+msgstr ""
+
+#: actualites archive form
+msgid "actualites.form.select"
+msgstr ""
+
+#: actualites archive form
+msgid "actualites.form.select-placeholder"
+msgstr ""
+
+#: blog
+msgid "blog.filters.title"
+msgstr ""
+
+#: blog
+msgid "blog.filters.reset"
+msgstr ""
+
+#: blog
+msgid "blog.filters.all"
+msgstr ""
+
+#: blog
+msgid "blog.filters.apply"
+msgstr ""
+
+#: blog
+msgid "blog.no-posts.title"
+msgstr ""
+
+#: blog
+msgid "blog.no-posts.description"
+msgstr ""
+
+#: blog
+msgid "blog.no-posts.button"
+msgstr ""
+
+#: blog
+msgid "blog.no-posts-recipes.title"
+msgstr ""
+
+#: blog
+msgid "blog.no-posts-recipes.description"
+msgstr ""
+
+#: blog
+msgid "blog.no-posts-recipes.button"
+msgstr ""

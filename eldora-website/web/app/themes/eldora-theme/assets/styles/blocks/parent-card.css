@@ -1,0 +1,11 @@
+.parent-card {
+  @apply bg-eldora-700 p-6 lg:p-8 rounded-lg;
+}
+
+.parent-card > *:last-child {
+  @apply mb-0;
+}
+
+.parent-card p {
+  @apply text-base!;
+}

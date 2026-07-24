@@ -1,0 +1,104 @@
+{# Pagination #}
+<div class="xl:col-span-10 xl:col-start-2">
+    <nav class="flex justify-center items-center space-x-2">
+        {# arrow left #}
+        {% if posts.pagination.prev %}
+            <a href="{{ posts.pagination.prev.link }}" class="size-10 flex items-center justify-center bg-eldora-700 hover:bg-eldora-600 text-white rounded-md transition-colors transform rotate-180 p-2">
+                <svg className="icon">
+                    <use xlink:href="/app/themes/eldora-theme/assets/icons/icons.svg#full-arrow-right" />
+                </svg>
+            </a>
+        {% else %}
+            <div class="size-10 flex items-center justify-center bg-eldora-600 rounded-md cursor-not-allowed transform rotate-180 p-2">
+                <svg className="icon size-4">
+                    <use xlink:href="/app/themes/eldora-theme/assets/icons/icons.svg#full-arrow-right" />
+                </svg>
+            </div>
+        {% endif %}
+        
+        {# pages #}
+        <div class="flex space-x-2 text-sm">
+            {# current page #}
+            {% set current_page = null %}
+            {% for page in posts.pagination.pages %}
+                {% if 'current' in page.class %}
+                    {% set current_page = page.title %}
+                {% endif %}
+            {% endfor %}
+
+            {% set first_page = posts.pagination.pages|first %}
+            {% set last_page = posts.pagination.pages|last %}
+            {% set displayed_first = false %}
+            {% set displayed_last = false %}
+
+            {# first page #}
+            {% if current_page - 2 > first_page.title %}
+                <a href="{{ first_page.link }}" class="size-10 flex items-center justify-center bg-eldora-700 hover:bg-eldora-600 rounded-md transition-colors">
+                    {{ first_page.title }}
+                </a>
+                {% set displayed_first = true %}
+            {% endif %}
+
+            {# ... if necessary (before) #}
+            {% if current_page - 3 > first_page.title %}
+                <span class="size-10 flex items-center justify-center bg-eldora-700 rounded-md cursor-not-allowed">
+                    ...
+                </span>
+            {% endif %}
+
+            {% for page in posts.pagination.pages %}
+                {% set page_num = page.title %}
+
+                {# 2 previous pages, current page and 2 next pages #}
+                {% if page_num >= (current_page - 2) and page_num <= (current_page + 2) %}
+                    {% if page.link %}
+                        <a href="{{ page.link }}" class="size-10 flex items-center justify-center bg-eldora-700 hover:bg-eldora-600 text-gray-300 rounded-md transition-colors">
+                            {{ page.title }}
+                        </a>
+                    {% else %}
+                        <span class="size-10 flex items-center justify-center bg-eldora-600 rounded-md max-md:hidden">
+                            {{ page.title }}
+                        </span>
+                    {% endif %}
+
+                    {# mark if the first/last page is displayed #}
+                    {% if page_num == first_page.title %}
+                        {% set displayed_first = true %}
+                    {% endif %}
+                    {% if page_num == last_page.title %}
+                        {% set displayed_last = true %}
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+            {# ... if necessary (after) #}
+            {% if current_page + 3 < last_page.title %}
+                <span class="size-10 flex items-center justify-center bg-eldora-700 rounded-md cursor-not-allowed">
+                    ...
+                </span>
+            {% endif %}
+
+            {# last page #}
+            {% if not displayed_last and current_page + 2 < last_page.title %}
+                <a href="{{ last_page.link }}" class="size-10 flex items-center justify-center bg-eldora-700 hover:bg-eldora-600 rounded-md transition-colors">
+                    {{ last_page.title }}
+                </a>
+            {% endif %}
+        </div>
+        
+        {# arrow right #}
+        {% if posts.pagination.next %}
+            <a href="{{ posts.pagination.next.link }}" class="size-10 flex items-center justify-center bg-eldora-700 hover:bg-eldora-600 text-white rounded-md transition-colors p-2">
+                <svg className="icon size-4">
+                    <use xlink:href="/app/themes/eldora-theme/assets/icons/icons.svg#full-arrow-right" />
+                </svg>
+            </a>
+        {% else %}
+            <div class="size-10 flex items-center justify-center bg-eldora-600 rounded-md cursor-not-allowed p-2">
+                <svg className="icon size-4">
+                    <use xlink:href="/app/themes/eldora-theme/assets/icons/icons.svg#full-arrow-right" />
+                </svg>
+            </div>
+        {% endif %}
+    </nav>
+</div>

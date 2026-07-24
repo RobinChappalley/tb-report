@@ -1,0 +1,19 @@
+.intro-title {
+  @apply text-eldora-200 text-lg underline underline-offset-7 whitespace-nowrap;
+}
+
+.intro-title.is_active {
+    @apply text-eldora-50 no-underline!;
+}
+
+.intro-title-container {
+    @apply mb-13 lg:mb-0 lg:sticky lg:top-30 z-10 lg:pb-30;
+}
+
+.intro-title-container .intro-title-container-title { 
+    @apply text-h-2xl lg:text-h-4xl font-bricolage mb-4 lg:mb-6;
+}
+
+.intro-title-container .intro-title-container-links {
+    @apply flex lg:flex-col gap-8 lg:gap-6 max-lg:overflow-x-scroll max-lg:-mx-4 max-lg:px-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden h-6;
+}

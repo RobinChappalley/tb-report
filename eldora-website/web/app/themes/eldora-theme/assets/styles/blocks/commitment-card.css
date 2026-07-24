@@ -1,0 +1,38 @@
+.commitment-card-link {
+  @apply w-full bg-eldora-500 rounded-lg p-6 lg:p-8 flex flex-col items-start cursor-pointer h-full relative max-md:aspect-square;
+}
+
+.theme-education .commitment-card-link,
+.theme-school .commitment-card-link,
+.theme-entreprise .commitment-card-link,
+.theme-health .commitment-card-link {
+  @apply bg-theme-primary;
+}
+
+.commitment-card-link .header-title {
+  @apply text-xs font-bold uppercase tracking-widest mb-2 xl:mb-3;
+}
+
+.commitment-card-link .title {
+  @apply text-h-3xl font-bricolage max-md:mb-6 md:mb-20;
+}
+
+.commitment-card-link .description {
+  @apply text-lg text-neutral-100 w-4/5;
+}
+
+.commitment-card-link .commitment-card-arrow {
+  @apply rounded-full bg-theme-700 absolute bottom-4 right-4;
+}
+
+.commitment-card-link .commitment-card-arrow svg {
+  @apply size-8 text-white;
+}
+
+.commitment-card-container {
+  @apply xl:grid grid-cols-12;
+}
+
+.commitment-card-container-layout {
+  @apply grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2 mb-24 xl:mb-32 xl:col-span-10 xl:col-start-2;
+}

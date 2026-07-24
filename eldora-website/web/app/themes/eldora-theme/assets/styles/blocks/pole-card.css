@@ -1,0 +1,26 @@
+.pole-card-link {
+  @apply w-full bg-eldora-500 rounded-lg p-5 md:p-6 flex flex-col justify-between items-start gap-5 cursor-pointer text-neutral-100;
+}
+
+.theme-education .pole-card-link,
+.theme-school .pole-card-link,
+.theme-entreprise .pole-card-link,
+.theme-health .pole-card-link {
+  @apply bg-theme-primary;
+}
+
+.pole-card-link .pole-logo {
+  @apply h-10;
+}
+
+.pole-card-link .text {
+  @apply text-sm md:text-lg;
+}
+
+.pole-card-link .pole-arrow {
+  @apply rounded-full bg-theme-700 self-end;
+}
+
+.pole-card-link .pole-arrow svg {
+  @apply size-8 text-white;
+}

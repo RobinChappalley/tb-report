@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "eldora/pole-card-container",
+  "version": "0.1.0",
+  "title": "Pôles",
+  "category": "design",
+  "icon": "networking",
+  "description": "Bloc pôles pour Guttenberg.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "id": {
+      "type": "string"
+    }
+  },
+  "textdomain": "eldora",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "viewScript": "file:./view.js"
+}

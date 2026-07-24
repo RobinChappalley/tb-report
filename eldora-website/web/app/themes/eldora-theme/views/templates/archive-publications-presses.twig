@@ -1,0 +1,33 @@
+{% extends "layouts/base.twig" %}
+{% block content %}
+<div class="container-grid mb-24 xl:mb-30">
+    <div class="xl:grid grid-cols-12">
+        {% if items %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 xl:col-span-10 xl:col-start-2">
+                {% for item in items %}
+                    <a href="{{ item.pdf.url }}" class="w-full rounded-lg grid grid-cols-1 lg:grid-cols-2 pt-6 px-6 bg-eldora-700" target="_blank">
+                            <div class="overflow-hidden rounded-t-lg max-lg:order-2 aspect-4/3 lg:aspect-square">
+                            <img src="{{ imgproxy(item.image.sizes.large, 'resize:fit:1200:0/auto:format/quality:75') }}" alt="{{ item.image.alt }}" class="w-full h-full object-cover">
+                        </div>
+                        
+                        <div class="lg:pl-6 lg:flex flex-col justify-between">
+                            <div class="max-lg:mb-12">
+                                <div class="text-eldora-100 text-sm mb-2.5">{{ item.date }}</div>
+                                <h2 class="text-h-xl font-bricolage">{{ item.title }}</h2>
+                            </div>
+                            <div class="text-eldora-100 text-sm mb-3 lg:mb-6 flex items-center gap-2">
+                                {{ __(context_prefix ~ '.archive-page.read-more', 'eldora-theme') }}
+                                <svg class="size-3">
+                                    <use xlink:href="/app/themes/eldora-theme/assets/icons/icons.svg#sim-card" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>{{ __(context_prefix ~ '.archive-page.no-items', 'eldora-theme') }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+/* @import need to be before @tailwind */
+@import "./fonts.css" layer(base);
+@import "./container.css" layer(base);
+@import "./titles.css" layer(base);
+@import "./links.css" layer(base);
+@import "./colors.css" layer(base);
+@import "./tailwind.css" layer(base);
+@import "./gradients.css" layer(base);
+@import "./embla.css" layer(base);
+@import "./gutenberg-blocks.css" layer(base);
+@import "./password-page.css" layer(base);
+@import "./blocks/image-metrics.css" layer(base);
+@import "./blocks/full-screen-image.css" layer(base);
+@import "./blocks/text-image-grid.css" layer(base);
+@import "./blocks/image-carousel-static.css" layer(base);
+@import "./blocks/gradient-container.css" layer(base);
+@import "./blocks/numbered-cards.css" layer(base);
+@import "./blocks/actions.css" layer(base);
+@import "./blocks/two-columns.css" layer(base);
+@import "./blocks/accordion.css" layer(base);
+@import "./blocks/testimonial.css" layer(base);
+@import "./blocks/testimonials-slider.css" layer(base);
+@import "./blocks/media.css" layer(base);
+@import "./blocks/pole-card.css" layer(base);
+@import "./blocks/pole-card-container.css" layer(base);
+@import "./blocks/headings-description-card.css" layer(base);
+@import "./blocks/headings-description-card-container.css" layer(base);
+@import "./blocks/image-text-card.css" layer(base);
+@import "./blocks/image-text-card-container.css" layer(base);
+@import "./blocks/news-card-container.css" layer(base);
+@import "./blocks/parent-card.css" layer(base);
+@import "./blocks/parent-card-container.css" layer(base);
+@import "./blocks/intro-title.css" layer(base);
+@import "./blocks/social-post-cards.css" layer(base);
+@import "./blocks/commitment-card.css" layer(base);
+@import "./core-blocks/core-list.css" layer(base);
+@import "./templates/single-news.css" layer(base);
+
+/* Leckerli */
+:root {
+  --leckerli-foreground: var(--color-eldora-50);/* Texts */
+  --leckerli-background: var(--color-eldora-700);/* Backgrounds  */
+  --leckerli-primary: #80BA27;/* Call to actions */
+  --leckerli-primary-hover: var(--color-eldora-100);/* Call to actions hovered */
+  --leckerli-primary-active: var(--color-eldora-200);/* Call to actions actived */
+  --leckerli-font: var(--font-roboto);/* Font family */
+}
+
+.banner-settings-toggle span[aria-hidden="true"] {
+  padding-top: 1px;
+}
+
+.banner-settings-toggle span[aria-hidden="true"].translate-x-0:after {
+  content: url('../icons/leckerli-close-white.svg');
+}
+
+.banner-settings-toggle span[aria-hidden="true"].translate-x-5:after {
+  content: url('../icons/leckerli-check-white.svg');
+}
+
+/* Global styles */
+html,
+body {
+  @apply font-roboto antialiased text-white scroll-smooth;
+}
+
+body {
+  @apply overflow-x-hidden;
+}
+
+body b,
+body strong {
+  @apply font-medium;
+}
+
+/* Alpine.js - Hide elements hidden by default, avoid blinking when using x-show */
+[x-cloak] {
+  display: none !important;
+}

@@ -1,0 +1,28 @@
+{% extends "layouts/base.twig" %}
+
+{% block content %}
+<div class="container-grid mb-24 xl:mb-30">
+    <div class="xl:grid grid-cols-12">
+        {% if jobs %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:gap-9 xl:col-span-10 xl:col-start-2">
+                {% for job in jobs %}
+                    <a href="{{ job.link }}" class="w-full aspect-square rounded-lg overflow-hidden relative bg-gradient-to-t from-black/50 to-transparent flex flex-col-reverse">
+                        {% if job.thumbnail %}
+                            <img src="{{ imgproxy(job.thumbnail.src, 'resize:fit:1200:0/auto:format/quality:75') }}" alt="{{ job.thumbnail.alt }}" class="absolute inset-0 w-full h-full object-cover -z-10">
+                        {% endif %}
+                        <h2 class="job-title p-6 lg:p-7 z-10 text-h-xl font-bricolage w-9/10">
+                            {{ job.title }}
+                        </h2>
+                        <svg class="size-8 bg-eldora-700 rounded-full absolute bottom-6 right-6">
+                            <use xlink:href="/app/themes/eldora-theme/assets/icons/icons.svg#arrow-right" />
+                        </svg>
+                    </a>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <p>{{ __('jobs.archive-page.no-jobs', 'eldora-theme') }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

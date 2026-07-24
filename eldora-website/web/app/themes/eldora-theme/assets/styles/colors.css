@@ -1,0 +1,70 @@
+/* The body has a class based on the ACF on every page, so we set custom colors so we can have adaptive blocks for each theme colors. Used in tailwind.css for config */
+body.theme-eldora {
+  --color-theme-50: var(--color-eldora-50);
+  --color-theme-100: var(--color-eldora-100);
+  --color-theme-200: var(--color-eldora-200);
+  --color-theme-300: var(--color-eldora-300);
+  --color-theme-400: var(--color-eldora-400);
+  --color-theme-500: var(--color-eldora-500);
+  --color-theme-600: var(--color-eldora-600);
+  --color-theme-700: var(--color-eldora-700);
+  --color-theme-800: var(--color-eldora-800);
+  --color-theme-900: var(--color-eldora-900);
+  --color-theme-primary: var(--color-eldora-700);
+}
+
+body.theme-school {
+  --color-theme-50: var(--color-school-50);
+  --color-theme-100: var(--color-school-100);
+  --color-theme-200: var(--color-school-200);
+  --color-theme-300: var(--color-school-300);
+  --color-theme-400: var(--color-school-400);
+  --color-theme-500: var(--color-school-500);
+  --color-theme-600: var(--color-school-600);
+  --color-theme-700: var(--color-school-700);
+  --color-theme-800: var(--color-school-800);
+  --color-theme-900: var(--color-school-900);
+  --color-theme-primary: var(--color-school-900);
+}
+
+body.theme-education {
+  --color-theme-50: var(--color-education-50);
+  --color-theme-100: var(--color-education-100);
+  --color-theme-200: var(--color-education-200);
+  --color-theme-300: var(--color-education-300);
+  --color-theme-400: var(--color-education-400);
+  --color-theme-500: var(--color-education-500);
+  --color-theme-600: var(--color-education-600);
+  --color-theme-700: var(--color-education-700);
+  --color-theme-800: var(--color-education-800);
+  --color-theme-900: var(--color-education-900);
+  --color-theme-primary: var(--color-education-900);
+}
+
+body.theme-entreprise {
+  --color-theme-50: var(--color-entreprise-50);
+  --color-theme-100: var(--color-entreprise-100);
+  --color-theme-200: var(--color-entreprise-200);
+  --color-theme-300: var(--color-entreprise-300);
+  --color-theme-400: var(--color-entreprise-400);
+  --color-theme-500: var(--color-entreprise-500);
+  --color-theme-600: var(--color-entreprise-600);
+  --color-theme-700: var(--color-entreprise-700);
+  --color-theme-800: var(--color-entreprise-800);
+  --color-theme-900: var(--color-entreprise-900);
+  --color-theme-primary: var(--color-entreprise-900);
+}
+
+body.theme-health {
+  --color-theme-50: var(--color-health-50);
+  --color-theme-100: var(--color-health-100);
+  --color-theme-200: var(--color-health-200);
+  --color-theme-300: var(--color-health-300);
+  --color-theme-400: var(--color-health-400);
+  --color-theme-500: var(--color-health-500);
+  --color-theme-600: var(--color-health-600);
+  --color-theme-700: var(--color-health-700);
+  --color-theme-800: var(--color-health-800);
+  --color-theme-900: var(--color-health-900);
+  --color-theme-primary: var(--color-health-900);
+}

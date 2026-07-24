@@ -1,0 +1,27 @@
+.gutenberg-blocks h2.wp-block-heading {
+  @apply lg:mb-6 mb-4;
+}
+
+.gutenberg-blocks h3.wp-block-heading {
+  @apply lg:mb-5 mb-4;
+}
+
+.gutenberg-blocks h4.wp-block-heading {
+  @apply lg:mb-5 mb-4;
+}
+
+.gutenberg-blocks h5.wp-block-heading {
+  @apply lg:mb-5 mb-4;
+}
+
+.gutenberg-blocks h6.wp-block-heading {
+  @apply lg:mb-5 mb-4;
+}
+
+.theme-eldora .gutenberg-blocks p {
+  @apply mb-7 text-neutral-100 text-lg;
+}
+
+body:not(.theme-eldora) .gutenberg-blocks p {
+  @apply mb-7 text-theme-50 text-lg;
+}

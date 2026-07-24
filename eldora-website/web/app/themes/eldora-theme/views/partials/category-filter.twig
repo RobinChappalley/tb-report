@@ -1,0 +1,46 @@
+<div class="xl:col-span-10 xl:col-start-2 md:max-w-[300px]"
+     x-data="{
+         selectedCategory: '{{ selected_category }}',
+         filterPosts() {
+             let url = window.location.href;
+
+             // Remove path-based pagination (e.g., /page/2/)
+             url = url.replace(/\/page\/\d+\//g, '/');
+
+             // Create URL object to handle query parameters
+             const urlObj = new URL(url);
+
+             if (this.selectedCategory) {
+                 urlObj.searchParams.set('category', this.selectedCategory);
+             } else {
+                 urlObj.searchParams.delete('category');
+             }
+
+             // Force back to page 1 when filtering
+             urlObj.searchParams.delete('paged');
+             urlObj.searchParams.delete('page');
+
+             window.location.href = urlObj.toString();
+         }
+     }"
+    >
+    <form>
+        <select
+            name="category-filter"
+            x-model="selectedCategory"
+            x-on:change="filterPosts()"
+            class="w-full h-fit bg-eldora-700 rounded-md py-3.5 px-4 text-base border-1 border-transparent hover:border-theme-400 focus:border-theme-500 focus:outline-none mb-8 cursor-pointer appearance-none bg-[url(/app/themes/eldora-theme/assets/icons/arrow-down-white.svg)] bg-no-repeat bg-position-[center_right_20px]"
+            aria-label="{{ filter_label|default(__('blog.form.select', 'eldora-theme')) }}"
+        >
+            <option value="">{{ parent_category_name|default(filter_placeholder|default(__('blog.form.select-placeholder', 'eldora-theme'))) }}</option>
+            {% if subcategories %}
+                {% for category in subcategories %}
+                    <option value="{{ category.slug }}" {% if selected_category == category.slug %}selected{% endif %}>{{ category.name }}</option>
+                {% endfor %}
+            {% else %}
+                <!-- DEBUG: No subcategories found -->
+                <option disabled>Aucune sous-catégorie trouvée</option>
+            {% endif %}
+        </select>
+    </form>
+</div>

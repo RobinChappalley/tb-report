@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "eldora/image-metrics",
+  "version": "0.1.0",
+  "title": "Chiffre clé",
+  "category": "media",
+  "icon": "chart-bar",
+  "description": "Bloc chiffre clé pour Guttenberg.",
+  "example": {},
+  "supports": {
+    "html": false
+  },
+  "attributes": {
+    "id": {
+      "type": "string"
+    },
+    "imageUrl": {
+      "type": "string"
+    },
+    "imageAlt": {
+      "type": "string"
+    },
+    "imageSizes": {
+      "type": "object"
+    },
+    "gradientDirection": {
+      "type": "enum",
+      "default": "left",
+      "enum": [
+        "left",
+        "right"
+      ]
+    },
+    "focalPoint": {
+      "type": "object",
+      "default": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "textdomain": "eldora",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "viewScript": "file:./view.js"
+}

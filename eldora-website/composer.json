@@ -1,0 +1,98 @@
+{
+    "name": "antistatique/eldora",
+    "type": "project",
+    "description": "WordPress for the Eldora website",
+    "homepage": "https://eldora.ch/",
+    "authors": [
+        {
+            "name": "Antistatique SA",
+            "role": "Development Agency"
+        },
+        {
+            "name": "Dessauges Antoine",
+            "role": "Developer at Antistatique SA"
+        },
+        {
+            "name": "Tiago Pinto Monteiro",
+            "role": "Developer at Antistatique SA"
+        }
+    ],
+    "repositories": {
+        "antistatique": {
+            "type": "composer",
+            "url": "https://repo.packagist.com/antistatique/"
+        },
+        "theme": {
+            "type": "path",
+            "url": "./web/app/themes/eldora-theme/",
+            "options": {
+                "symlink": false
+            }
+        },
+        "custom-plugins": {
+            "type": "path",
+            "url": "./web/app/custom-plugins/*",
+            "options": {
+                "symlink": true
+            }
+        },
+        "0": {
+            "type": "composer",
+            "url": "https://wpackagist.org",
+            "only": [
+                "wpackagist-plugin/*",
+                "wpackagist-theme/*"
+            ]
+        }
+    },
+    "require": {
+        "php": ">=8.2",
+        "antistatique/advanced-custom-fields-pro": "^6.4",
+        "antistatique/eldora-blocks": "*",
+        "antistatique/eldora-theme": "*",
+        "antistatique/wp-plugin-filebird-pro": "^6.4",
+        "antistatique/wp-plugin-polylang-pro": "^3.6",
+        "composer/installers": "^2.2",
+        "oscarotero/env": "^2.1",
+        "roots/bedrock-autoloader": "^1.0",
+        "roots/bedrock-disallow-indexing": "^2.0",
+        "roots/wordpress": "^6.9",
+        "roots/wp-config": "1.0.0",
+        "vlucas/phpdotenv": "^5.5",
+        "wpackagist-plugin/acf-options-for-polylang": "^2.0",
+        "wpackagist-plugin/loco-translate": "^2.8",
+        "wpackagist-plugin/redirection": "^5.5",
+        "wpackagist-plugin/webp-express": "^0.25.9",
+        "wpackagist-plugin/wp-mail-smtp": "^4.5",
+        "yoast/wordpress-seo": "^27.4"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest",
+        "squizlabs/php_codesniffer": "^3.13"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "allow-plugins": {
+            "composer/installers": true,
+            "roots/wordpress-core-installer": true
+        },
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "installer-paths": {
+            "web/app/mu-plugins/{$name}/": [
+                "type:wordpress-muplugin"
+            ],
+            "web/app/plugins/{$name}/": [
+                "type:wordpress-plugin"
+            ],
+            "web/app/themes/{$name}/": [
+                "type:wordpress-theme"
+            ]
+        },
+        "wordpress-install-dir": "web/wp"
+    }
+}

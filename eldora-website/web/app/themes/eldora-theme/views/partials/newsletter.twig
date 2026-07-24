@@ -1,0 +1,18 @@
+<div>
+    <h7 class="h7 mb-5">{{ __('newsletter.title', 'eldora-theme') }}</h7>
+    <p class="text-base text-neutral-100 mb-5 max-w-[365px]">{{ __('newsletter.subtitle', 'eldora-theme') }}</p>
+</div>
+<form id="foodletter" class="flex max-lg:flex-col gap-2" action="https://mailing2.eldora.ch/form.php?form=3" method="post">
+  <input
+    name="email"
+    type="email"
+    placeholder="{{ __('newsletter.form.placeholder', 'eldora-theme') }}"
+    class="w-full {{ theme_color == 'eldora' ? 'bg-eldora-500' : 'bg-theme-800' }} rounded-lg py-2 px-3 lg:min-w-[340px] h-[45px] text-base text-neutral-50 border-1 border-transparent hover:border-theme-400 focus:border-theme-500 focus:outline-none"
+    aria-label="{{ __('newsletter.form.placeholder', 'eldora-theme') }}"
+    required
+  />
+  <input type="hidden" name="format" value="h" />
+  <button type="submit" class="h-[45px] max-lg:w-full bg-white text-sm text-theme-primary rounded-lg py-2 px-3 hover:bg-theme-50 active:bg-theme-50 active:border-none focus:bg-white focus:outline-none focus:border-1 focus:border-theme-primary focus:border-dashed">
+    {{ __('newsletter.form.button', 'eldora-theme') }}
+  </button>
+</form>

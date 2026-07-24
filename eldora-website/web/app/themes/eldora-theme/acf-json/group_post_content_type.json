@@ -1,0 +1,50 @@
+{
+    "key": "group_post_content_type",
+    "title": "Type de contenu",
+    "fields": [
+        {
+            "key": "field_post_content_type",
+            "label": "Type de contenu",
+            "name": "post_content_type",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Sélectionnez si cet article est une actualité ou une recette. Cette sélection détermine sur quelle page l'article apparaîtra.",
+            "required": 1,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "actualites": "Actualité",
+                "recettes": "Recette"
+            },
+            "default_value": "actualites",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0
+}

@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@theme {
+  /* Fonts */
+  --font-*: initial;
+  --font-bricolage: "Bricolage", sans-serif;
+  --font-roboto: "Roboto", sans-serif;
+
+  /* Colors */
+  --color-*: initial;
+  --color-transparent: transparent;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-neutral-50: #f1f1f1;
+  --color-neutral-100: #d2d2d2;
+  --color-neutral-200: #bdbdbc;
+  --color-neutral-300: #9f9f9e;
+  --color-neutral-400: #8c8c8b;
+  --color-neutral-500: #6f6f6e;
+  --color-neutral-600: #656564;
+  --color-neutral-700: #4f4f4e;
+  --color-neutral-800: #3d3d3d;
+  --color-neutral-900: #2f2f2e;
+
+  --color-eldora-50: #e9e9ea;
+  --color-eldora-100: #babcbf;
+  --color-eldora-200: #999ba0;
+  --color-eldora-300: #6a6e75;
+  --color-eldora-400: #4d515a;
+  --color-eldora-500: #212631;
+  --color-eldora-600: #1e232d;
+  --color-eldora-700: #171b23;
+  --color-eldora-800: #12151b;
+  --color-eldora-900: #0e1015;
+
+  --color-school-50: #fdfbe6;
+  --color-school-100: #f9f3b0;
+  --color-school-200: #f6ed8a;
+  --color-school-300: #f2e555;
+  --color-school-400: #efe034;
+  --color-school-500: #ebd801;
+  --color-school-600: #d6c501;
+  --color-school-700: #a79901;
+  --color-school-800: #817701;
+  --color-school-900: #635b00;
+
+  --color-education-50: #fef7e6;
+  --color-education-100: #fde7b0;
+  --color-education-200: #fcdb8a;
+  --color-education-300: #fbca54;
+  --color-education-400: #fac033;
+  --color-education-500: #f9b000;
+  --color-education-600: #e3a000;
+  --color-education-700: #b17d00;
+  --color-education-800: #896100;
+  --color-education-900: #694a00;
+
+  --color-entreprise-50: #fce6ec;
+  --color-entreprise-100: #f7b0c4;
+  --color-entreprise-200: #f38aa7;
+  --color-entreprise-300: #ee557f;
+  --color-entreprise-400: #ea3466;
+  --color-entreprise-500: #e50140;
+  --color-entreprise-600: #d0013a;
+  --color-entreprise-700: #a3012d;
+  --color-entreprise-800: #7e0123;
+  --color-entreprise-900: #60001b;
+
+  --color-health-50: #f6eef5;
+  --color-health-100: #e4cbe1;
+  --color-health-200: #d7b2d2;
+  --color-health-300: #c58fbe;
+  --color-health-400: #b979b1;
+  --color-health-500: #a8589e;
+  --color-health-600: #995090;
+  --color-health-700: #773e70;
+  --color-health-800: #5c3057;
+  --color-health-900: #472542;
+
+  /* Theme colors (Will be egal to school, education, entreprise or health colors based on the theme, see colors.css) */
+  --color-theme-50: var(--color-theme-50);
+  --color-theme-100: var(--color-theme-100);
+  --color-theme-200: var(--color-theme-200);
+  --color-theme-300: var(--color-theme-300);
+  --color-theme-400: var(--color-theme-400);
+  --color-theme-500: var(--color-theme-500);
+  --color-theme-600: var(--color-theme-600);
+  --color-theme-700: var(--color-theme-700);
+  --color-theme-800: var(--color-theme-800);
+  --color-theme-900: var(--color-theme-900);
+  --color-theme-primary: var(--color-theme-primary);
+
+  /* Titles font-size */
+  --text-h-7xl: clamp(2.75rem, 2.143vw + 2.107rem, 4.25rem);
+  --text-h-7xl--line-height: 100%;
+  --text-h-7xl--letter-spacing: clamp(-0.22px, -0.28px, -0.34px);
+  --text-h-7xl--font-weight: 600;
+
+  --text-h-6xl: clamp(2.5rem, 1.429vw + 2.071rem, 3.5rem);
+  --text-h-6xl--line-height: 100%;
+  --text-h-6xl--letter-spacing: clamp(-0.2px, -0.24px, -0.28px);
+  --text-h-6xl--font-weight: 600;
+
+  --text-h-5xl: clamp(2.25rem, 0.714vw + 2.036rem, 2.75rem);
+  --text-h-5xl--line-height: 110%;
+  --text-h-5xl--letter-spacing: clamp(-0.18px, -0.2px, -0.22px);
+  --text-h-5xl--font-weight: 600;
+
+  --text-h-4xl: clamp(2rem, 0.357vw + 1.893rem, 2.25rem);
+  --text-h-4xl--line-height: 110%;
+  --text-h-4xl--letter-spacing: clamp(-0.14px, -0.16px, -0.18px);
+  --text-h-4xl--font-weight: 600;
+
+  --text-h-3xl: clamp(1.5rem, 0.714vw + 1.286rem, 2rem);
+  --text-h-3xl--line-height: 120%;
+  --text-h-3xl--letter-spacing: clamp(-0.12px, -0.14px, -0.16px);
+  --text-h-3xl--font-weight: 600;
+
+  --text-h-2xl: clamp(1.375rem, 0.179vw + 1.321rem, 1.5rem);
+  --text-h-2xl--line-height: 115%;
+  --text-h-2xl--letter-spacing: clamp(-0.11px, -0.12px, -0.12px);
+  --text-h-2xl--font-weight: 600;
+
+  --text-h-xl: 1.25rem;
+  --text-h-xl--line-height: 115%;
+  --text-h-xl--letter-spacing: -0.1px;
+  --text-h-xl--font-weight: 600;
+
+  /* Paragraphs font-size */
+  --text-xl: clamp(1.375rem, 0.179vw + 1.321rem, 1.5rem);
+  --text-xl--line-height: 115%;
+  --text-xl--letter-spacing: clamp(-0.11px, -0.12px, -0.12px);
+  --text-xl--font-weight: 400;
+
+  --text-lg: clamp(1.063rem, 0.089vw + 1.036rem, 1.125rem);
+  --text-lg--line-height: 115%;
+  --text-lg--letter-spacing: clamp(0.255px, 0.26px, 0.27px);
+  --text-lg--font-weight: 400;
+
+  --text-base: 1rem;
+  --text-base--line-height: 125%;
+  --text-base--letter-spacing: 0;
+  --text-base--font-weight: 400;
+
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 130%;
+  --text-sm--letter-spacing: 0.4px;
+  --text-sm--font-weight: 400;
+
+  /* Labels font-size */
+  --text-label: 0.75rem;
+  --text-label--line-height: 140%;
+  --text-label--letter-spacing: 1.08px;
+  --text-label--font-weight: 500;
+}

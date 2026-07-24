@@ -1,0 +1,30 @@
+.headings-description-card-link {
+  @apply w-full bg-eldora-500 rounded-lg p-6 flex flex-col items-start gap-4 cursor-pointer text-neutral-100 h-full xl:aspect-[1.1/1];
+}
+
+.headings-description-card-link:hover .headings-description-card-arrow {
+  @apply bg-theme-600;
+}
+
+.theme-education .headings-description-card-link,
+.theme-school .headings-description-card-link,
+.theme-entreprise .headings-description-card-link,
+.theme-health .headings-description-card-link {
+  @apply bg-theme-primary;
+}
+
+.headings-description-card-link .title {
+  @apply text-h-xl font-bricolage;
+}
+
+.headings-description-card-link .description {
+  @apply text-lg mb-4 line-clamp-3;
+}
+
+.headings-description-card-link .headings-description-card-arrow {
+  @apply rounded-full bg-theme-700 self-end mt-auto transition-colors;
+}
+
+.headings-description-card-link .headings-description-card-arrow svg {
+  @apply size-8 text-white;
+}

@@ -1,0 +1,23 @@
+.actions-container-preview .block-editor-block-list__layout {
+  display: inline-flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.actions-container-preview .block-editor-block-list__layout .wp-block {
+  margin: 0;
+}
+
+.actions-container-preview
+  .block-editor-block-list__layout
+  .block-list-appender {
+  position: initial;
+}
+
+.actions-container-preview
+  .block-editor-block-list__layout
+  .block-list-appender
+  button {
+  height: 100%;
+  width: 100px;
+}

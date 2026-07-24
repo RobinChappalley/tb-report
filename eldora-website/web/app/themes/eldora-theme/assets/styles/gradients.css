@@ -1,0 +1,26 @@
+.gradient-up,
+.gradient-down,
+.gradient-left,
+.gradient-right {
+  @apply relative;
+}
+
+.gradient-up::after {
+  @apply content-[''] w-full h-full absolute top-0 left-0 -z-1;
+  @apply bg-gradient-to-t from-transparent to-theme-primary;
+}
+
+.gradient-down::after {
+  @apply content-[''] w-full h-full absolute top-0 left-0 -z-1;
+  @apply bg-gradient-to-b from-transparent to-theme-primary;
+}
+
+.gradient-left::after {
+  @apply content-[''] w-full h-full absolute top-0 left-0 -z-1;
+  @apply bg-gradient-to-l from-transparent to-theme-primary;
+}
+
+.gradient-right::after {
+  @apply content-[''] w-full h-full absolute top-0 left-0 -z-1;
+  @apply bg-gradient-to-r from-transparent to-theme-primary;
+}

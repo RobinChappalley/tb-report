@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+
+group :development do
+  gem 'capistrano', '~> 3.19'
+
+  gem 'ed25519', '>= 1.2', '< 2.0'
+  gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
+
+  gem 'capistrano-composer'
+  gem 'capistrano-cachetool'
+
+  gem 'capistrano-antistatique', git: 'https://github.com/antistatique/capistrano-antistatique'
+end

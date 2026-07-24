@@ -1,0 +1,73 @@
+    _          _   _     _        _   _
+   / \   _ __ | |_(_)___| |_ __ _| |_(_) __ _ _   _  ___
+  / _ \ | '_ \| __| / __| __/ _` | __| |/ _` | | | |/ _ \
+ / ___ \| | | | |_| \__ \ || (_| | |_| | (_| | |_| |  __/
+/_/   \_\_| |_|\__|_|___/\__\__,_|\__|_|\__, |\__,_|\___|
+                                           |_|
+
+/* TEAM */
+
+  Digital Strategist : Alberto Gomez
+  Twitter: @kidvaldez
+  From: Lausanne, Switzerland
+
+  Web Software Engineer : Gilles Doge
+  Twitter: @gido
+  Github: gido
+  From: Lausanne, Switzerland
+
+  Software Designer : Marc Friederich
+  Twitter: @zufrieden
+  Github: zufrieden
+  From: Lausanne, Switzerland
+
+  Visual Designer : Pierre Georges
+  Twitter: @pierre__georges
+  From: Lausanne, Switzerland
+
+  UX Designer : Noemie Sandoz
+  Twitter: @noemiesandoz
+  From: Cousset, Switzerland
+  
+  Lead Web Developer : Yann Gouffon
+  Twitter: @Yago_0
+  Github: yago
+  From: Lausanne, Switzerland
+
+  Web Developer : Kevin Wenger
+  Twitter: @wengerk
+  Github: wengerk
+  From: Lausanne, Switzerland
+
+  Senior Web Developer : Yann Lugrin
+  Github: YannLugrin
+  Twitter: @YannLugrin
+  From: Lausanne, Switzerland
+
+  Web developer : Tiago Pinto Monteiro
+  Github: Deegoh
+  From: Lausanne, Switzerland
+
+  Web Developer : Antoine Dessauges
+  Github: DessaugesAntoine
+  From: Morges, Switzerland
+
+  Web Developer : Anthony Salamone
+  Github: AnthonySalamone
+  From: Courgevaux, Switzerland
+  
+  Project Manager : Susana Jeanmonod
+  Github: antistatique-susana
+  From: Perroy, Switzerland
+
+  Project Manager : Angéline Rhodes
+  Github: angie-demat
+  From: Lausanne, Switzerland
+
+  Finance: Laura Rey
+  Github: laura84
+  From: Lausanne, Switzerland
+
+/* SITE */
+
+  Built in: 2025

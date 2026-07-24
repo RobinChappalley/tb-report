@@ -1,0 +1,125 @@
+.text-image-grid-preview {
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr 5fr 1fr;
+}
+
+.text-image-grid-preview.reverse {
+  grid-template-columns: 1fr 5fr 1fr 4fr 1fr;
+}
+
+.text-image-grid-preview .texts-area {
+  grid-column-start: 2;
+  align-self: center;
+}
+
+.text-image-grid-preview.reverse .texts-area {
+  grid-column-start: 4;
+}
+
+.text-image-grid-preview .texts-area .surtitle {
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  word-break: break-word;
+}
+
+.text-image-grid-preview .texts-area .title {
+  color: #f1f1f1;
+  font-family: "Bricolage";
+  font-size: 38px;
+  font-weight: 600;
+  margin-bottom: 36px;
+  word-break: break-word;
+  line-height: 41px;
+}
+
+.text-image-grid-preview .texts-area .text {
+  color: #d2d2d2;
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 14px;
+  word-break: break-word;
+  line-height: 20px;
+}
+
+.text-image-grid-preview .texts-area .link-text {
+  color: #d2d2d2;
+  font-size: 14px;
+  font-weight: 400;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  word-break: break-word;
+}
+
+.text-image-grid-preview .images-area {
+  grid-column-start: 4;
+}
+
+.text-image-grid-preview.reverse .images-area {
+  grid-column-start: 2;
+  grid-row-start: 1;
+}
+
+.text-image-grid-preview .images-area.format-one-image-right img,
+.text-image-grid-preview .images-area.format-one-image-left img {
+  border-radius: 8px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.text-image-grid-preview .images-area.format-four-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.text-image-grid-preview .images-area.format-four-images img {
+  width: 100%;
+  aspect-ratio: 260 / 325;
+  object-fit: cover;
+}
+
+.text-image-grid-preview .images-area.format-four-images .image-2 img,
+.text-image-grid-preview .images-area.format-four-images .image-4 img,
+.text-image-grid-preview .images-area.format-four-images .add-image-2,
+.text-image-grid-preview .images-area.format-four-images .add-image-4 {
+  border-radius: 24px 0;
+  margin-top: 40px;
+  margin-bottom: -40px;
+}
+
+.text-image-grid-preview .images-area.format-four-images .image-2,
+.text-image-grid-preview .images-area.format-four-images .image-4 {
+  overflow: initial;
+}
+
+.text-image-grid-preview
+  .images-area.format-four-images
+  .image-2
+  .remove-image-button,
+.text-image-grid-preview
+  .images-area.format-four-images
+  .image-4
+  .remove-image-button {
+  top: 48px;
+}
+
+.text-image-grid-preview .images-area.format-four-images .image-1 img,
+.text-image-grid-preview .images-area.format-four-images .image-3 img,
+.text-image-grid-preview .images-area.format-four-images .add-image-1,
+.text-image-grid-preview .images-area.format-four-images .add-image-3 {
+  border-radius: 0 24px;
+}
+
+.text-image-grid-preview .images-area.format-four-images .add-image-button {
+  height: 100%;
+  min-height: 200px;
+}
+
+.text-image-grid-preview-image-item {
+  margin-bottom: 20px;
+}

@@ -1,0 +1,11 @@
+.image-carousel-static {
+  @apply mb-24 sm:mb-30 col-start-1! col-end-4! mx-0! overflow-x-hidden;
+}
+
+.image-carousel-static .images-area {
+  @apply max-sm:gap-4 max-sm:ml-4;
+}
+
+.image-carousel-static .images-area img {
+  @apply w-full aspect-2/3 sm:aspect-video rounded-lg object-cover;
+}

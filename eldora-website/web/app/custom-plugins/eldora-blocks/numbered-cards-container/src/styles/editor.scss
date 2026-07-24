@@ -1,0 +1,50 @@
+.numbered-cards-container-preview .titre-text-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 50px;
+}
+
+.numbered-cards-container-preview .titre-text-container .title {
+  font-size: 38px;
+  font-weight: 600;
+  font-family: "Bricolage";
+  line-height: 110%;
+}
+
+.numbered-cards-container-preview .titre-text-container .text {
+  color: #f6eef5;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 115%;
+}
+
+.numbered-cards-container-preview
+  .block-editor-inner-blocks
+  .block-editor-block-list__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 1fr;
+  gap: 16px;
+}
+
+.numbered-cards-container-preview
+  .block-editor-inner-blocks
+  .block-list-appender {
+  position: initial;
+  height: 100%;
+}
+
+.numbered-cards-container-preview
+  .block-editor-inner-blocks
+  .block-list-appender
+  button {
+  height: 100%;
+}
+
+.numbered-cards-container-preview
+  .block-editor-inner-blocks
+  .wp-block-eldora-numbered-card {
+  width: 100%;
+  margin: 0 !important;
+}

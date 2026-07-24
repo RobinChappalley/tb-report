@@ -1,0 +1,49 @@
+.social-post-cards-preview {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; 
+}
+
+.social-post-cards-preview .social-post-cards-title {
+  flex: 1;
+  font-size: 32px;
+  font-family: "Bricolage", sans-serif;
+}
+
+.social-post-cards-preview .social-posts-preview {
+  flex: 1;
+}
+
+.social-post-cards-preview .social-posts-preview .social-posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.social-post-cards-preview .social-posts-preview .social-post-preview-item {
+  display: flex;
+  background: #171B23;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .social-post-preview-image {
+    flex: 1;
+    background-color: rgb(199, 199, 199);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 4/2;
+    color: #000;
+  }
+
+  .social-post-preview-content {
+    flex: 1;
+    padding: 15px;
+  }
+}
+
+.social-post-cards-preview .social-posts-link {
+    margin-top: 10px;
+    text-decoration: underline;
+    text-underline-offset: 6px;
+}

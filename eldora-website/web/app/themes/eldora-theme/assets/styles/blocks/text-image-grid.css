@@ -1,0 +1,66 @@
+.text-image-grid {
+  @apply mb-24 lg:mb-31;
+}
+
+.text-image-grid .elements-container {
+  @apply grid gap-y-8 grid-cols-12 lg:grid-cols-[1fr_4fr_1fr_5fr_1fr];
+}
+
+.text-image-grid .elements-container.reverse {
+  @apply grid-cols-12 lg:grid-cols-[1fr_5fr_1fr_4fr_1fr];
+}
+
+.text-image-grid .texts-area {
+  @apply col-start-1 max-lg:row-start-2 max-lg:col-span-12 lg:col-start-2 self-center;
+}
+
+.text-image-grid .elements-container.reverse .texts-area {
+  @apply col-start-1 lg:col-start-4 max-lg:row-start-2;
+}
+
+.text-image-grid .texts-area .surtitle {
+  @apply mb-3 text-label text-white uppercase;
+}
+
+.text-image-grid .texts-area .title {
+  @apply mb-6 text-neutral-50;
+}
+
+.text-image-grid .texts-area .text {
+  @apply text-neutral-100 text-base;
+}
+
+.text-image-grid .texts-area .link {
+  @apply mt-4 text-neutral-100 text-sm inline-block;
+}
+
+.text-image-grid .images-area {
+  @apply col-start-1 lg:col-start-4 max-lg:row-start-1 max-lg:col-span-12;
+}
+
+.text-image-grid .elements-container.reverse .images-area {
+  @apply col-start-1 lg:col-start-2 row-start-1;
+}
+
+.text-image-grid .images-area.format-one-image-right img,
+.text-image-grid .images-area.format-one-image-left img {
+  @apply rounded-lg w-full aspect-video object-cover;
+}
+
+.text-image-grid .images-area.format-four-images {
+  @apply grid grid-cols-2 gap-6 mb-10 max-lg:col-span-11 max-lg:col-start-2!;
+}
+
+.text-image-grid .images-area.format-four-images img {
+  @apply w-full aspect-[260/325] object-cover;
+}
+
+.text-image-grid .images-area.format-four-images .image-2,
+.text-image-grid .images-area.format-four-images .image-4 {
+  @apply rounded-tr-2xl rounded-bl-2xl  lg:rounded-tr-3xl lg:rounded-bl-3xl mt-10 -mb-10;
+}
+
+.text-image-grid .images-area.format-four-images .image-1,
+.text-image-grid .images-area.format-four-images .image-3 {
+  @apply rounded-tl-2xl rounded-br-2xl lg:rounded-tl-3xl lg:rounded-br-3xl;
+}

@@ -1,0 +1,27 @@
+.image-text-card {
+  @apply w-full;
+}
+
+.image-text-card .image-container {
+  @apply w-full aspect-[7/8] md:aspect-[3/2] overflow-hidden rounded-lg mb-6;
+}
+
+.image-text-card .image {
+  @apply w-full h-full object-cover;
+}
+
+.image-text-card .title {
+  @apply text-xl font-bricolage mb-2;
+}
+
+.image-text-card .text {
+  @apply max-md:text-sm mb-4 text-eldora-100;
+}
+
+.image-text-card .link-text {
+  @apply max-md:text-sm flex items-center;
+}
+
+.image-text-card .link-text .icon {
+  @apply size-8;
+}

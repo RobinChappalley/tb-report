@@ -1,0 +1,23 @@
+<div class="container-grid max-xl:px-4 mt-12 xl:mt-23 mb-18 xl:mb-24">
+  <div class="text-center">
+    <div class="flex justify-center mb-10">
+      {% include 'partials/breadcrumbs.twig' %}
+    </div>
+
+    {% if categories %}
+      <div class="flex justify-center items-center gap-2 mb-10">
+        {% for category in categories %}
+          <div class="flex justify-center items-center uppercase px-[10px] py-[5px] bg-theme-700 w-fit font-medium text-xs text-white rounded-sm tracking-widest">
+            {{ category.name }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% if post.hero_text %}
+      <div class="text-lg max-w-[665px] mx-auto mb-2">{{ post.hero_text }}</div>
+    {% endif %}
+
+    <h1 class="h2">{{ post.hero_title }}</h1>
+  </div>
+</div>

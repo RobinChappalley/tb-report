@@ -1,0 +1,43 @@
+{% if size == "large" %}
+  {% set padding = "px-4 py-3" %}
+  {% set text_size = "text-sm" %}
+  {% set icon_size = "size-[21px]" %}
+{% elseif size == "medium" %}
+  {% set padding = "px-3 py-2" %}
+  {% set text_size = "text-sm" %}
+  {% set icon_size = "size-[21px]" %}
+{% elseif size == "icon-only" %}
+  {% set padding = "p-2" %}
+  {% set text_size = "text-base" %}
+  {% set icon_size = "size-[31px]" %}
+{% else %} {# small #}
+  {% set padding = "px-2.5 py-1.5" %}
+  {% set text_size = "text-label uppercase" %}
+  {% set icon_size = "size-[17px]" %}
+{% endif %}
+
+{% if type == "primary" %}
+  {% set color_and_bg = "bg-white hover:bg-theme-50 active:border-none active:bg-theme-50 text-theme-primary focus:bg-white focus:outline-none focus:border-1 focus:border-theme-primary focus:border-dashed" %}
+{% else %} {# secondary #}
+  {% if theme_color == "eldora" %}
+    {% set color_and_bg = "text-white bg-eldora-700 hover:bg-eldora-600 active:bg-eldora-700 focus:bg-eldora-700 focus:outline-none focus:border-1 focus:border-white focus:border-dashed" %}
+  {% else %}
+    {% set color_and_bg = "text-white bg-theme-900 hover:bg-theme-800 active:bg-theme-800 focus:bg-theme-900 focus:outline-none focus:border-1 focus:border-white focus:border-dashed" %}
+  {% endif %}
+{% endif %}
+
+<a href="{{ link }}" target="{{ is_blank ? '_blank' }}" {{ is_download ? 'download' : '' }} class="{{ padding }} {{ text_size }} {{ color_and_bg }} rounded-sm flex items-center gap-2 w-fit {{ additional_classes }}">
+  {% if icon_left %}
+    <svg class="{{ icon_size }}">
+      <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#{{ icon_left }}" />
+    </svg>
+  {% endif %}
+
+  {{ text }}
+  
+  {% if icon_right %}
+    <svg class="{{ icon_size }}">
+      <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#{{ icon_right }}" />
+    </svg>
+  {% endif %}
+</a>

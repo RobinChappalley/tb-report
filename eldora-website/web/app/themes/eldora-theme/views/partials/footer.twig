@@ -1,0 +1,85 @@
+<footer class="container-grid">
+  <div class="flex flex-wrap gap-14 max-lg:flex-col justify-between items-start bg-theme-primary rounded-lg px-5 py-6 lg:p-12">
+    <div class="flex flex-col justify-between h-full gap-18">     
+      {# Logo #}
+      <div class="xl:row-start-2 xl:col-start-1 flex max-xl:justify-between">
+        <a href="{{ site.url }}" class="shrink-0 link no-underline">
+          <img class="w-[143px]" src="{{ theme.path }}/assets/images/logo-{{ theme_color }}-{{ current_language }}.svg" alt="Eldora" />
+        </a>
+      </div>
+
+      {# Socials #}
+      {% if socials|length > 1 %}
+          <div class="flex gap-4">
+            {% if socials.facebook %}
+              <a class="link no-underline no-focus-padding" href="{{ socials.facebook }}" target="_blank">
+                <svg class="size-[32px] rounded-lg {{ theme_color == 'eldora' ? 'bg-eldora-500' : 'bg-theme-800' }}">
+                  <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#facebook" />
+                </svg>
+              </a>
+            {% endif %}
+            {% if socials.instagram %}
+              <a class="link no-underline no-focus-padding" href="{{ socials.instagram }}" target="_blank">
+                <svg class="size-[32px] rounded-lg {{ theme_color == 'eldora' ? 'bg-eldora-500' : 'bg-theme-800' }}">
+                  <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#instagram" />
+                </svg>
+              </a>
+            {% endif %}
+            {% if socials.linkedin %}
+              <a class="link no-underline no-focus-padding" href="{{ socials.linkedin }}" target="_blank">
+                <svg class="size-[32px] rounded-lg {{ theme_color == 'eldora' ? 'bg-eldora-500' : 'bg-theme-800' }}">
+                  <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#linkedin" />
+                </svg>
+              </a>
+            {% endif %}
+            {% if socials.youtube %}
+              <a class="link no-underline no-focus-padding" href="{{ socials.youtube }}" target="_blank">
+                <svg class="size-[32px] rounded-lg {{ theme_color == 'eldora' ? 'bg-eldora-500' : 'bg-theme-800' }}">
+                  <use xlink:href="{{ theme.link }}/assets/icons/icons.svg#youtube" />
+                </svg>
+              </a>
+            {% endif %}
+          </div>
+        {% endif %}
+    </div>
+    <div class="flex max-lg:flex-col-reverse max-lg:w-full gap-14 lg:gap-28">
+      {# Contact #}
+      <div>
+        <h7 class="h7 mb-5">{{ __('footer.contact.title', 'eldora-theme') }}</h7>
+        {% if footer.address %}
+          <div class="text-base text-neutral-100 mb-4">{{ footer.address }}</div>
+        {% endif %}
+        {% if footer.phone %}
+          <a href="tel:{{ footer.phone }}" class="text-base text-neutral-100 mb-4 block link">{{ footer.phone }}</a>
+        {% endif %}
+        {% if footer.email %}
+          <a href="mailto:{{ footer.email }}" class="text-base text-neutral-100 block link">{{ footer.email }}</a>
+        {% endif %}
+      </div>
+      {# Newsletter #}
+      <div>
+        {% include 'partials/newsletter.twig' %}
+      </div>
+    </div>
+  </div>
+
+  {# Logo #}
+  <div class="my-20">
+    <img src="{{ theme.path }}/assets/images/footer-logo-{{ current_language }}.svg" alt="Eldora" class="max-w-[565px] w-full mx-auto p-4"/>
+  </div>
+
+  {# Policies and copyright #}
+  <div class="flex max-lg:flex-col gap-5 mt-8 my-6 lg:mb-12 lg:justify-between lg:items-center text-sm text-neutral-100">
+    <div class="flex max-lg:flex-col gap-x-4 gap-y-5">
+      <a href="{{ footer.privacy_policy.url }}" class="link" target="{{ footer.privacy_policy.target }}">{{ footer.privacy_policy.title }}</a>
+      <a href="{{ footer.cookie_policy.url }}" class="link" target="{{ footer.cookie_policy.target }}">{{ footer.cookie_policy.title }}</a>
+      {% if footer.site_map %}
+        <a href="{{ footer.site_map.url }}" class="link" target="{{ footer.site_map.target }}">{{ footer.site_map.title }}</a>
+      {% endif %}
+    </div>
+    <div class="flex max-lg:flex-col-reverse gap-x-4 gap-y-8">
+      <span>Copyright © Eldora SA {{ 'now'|date('Y') }}</span>
+      <span>{{ __('footer.website_author', 'eldora-theme') }}{{ ' ' }} <a href="https://antistatique.net/" class="link" target="_blank">Antistatique</a></span>
+    </div>
+  </div>
+</footer>

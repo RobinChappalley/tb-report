@@ -1,0 +1,22 @@
+.gradient-container-preview {
+  position: relative;
+  margin-left: -16px;
+  margin-right: -32px;
+  padding: 25px 32px 0 16px; // 32px because of the scroll bar
+  z-index: 0;
+}
+
+.gradient-container-preview::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #171b23 0%, rgba(23, 27, 35, 0) 100%);
+}
+
+.gradient-container-preview > .block-editor-inner-blocks {
+  position: relative;
+  z-index: 10;
+}

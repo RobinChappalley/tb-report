@@ -1,0 +1,4 @@
+/* Parent block */
+.actions-container {
+  @apply flex gap-4 mb-6;
+}

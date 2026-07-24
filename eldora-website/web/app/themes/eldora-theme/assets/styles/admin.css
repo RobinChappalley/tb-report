@@ -1,0 +1,177 @@
+/* Style for gutenberg admin, not minify in output.css but added in function.php */
+.block-editor-writing-flow {
+  padding: 0 32px 0 16px; /* 32px right because of the sidebar */
+  background-color: #212631;
+  color: white;
+}
+
+.block-editor-writing-flow .edit-post-visual-editor__post-title-wrapper {
+  margin-top: 0 !important;
+}
+
+/* Remove max-width to improve gutenberg block preview since it can be on multiple columns */
+.wp-block {
+  max-width: none;
+}
+
+/* Fonts */
+@font-face {
+  font-family: "Bricolage";
+  src: url("../fonts/Bricolage-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../fonts/Roboto-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Titles */
+h1.wp-block-heading {
+  font-family: "Bricolage";
+  font-size: 68px;
+}
+
+h2.wp-block-heading {
+  font-family: "Bricolage";
+  font-size: 56px;
+}
+
+h3.wp-block-heading {
+  font-family: "Bricolage";
+  font-size: 44px;
+}
+
+h4.wp-block-heading {
+  font-family: "Bricolage";
+  font-size: 36px;
+}
+
+h5.wp-block-heading {
+  font-family: "Bricolage";
+  font-size: 32px;
+}
+
+h6.wp-block-heading {
+  font-family: "Bricolage";
+  font-size: 24px;
+}
+
+/* Some style for the media upload to have a correct display */
+.media-container {
+  margin-bottom: 15px;
+}
+
+.media-container button {
+  background: #f44336;
+  color: white;
+}
+.media-container .remove-image-button {
+  margin-top: 10px;
+}
+.media-container .remove-image-button:hover {
+  color: white !important;
+}
+
+/* Image container */
+.image-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.image-container .remove-image-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 6px;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  border-radius: 50%;
+  z-index: 999;
+}
+
+.image-container .remove-image-button:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.add-image-button {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  color: white !important;
+}
+
+.add-image-button:hover {
+  background: #e0e0e0;
+}
+
+/* Label */
+.block-editor-block-inspector label {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Popover */
+.url-popover {
+  min-width: 300px;
+}
+
+.popover {
+  margin: 20px;
+}
+
+.popover-help {
+  margin-top: 10px;
+}
+
+/* Rich text */
+.block-editor-block-inspector .rich-text {
+  font-size: 13px;
+  line-height: normal;
+  border: 1px solid #949494;
+  border-radius: 2px;
+  padding: 8px 6px;
+  text-transform: none;
+  font-weight: 400;
+  margin-bottom: 24px;
+}
+
+/* Red link button */
+.red-link-button {
+  color: red;
+  text-decoration-color: red;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.red-link-button:hover {
+  color: red !important;
+}
+
+/* Iframe inspector control */
+.media-preview-inspector-control {
+  width: 100%;
+}

@@ -1,0 +1,134 @@
+{% extends "layouts/base.twig" %}
+{% block content %}
+<div class="container-grid mb-22">
+    <div class="xl:grid grid-cols-12">
+        {% if posts and posts|length > 0 %}
+            {% set has_filters = selected_filters|length > 0 %}
+            {% if paged == 1 and not has_filters %}
+                {# highlight post on page 1 #}
+                {% set featuredPost = posts[0] %}
+                <div class="xl:col-span-10 xl:col-start-2 mb-45 xl:mb-24">
+                    <a href="{{ featuredPost.link }}" class="block w-full md:flex items-center">
+                            <div class="aspect-4/3 overflow-hidden rounded-lg flex-1 shrink-0">
+                            <img src="{{ imgproxy(featuredPost.thumbnail.src('large'), 'resize:fit:1200:0/auto:format/quality:75') }}" alt="{{ featuredPost.thumbnail.alt }}" class="w-full h-full object-cover">
+                        </div>
+                        <div class="max-md:px-3.5 max-md:pt-6 flex-1 shrink-0 md:pl-14">
+                            {# terms are commented cause they may be needed in the future #}
+                            {# {% if featuredPost.terms('category') %}
+                                <div class="text-xs uppercase font-medium tracking-widest mb-1">
+                                    {% for term in featuredPost.terms('category') %}
+                                        {% if term.slug != parent_category_slug %}
+                                            <div>{{ term.name }}</div>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            {% endif %} #}
+                            <div class="text-xs uppercase font-medium tracking-widest mb-1">
+                                {{ __('blog.post.tag', 'eldora-theme') }}
+                            </div>
+                            <h1 class="text-h-2xl md:text-h-3xl font-bricolage mb-4 md:mb-1.5 line-clamp-3">{{ featuredPost.title }}</h1>
+                            <div class="text-eldora-100 mb-6 text-sm">{{ featuredPost.date }}</div>
+                            {% if featuredPost.excerpt %}
+                                <p class="text-eldora-100 line-clamp-4">{{ featuredPost.excerpt|striptags }}</p>
+                            {% endif %}
+                        </div>
+                    </a>
+                </div>
+
+                {% include 'partials/multi-category-filters.twig' %}
+
+                {# 5 other posts in grid #}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 xl:col-span-10 xl:col-start-2 mb-24 xl:mb-18">
+                    {% for post in posts %}
+                        {% if not loop.first %}
+                            {% if loop.index == 5 %}
+                                <div class="bg-eldora-700 rounded-lg px-6 py-7 flex flex-col justify-between max-md:gap-10">
+                                    {% include 'partials/newsletter.twig' %}
+                                </div>
+                            {% endif %}
+                            <a href="{{ post.link }}" class="w-full rounded-lg flex flex-col-reverse max-lg:justify-between lg:flex-row bg-eldora-700 overflow-hidden">
+                                    <div class="overflow-hidden aspect-video lg:aspect-square lg:w-55 lg:shrink-0">
+                                    <img src="{{ imgproxy(post.thumbnail.src, 'resize:fit:800:0/auto:format/quality:75') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-full object-cover">
+                                </div>
+
+                                <div class="p-6">
+                                    {# terms are commented cause they may be needed in the future #}
+                                    {# {% if post.terms('category') %}
+                                        <div class="text-xs uppercase font-bricolage font-bold tracking-widest mb-2">
+                                            {% for term in post.terms('category') %}
+                                                {% if term.slug != parent_category_slug %}
+                                                    <div>{{ term.name }}</div>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %} #}
+                                    <div class="text-xs uppercase font-bricolage font-bold tracking-widest mb-2">
+                                        {{ __('blog.post.tag', 'eldora-theme') }}
+                                    </div>
+                                    <h2 class="text-h-xl font-bricolage mb-3">{{ post.title }}</h2>
+                                    <div class="text-eldora-100 text-sm mb-6">{{ post.date }}</div>
+                                </div>
+                            </a>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% else %}
+                {# layout without highlight post #}
+                {% include 'partials/multi-category-filters.twig' %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 xl:col-span-10 xl:col-start-2 mb-24 xl:mb-18">
+                    {% for post in posts %}
+                        {% if loop.index == 4 %}
+                            <div class="bg-eldora-700 rounded-lg px-6 py-7 flex flex-col justify-between max-md:gap-10">
+                                {% include 'partials/newsletter.twig' %}
+                            </div>
+                        {% endif %}
+                        <a href="{{ post.link }}" class="w-full rounded-lg flex flex-col-reverse max-lg:justify-between lg:flex-row bg-eldora-700 overflow-hidden">
+                            <div class="overflow-hidden aspect-video lg:aspect-square lg:w-55 lg:shrink-0">
+                                <img src="{{ imgproxy(post.thumbnail.src, 'resize:fit:800:0/auto:format/quality:75') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-full object-cover">
+                            </div>
+
+                            <div class="p-6">
+                                {# terms are commented cause they may be needed in the future #}
+                                {# {% if post.terms('category') %}
+                                    <div class="text-xs uppercase font-bricolage font-bold tracking-widest mb-2">
+                                        {% for term in post.terms('category') %}
+                                            {% if term.slug != parent_category_slug %}
+                                                <div>{{ term.name }}</div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                {% endif %} #}
+                                <div class="text-xs uppercase font-bricolage font-bold tracking-widest mb-2">
+                                    {{ __('blog.post.tag', 'eldora-theme') }}
+                                </div>
+                                <h2 class="text-h-xl font-bricolage mb-3">{{ post.title }}</h2>
+                                <div class="text-eldora-100 text-sm mb-6">{{ post.date }}</div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {# pagination #}
+            {% if posts.pagination and posts.pagination.pages|length > 1 %}
+                {% include 'partials/pagination.twig' %}
+            {% endif %}
+        {# no posts#}
+        {% else %}
+            {% include 'partials/multi-category-filters.twig' %}
+            <div class="xl:col-span-10 xl:col-start-2 text-center py-16">
+                <div class="bg-eldora-700 rounded-lg p-8">
+                    <h3 class="text-h-xl font-bricolage mb-4">{{ __('blog.no-posts.title', 'eldora-theme') }}</h3>
+                    <p class="text-eldora-100 mb-6">{{ __('blog.no-posts.description', 'eldora-theme') }}</p>
+                    <button
+                        onclick="window.location.href = window.location.pathname"
+                        class="px-4 py-3.5 bg-eldora-700 hover:bg-eldora-600 text-white rounded-md text-sm font-medium transition-colors duration-200 cursor-pointer"
+                    >
+                        {{ __('blog.no-posts.button', 'eldora-theme') }}
+                    </button>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
