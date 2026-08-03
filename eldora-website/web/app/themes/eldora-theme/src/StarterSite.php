@@ -40,6 +40,9 @@ class StarterSite extends Site
    */
   public function __construct()
   {
+    ini_set('log_errors', '1');
+    ini_set('error_log', '/dev/stderr');
+
     add_action('after_setup_theme', [ $this, 'theme_supports' ]);
     add_action('init', [ $this, 'register_post_types' ]);
     add_action('init', [ $this, 'register_taxonomies' ]);

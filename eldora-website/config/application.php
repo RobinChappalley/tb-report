@@ -145,6 +145,8 @@ Config::define('CONCATENATE_SCRIPTS', false);
 Config::define('WP_DEBUG_DISPLAY', false);
 Config::define('WP_DEBUG_LOG', false);
 Config::define('SCRIPT_DEBUG', false);
+ini_set('log_errors', '1');
+ini_set('error_log', '/dev/stderr');
 ini_set('display_errors', '0');
 
 /**
