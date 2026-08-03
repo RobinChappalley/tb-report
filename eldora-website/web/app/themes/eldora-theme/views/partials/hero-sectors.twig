@@ -21,8 +21,8 @@
 
     <div class="hero-sectors-image col-start-7 col-end-13">
       <picture>
-        <source srcset="{{ imgproxy(post.hero_image.sizes.large, 'resize:fit:1600:0/auto:format/quality:75') }}" media="(min-width: 1024px)">
-        <img src="{{ imgproxy(post.hero_image.url, 'resize:fit:800:0/auto:format/quality:75') }}" alt="{{ post.hero_image.alt }}" class="w-full aspect-4/3 object-cover rounded-tl-3xl rounded-br-3xl">
+        <source srcset="{{ imgproxy(post.hero_image.sizes.large, 'rt:fit/q:75') }}" media="(min-width: 1024px)">
+        <img src="{{ imgproxy(post.hero_image.url, 'rt:fit/q:75') }}" alt="{{ post.hero_image.alt }}" class="w-full aspect-4/3 object-cover rounded-tl-3xl rounded-br-3xl">
       </picture>
     </div>
   </div>

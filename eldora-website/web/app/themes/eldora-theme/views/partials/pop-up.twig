@@ -19,7 +19,7 @@
         {% if popup.image %}
             <div class="rounded-md overflow-hidden relative {{ popup.has_video ? 'aspect-video' : 'aspect-square' }}">
             <img
-              src="{{ imgproxy(popup.image.url, 'resize:fit:1200:0/auto:format/quality:75') }}"
+              src="{{ imgproxy(popup.image.url, 'rt:fit/q:75') }}"
               alt="{{ popup.image.alt ?: popup.title }}"
               class="w-full h-full object-cover"
               loading="lazy"

@@ -27,8 +27,8 @@
                   <div class="aspect-4/3">
                         {% if news.thumbnail %}
                       <picture>
-                        <source srcset="{{ imgproxy(news.thumbnail.src('large'), 'resize:fit:1200:0/auto:format/quality:75') }}" media="(min-width: 768px)" />
-                        <img class="w-full h-full object-cover" src="{{ imgproxy(news.thumbnail.src('medium-large'), 'resize:fit:800:0/auto:format/quality:75') }}" alt="{{ news.thumbnail.alt }}" />
+                        <source srcset="{{ imgproxy(news.thumbnail.src('large'), 'rt:fit/q:75') }}" media="(min-width: 768px)" />
+                        <img class="w-full h-full object-cover" src="{{ imgproxy(news.thumbnail.src('medium-large'), 'rt:fit/q:75') }}" alt="{{ news.thumbnail.alt }}" />
                       </picture>
                     {% endif %}
                   </div>

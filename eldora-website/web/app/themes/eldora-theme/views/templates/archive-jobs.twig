@@ -8,7 +8,7 @@
                 {% for job in jobs %}
                     <a href="{{ job.link }}" class="w-full aspect-square rounded-lg overflow-hidden relative bg-gradient-to-t from-black/50 to-transparent flex flex-col-reverse">
                         {% if job.thumbnail %}
-                            <img src="{{ imgproxy(job.thumbnail.src, 'resize:fit:1200:0/auto:format/quality:75') }}" alt="{{ job.thumbnail.alt }}" class="absolute inset-0 w-full h-full object-cover -z-10">
+                            <img src="{{ imgproxy(job.thumbnail.src, 'rt:fit/q:75') }}" alt="{{ job.thumbnail.alt }}" class="absolute inset-0 w-full h-full object-cover -z-10">
                         {% endif %}
                         <h2 class="job-title p-6 lg:p-7 z-10 text-h-xl font-bricolage w-9/10">
                             {{ job.title }}

@@ -16,7 +16,7 @@
                     {% for post in posts %}
                         <a href="{{ post.link }}" class="w-full rounded-lg flex flex-col-reverse max-lg:justify-between lg:flex-row bg-eldora-700 overflow-hidden">
                                 <div class="overflow-hidden aspect-video lg:aspect-square lg:w-55 lg:shrink-0">
-                                <img src="{{ imgproxy(post.thumbnail.src, 'resize:fit:800:0/auto:format/quality:75') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-full object-cover">
+                                <img src="{{ imgproxy(post.thumbnail.src, 'rt:fit/q:75') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-full object-cover">
                             </div>
 
                             <div class="p-6">

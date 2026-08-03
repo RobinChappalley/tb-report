@@ -7,7 +7,7 @@
                 {% for item in items %}
                     <a href="{{ item.pdf.url }}" class="w-full rounded-lg grid grid-cols-1 lg:grid-cols-2 pt-6 px-6 bg-eldora-700" target="_blank">
                             <div class="overflow-hidden rounded-t-lg max-lg:order-2 aspect-4/3 lg:aspect-square">
-                            <img src="{{ imgproxy(item.image.sizes.large, 'resize:fit:1200:0/auto:format/quality:75') }}" alt="{{ item.image.alt }}" class="w-full h-full object-cover">
+                            <img src="{{ imgproxy(item.image.sizes.large, 'rt:fit/q:75') }}" alt="{{ item.image.alt }}" class="w-full h-full object-cover">
                         </div>
                         
                         <div class="lg:pl-6 lg:flex flex-col justify-between">

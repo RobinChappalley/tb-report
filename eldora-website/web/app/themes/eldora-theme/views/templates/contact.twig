@@ -104,7 +104,7 @@
                         {{ __('contact.map.title', 'eldora-theme') }}
                     </h3>
                     <div class="mb-8 lg:mb-10 aspect-square overflow-hidden rounded-lg">
-                        <img src="{{ imgproxy(post.map_image.sizes.large, 'resize:fit:1200:0/auto:format/quality:75') }}" alt="{{ post.map_image.alt }}" class="w-full h-full object-cover">
+                        <img src="{{ imgproxy(post.map_image.sizes.large, 'rt:fit/q:75') }}" alt="{{ post.map_image.alt }}" class="w-full h-full object-cover">
                     </div>
                     <div class="bg-eldora-700 rounded-lg px-6 py-7 flex flex-col justify-between gap-10">
                         {% include 'partials/newsletter.twig' %}

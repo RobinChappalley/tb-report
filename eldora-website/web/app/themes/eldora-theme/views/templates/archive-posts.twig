@@ -10,7 +10,7 @@
                 <div class="xl:col-span-10 xl:col-start-2 mb-45 xl:mb-24">
                     <a href="{{ featuredPost.link }}" class="block w-full md:flex items-center">
                             <div class="aspect-4/3 overflow-hidden rounded-lg flex-1 shrink-0">
-                            <img src="{{ imgproxy(featuredPost.thumbnail.src('large'), 'resize:fit:1200:0/auto:format/quality:75') }}" alt="{{ featuredPost.thumbnail.alt }}" class="w-full h-full object-cover">
+                            <img src="{{ imgproxy(featuredPost.thumbnail.src('large'), 'rt:fit/q:75') }}" alt="{{ featuredPost.thumbnail.alt }}" class="w-full h-full object-cover">
                         </div>
                         <div class="max-md:px-3.5 max-md:pt-6 flex-1 shrink-0 md:pl-14">
                             {# terms are commented cause they may be needed in the future #}
@@ -48,7 +48,7 @@
                             {% endif %}
                             <a href="{{ post.link }}" class="w-full rounded-lg flex flex-col-reverse max-lg:justify-between lg:flex-row bg-eldora-700 overflow-hidden">
                                     <div class="overflow-hidden aspect-video lg:aspect-square lg:w-55 lg:shrink-0">
-                                    <img src="{{ imgproxy(post.thumbnail.src, 'resize:fit:800:0/auto:format/quality:75') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-full object-cover">
+                                    <img src="{{ imgproxy(post.thumbnail.src, 'rt:fit/q:75') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-full object-cover">
                                 </div>
 
                                 <div class="p-6">
@@ -84,7 +84,7 @@
                         {% endif %}
                         <a href="{{ post.link }}" class="w-full rounded-lg flex flex-col-reverse max-lg:justify-between lg:flex-row bg-eldora-700 overflow-hidden">
                             <div class="overflow-hidden aspect-video lg:aspect-square lg:w-55 lg:shrink-0">
-                                <img src="{{ imgproxy(post.thumbnail.src, 'resize:fit:800:0/auto:format/quality:75') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-full object-cover">
+                                <img src="{{ imgproxy(post.thumbnail.src, 'rt:fit/q:75') }}" alt="{{ post.thumbnail.alt }}" class="w-full h-full object-cover">
                             </div>
 
                             <div class="p-6">
