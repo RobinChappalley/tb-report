@@ -11,6 +11,7 @@
     #h(1fr) // rien à gauche
     #h(1fr) // rien à droite
   ],
+  margin: (top: 3cm),
   number-align: center,
 )
 
