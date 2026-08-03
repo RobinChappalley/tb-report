@@ -13,7 +13,7 @@
   ],
   margin: (top: 3cm),
   number-align: center,
-)
+  )
 
 
 #set document(
@@ -58,6 +58,9 @@
 #include "contenu/01-introduction.typ"
 #include "contenu/02-contexte.typ"
 #include "contenu/03-benchmark.typ"
+#include "contenu/04-poc.typ"
+#include "contenu/conclusion.typ"
+#include "contenu/09-linkedin-post.typ"
 
 #include "pages-admin/bibliography.typ"
 #set heading(numbering: none)
