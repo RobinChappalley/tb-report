@@ -5,7 +5,11 @@
 // ─── Configuration globale (style par défaut de Typst) ─────
 #let page-base = (
   paper: "a4",
-  header: header-commun,
+  header: context {
+    if counter(page).get().first() > 1 {
+      header-commun
+    }
+  },
   margin: (top: 3cm),
   number-align: center,
 )
