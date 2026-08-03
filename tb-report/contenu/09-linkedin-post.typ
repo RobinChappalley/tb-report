@@ -11,7 +11,7 @@ J'ai commencé par faire un benchmark de 3 architectures différentes : un SaaS 
 
 Une fois que l'architecture a été choisie, j'en ai fait une preuve de concept, dans des conditions proches de la production. J'ai suivi la documentation et j'ai mis en place imgproxy avec la signature des URLs pour que seuls les sites autorisés puissent utiliser le service.
 
-Sur le papier, tout devait marcher "simplement", mais dans la pratique, il fallait en avoir le coeur net. J'ai donc connecté le service a un projet Wordpress (Eldora) de l'agence, pour confirmer la compatibilité. Quelques cafés plus tard, ça a marché. Un grand ouf de soulagement, je n'ai pas fait tout ça pour rien. En moyenne, les développeurs devraient gagner 1 heure par projet, mais surtout, le processus d'optimisation est centralisé, et donc plus facile à maintenir
+Sur le papier, tout devait marcher "simplement", mais dans la pratique, il fallait en avoir le coeur net. J'ai donc connecté le service a un projet Wordpress (Eldora) de l'agence, pour confirmer la compatibilité. Quelques cafés plus tard, ça a marché. Un grand ouf de soulagement, je n'ai pas fait tout ça pour rien. En général, les développeurs devraient gagner du temps sur chaque projet, mais surtout, le processus d'optimisation est centralisé, et donc plus facile à maintenir.
 
 J'aimerais sincèrement remercier Antistatique et particulièrement Marc Friederich pour la confiance qu'ils m'ont accordée dès le premier jour, l'accompagnement dont ils ont fait preuve et la liberté qu'ils m'ont laissée pour mener à bien ce travail. Merci également à mon professeur référent, Loris Gavillet, pour ses conseils, son regard critique et son soutien tout au long de ce projet.
 
