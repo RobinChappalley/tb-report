@@ -52,6 +52,7 @@ class StarterSite extends Site
     add_filter('timber/context', [ $this, 'add_to_context' ]);
     add_filter('timber/twig/functions', [ $this, 'add_functions_to_twig' ]);
     add_filter('timber/twig/environment/options', [ $this, 'update_twig_environment_options' ]);
+    add_filter('the_content', [ $this, 'proxy_content_images' ], 20);
     add_filter('pll_translation_url', [ $this, 'translate_custom_post_type_urls' ], 10, 2);
 
     parent::__construct();
@@ -426,6 +427,8 @@ class StarterSite extends Site
       return '';
     }
 
+    $original_src = $src;
+
     // Try multiple sources for env vars: getenv, $_ENV, $_SERVER, and project env() helper
     $imgproxy_base = getenv('IMGPROXYURL') ?: ($_ENV['IMGPROXYURL'] ?? $_SERVER['IMGPROXYURL'] ?? (function_exists('env') ? env('IMGPROXYURL') : (defined('IMGPROXYURL') ? IMGPROXYURL : '')));
     $key_hex = getenv('IMGPROXYKEY') ?: ($_ENV['IMGPROXYKEY'] ?? $_SERVER['IMGPROXYKEY'] ?? (function_exists('env') ? env('IMGPROXYKEY') : (defined('IMGPROXYKEY') ? IMGPROXYKEY : '')));
@@ -436,11 +439,26 @@ class StarterSite extends Site
       $src = home_url($src);
     }
 
-    // encode source as plain (base64 URL-safe without padding)
+    $resolved_src = $src;
+
+    // Encode source as base64url, then append the source extension if available.
     $encoded = rtrim(strtr(base64_encode($src), '+/', '-_'), '=');
+    $source_path = parse_url($src, PHP_URL_PATH) ?: '';
+    $source_extension = $source_path ? pathinfo($source_path, PATHINFO_EXTENSION) : '';
+    if ($source_extension !== '') {
+      $encoded .= '.' . $source_extension;
+    }
 
     $ops = trim($ops, '/');
-    $path = ($ops !== '' ? $ops . '/' : '') . 'plain/' . $encoded;
+    $path = ($ops !== '' ? $ops . '/' : '') . $encoded;
+
+    error_log(
+      'imgproxy: original_src=' . $original_src .
+      ' resolved_src=' . $resolved_src .
+      ' ops=' . ($ops !== '' ? $ops : '(none)') .
+      ' encoded=' . $encoded.
+      ' path=' . $path
+    );
 
     if (!$imgproxy_base) {
       // no imgproxy configured — log for debug and return original src
@@ -471,6 +489,134 @@ class StarterSite extends Site
     $final = $imgproxy_base . '/insecure/' . $path;
     error_log('imgproxy: returning insecure url ' . $final);
     return $final;
+  }
+
+  /**
+   * Proxy image URLs inside rendered HTML content.
+   *
+   * This is used for Gutenberg blocks and any other HTML that goes through the_content.
+   * It keeps local theme assets untouched and only proxies remote image URLs.
+   *
+   * @param string $content HTML content rendered by WordPress.
+   * @return string
+   */
+  public function proxy_content_images($content)
+  {
+    if (!$content || is_admin()) {
+      return $content;
+    }
+
+    if (stripos($content, '<img') === false && stripos($content, '<source') === false) {
+      return $content;
+    }
+
+    $imgproxy_base = getenv('IMGPROXYURL') ?: ($_ENV['IMGPROXYURL'] ?? $_SERVER['IMGPROXYURL'] ?? (function_exists('env') ? env('IMGPROXYURL') : (defined('IMGPROXYURL') ? IMGPROXYURL : '')));
+    if (!$imgproxy_base) {
+      return $content;
+    }
+
+    $previous_errors = libxml_use_internal_errors(true);
+    $document = new \DOMDocument('1.0', 'UTF-8');
+    $wrapped_content = '<div id="imgproxy-content-root">' . $content . '</div>';
+    $document->loadHTML('<?xml encoding="utf-8" ?>' . $wrapped_content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $xpath = new \DOMXPath($document);
+
+    foreach ($xpath->query('//*[@src]') as $node) {
+      /** @var \DOMElement $node */
+      $source_url = $node->getAttribute('src');
+      $proxied_url = $this->maybe_proxy_url($source_url);
+      if ($proxied_url !== $source_url) {
+        $node->setAttribute('src', $proxied_url);
+      }
+    }
+
+    foreach ($xpath->query('//*[@srcset]') as $node) {
+      /** @var \DOMElement $node */
+      $source_srcset = $node->getAttribute('srcset');
+      $proxied_srcset = $this->proxy_srcset($source_srcset);
+      if ($proxied_srcset !== $source_srcset) {
+        $node->setAttribute('srcset', $proxied_srcset);
+      }
+    }
+
+    $root = $document->getElementById('imgproxy-content-root');
+    $proxied_content = '';
+
+    if ($root) {
+      foreach ($root->childNodes as $child_node) {
+        $proxied_content .= $document->saveHTML($child_node);
+      }
+    } else {
+      $proxied_content = $content;
+    }
+
+    libxml_clear_errors();
+    libxml_use_internal_errors($previous_errors);
+
+    return $proxied_content;
+  }
+
+  /**
+   * Proxy a single image URL only when it looks like a remote, public URL.
+   *
+   * @param string $url
+   * @return string
+   */
+  private function maybe_proxy_url($url)
+  {
+    $trimmed_url = trim((string) $url);
+
+    if ($trimmed_url === '' || preg_match('#^(data:|blob:|mailto:|javascript:)#i', $trimmed_url)) {
+      return $trimmed_url;
+    }
+
+    $imgproxy_base = getenv('IMGPROXYURL') ?: ($_ENV['IMGPROXYURL'] ?? $_SERVER['IMGPROXYURL'] ?? (function_exists('env') ? env('IMGPROXYURL') : (defined('IMGPROXYURL') ? IMGPROXYURL : '')));
+    if ($imgproxy_base && stripos($trimmed_url, rtrim($imgproxy_base, '/')) === 0) {
+      return $trimmed_url;
+    }
+
+    if (preg_match('#^/?app/themes/#', $trimmed_url) || preg_match('#^/?wp/(?:wp-admin|wp-includes)/#', $trimmed_url)) {
+      return $trimmed_url;
+    }
+
+    $parsed_url = parse_url($trimmed_url);
+    if (empty($parsed_url['host'])) {
+      return $trimmed_url;
+    }
+
+    $local_hosts = [ 'localhost', '127.0.0.1', '::1' ];
+    if (in_array($parsed_url['host'], $local_hosts, true) || str_ends_with($parsed_url['host'], '.local')) {
+      return $trimmed_url;
+    }
+
+    return $this->imgproxy_url($trimmed_url);
+  }
+
+  /**
+   * Proxy every URL found in a srcset attribute.
+   *
+   * @param string $srcset
+   * @return string
+   */
+  private function proxy_srcset($srcset)
+  {
+    $entries = array_filter(array_map('trim', explode(',', (string) $srcset)));
+    if (empty($entries)) {
+      return $srcset;
+    }
+
+    $proxied_entries = [];
+
+    foreach ($entries as $entry) {
+      $parts = preg_split('/\s+/', $entry, 2);
+      $candidate_url = $parts[0] ?? '';
+      $descriptor = $parts[1] ?? '';
+      $proxied_url = $this->maybe_proxy_url($candidate_url);
+
+      $proxied_entries[] = trim($proxied_url . ' ' . $descriptor);
+    }
+
+    return implode(', ', $proxied_entries);
   }
 
   public function get_breadcrumbs()
