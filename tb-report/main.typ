@@ -3,16 +3,19 @@
 #import "variables.typ": *
 
 // ─── Configuration globale (style par défaut de Typst) ─────
-#set page(
+#let page-base = (
   paper: "a4",
   header: header-commun,
+  margin: (top: 3cm),
+  number-align: center,
+)
+#set page(
+  ..page-base,
   footer: context [
     #set text(size: 9pt, fill: gray)
     #h(1fr) // rien à gauche
     #h(1fr) // rien à droite
   ],
-  margin: (top: 3cm),
-  number-align: center,
   )
 
 
@@ -48,10 +51,11 @@
 
 // ─── Contenu (chapitres) ────────────────────────────────────
 #set page(
-    footer: context [
+      footer: context [
       #set text(size: 10pt, fill: gray)
       #align(center, counter(page).display())
-    ]
+    ],
+    ..page-base,
   )
 #set heading(numbering: "1-1")
 #include "contenu/00-table-of-contents.typ"
@@ -71,6 +75,3 @@
 #include "pages-admin/ai-usage-declaration.typ"
 #include "pages-admin/confidentiality-declaration.typ"
 #include "pages-admin/bilan-inter.typ"
-
-// Remettre le style par défaut pour la suite si nécessaire
-// (pas nécessaire si c'est la fin du document)
