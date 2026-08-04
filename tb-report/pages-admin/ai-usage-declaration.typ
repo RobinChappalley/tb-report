@@ -9,6 +9,9 @@
   ("Claude Opus 4.8", "6", "Glissement du modèle besoin/KPI vers le modèle filtre/critères de décision pondérés"),
   ("Gemini 3.5 Flash", "1","Définition du titre" ),
   ("Gemini 3.1 Pro", "2", "Découpage de l'intégration à un projet existant"),
+  ("GPT 5.6 Luna", "2","Structure du rapport"),
+  ("Kimi K3", "2","Structure du rapport"),
+  ("Gemini 3.1 Pro", "2","Structure du rapport")
 
 
   // ajoute tes lignes ici au fil du TB
