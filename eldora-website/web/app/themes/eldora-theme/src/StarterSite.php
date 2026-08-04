@@ -516,23 +516,14 @@ class StarterSite extends Site
     $document->loadHTML('<?xml encoding="utf-8" ?>' . $wrapped_content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $xpath = new \DOMXPath($document);
 
-    foreach ($xpath->query('//*[@src]') as $node) {
-      /** @var \DOMElement $node */
-      $source_url = $node->getAttribute('src');
-      $proxied_url = $this->maybe_proxy_url($source_url);
-      if ($proxied_url !== $source_url) {
-        $node->setAttribute('src', $proxied_url);
-      }
-    }
-
-    foreach ($xpath->query('//*[@srcset]') as $node) {
-      /** @var \DOMElement $node */
-      $source_srcset = $node->getAttribute('srcset');
-      $proxied_srcset = $this->proxy_srcset($source_srcset);
-      if ($proxied_srcset !== $source_srcset) {
-        $node->setAttribute('srcset', $proxied_srcset);
-      }
-    }
+// Remplace //*[@src]
+foreach ($xpath->query('//img[@src] | //source[@src]') as $node) {
+  $source_url = $node->getAttribute('src');
+  $proxied_url = $this->maybe_proxy_url($source_url);
+  if ($proxied_url !== $source_url) {
+    $node->setAttribute('src', $proxied_url);
+  }
+}
 
     $root = $document->getElementById('imgproxy-content-root');
     $proxied_content = '';
