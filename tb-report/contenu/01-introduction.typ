@@ -3,6 +3,11 @@
 
 = Introduction
 
-L'introduction est une section requise dans un rapport technique. Introduisez votre travail, l'idée de départ et les objectifs attendus. Un lecteur qui découvrirait votre projet au travers de cette introduction devrait ainsi être capable d'en comprendre le cadre, l'idée générale et les aboutissants du projet.
+2. Problème
+Le problème n’est pas simplement que les images sont lourdes. D’après ton propre post LinkedIn, les images étaient déjà optimisées. Le véritable problème est :
 
-coucuo, je rajoute du contenu
+la duplication de la logique d’optimisation ;
+la dépendance aux fonctionnalités propres aux CMS et frameworks ;
+la génération anticipée de variantes parfois inutilisées ;
+la maintenance de configurations différentes ;
+la difficulté à faire évoluer la stratégie d’image de façon centralisée.
