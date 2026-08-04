@@ -444,11 +444,6 @@ class StarterSite extends Site
     // Encode source as base64url, then append the source extension if available.
     $encoded = rtrim(strtr(base64_encode($src), '+/', '-_'), '=');
     $source_path = parse_url($src, PHP_URL_PATH) ?: '';
-    $source_extension = $source_path ? pathinfo($source_path, PATHINFO_EXTENSION) : '';
-    if ($source_extension !== '') {
-      $encoded .= '.' . $source_extension;
-    }
-
     $ops = trim($ops, '/');
     $path = ($ops !== '' ? $ops . '/' : '') . $encoded;
 
