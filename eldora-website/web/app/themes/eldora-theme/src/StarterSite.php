@@ -434,12 +434,12 @@ class StarterSite extends Site
     $key_hex = getenv('IMGPROXYKEY') ?: ($_ENV['IMGPROXYKEY'] ?? $_SERVER['IMGPROXYKEY'] ?? (function_exists('env') ? env('IMGPROXYKEY') : (defined('IMGPROXYKEY') ? IMGPROXYKEY : '')));
     $salt_hex = getenv('IMGPROXYSALT') ?: ($_ENV['IMGPROXYSALT'] ?? $_SERVER['IMGPROXYSALT'] ?? (function_exists('env') ? env('IMGPROXYSALT') : (defined('IMGPROXYSALT') ? IMGPROXYSALT : '')));
 
-    // Ensure absolute URL for source
-    if (strpos($src, '//') === false) {
-      $src = home_url($src);
-    }
+    // Remap local/dev URLs to a public origin so imgproxy always fetches a reachable source.
+    $src = $this->resolve_imgproxy_source_url($src);
 
     $resolved_src = $src;
+
+    error_log('imgproxy debug - source url before encoding: ' . $src);
 
     // Encode source as base64url, then append the source extension if available.
     $encoded = rtrim(strtr(base64_encode($src), '+/', '-_'), '=');
@@ -516,14 +516,14 @@ class StarterSite extends Site
     $document->loadHTML('<?xml encoding="utf-8" ?>' . $wrapped_content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $xpath = new \DOMXPath($document);
 
-// Remplace //*[@src]
-foreach ($xpath->query('//img[@src] | //source[@src]') as $node) {
-  $source_url = $node->getAttribute('src');
-  $proxied_url = $this->maybe_proxy_url($source_url);
-  if ($proxied_url !== $source_url) {
+    // Remplace //*[@src]
+    foreach ($xpath->query('//img[@src] | //source[@src]') as $node) {
+    $source_url = $node->getAttribute('src');
+    $proxied_url = $this->maybe_proxy_url($source_url);
+    if ($proxied_url !== $source_url) {
     $node->setAttribute('src', $proxied_url);
-  }
-}
+    }
+    }
 
     $root = $document->getElementById('imgproxy-content-root');
     $proxied_content = '';
@@ -561,21 +561,48 @@ foreach ($xpath->query('//img[@src] | //source[@src]') as $node) {
       return $trimmed_url;
     }
 
-    if (preg_match('#^/?app/themes/#', $trimmed_url) || preg_match('#^/?wp/(?:wp-admin|wp-includes)/#', $trimmed_url)) {
-      return $trimmed_url;
-    }
-
-    $parsed_url = parse_url($trimmed_url);
-    if (empty($parsed_url['host'])) {
-      return $trimmed_url;
-    }
-
-    $local_hosts = [ 'localhost', '127.0.0.1', '::1' ];
-    if (in_array($parsed_url['host'], $local_hosts, true) || str_ends_with($parsed_url['host'], '.local')) {
-      return $trimmed_url;
-    }
-
     return $this->imgproxy_url($trimmed_url);
+  }
+
+  /**
+   * Resolve a possibly local image URL to a public source URL imgproxy can fetch.
+   *
+   * @param string $url
+   * @return string
+   */
+  private function resolve_imgproxy_source_url($url)
+  {
+    $trimmed_url = trim((string) $url);
+
+    if ($trimmed_url === '') {
+      return $trimmed_url;
+    }
+
+    $source_base = getenv('IMGPROXY_SOURCE_URL') ?: ($_ENV['IMGPROXY_SOURCE_URL'] ?? $_SERVER['IMGPROXY_SOURCE_URL'] ?? (function_exists('env') ? env('IMGPROXY_SOURCE_URL') : 'https://www.eldora.ch'));
+    $source_base = rtrim($source_base, '/');
+
+    if (preg_match('#^[a-z][a-z0-9+.-]*://#i', $trimmed_url)) {
+      $parsed_url = parse_url($trimmed_url);
+
+      if (!empty($parsed_url['host'])) {
+        $local_hosts = [ 'localhost', '127.0.0.1', '::1' ];
+        if (in_array($parsed_url['host'], $local_hosts, true) || str_ends_with($parsed_url['host'], '.local')) {
+          $path = $parsed_url['path'] ?? '';
+          $query = isset($parsed_url['query']) ? '?' . $parsed_url['query'] : '';
+          $fragment = isset($parsed_url['fragment']) ? '#' . $parsed_url['fragment'] : '';
+
+          return $source_base . $path . $query . $fragment;
+        }
+      }
+
+      return $trimmed_url;
+    }
+
+    if (str_starts_with($trimmed_url, '/')) {
+      return $source_base . $trimmed_url;
+    }
+
+    return $source_base . '/' . ltrim($trimmed_url, '/');
   }
 
   /**
