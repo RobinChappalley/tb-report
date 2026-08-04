@@ -53,6 +53,7 @@
 #include "pages-admin/publiable-abstract.typ"
 
 
+
 // ─── Contenu (chapitres) ────────────────────────────────────
 #set page(
       footer: context [
@@ -72,6 +73,7 @@
 
 #include "pages-admin/bibliography.typ"
 #set heading(numbering: none)
+#include "contenu/glossary.typ"
 
 // ─── Pages officielles (style Arial obligatoire) ────────────
 #show: page-officielle
