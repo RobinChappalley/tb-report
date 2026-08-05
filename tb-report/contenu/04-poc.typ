@@ -60,11 +60,18 @@ Les clés IMGPROXY_KEY et IMGPROXY_SALT sont injectées en variables d'environne
 
 == Implémentation sur un projet existant
 
-La PE prévoyait initialement deux connecteurs légers pour Drupal et Next.js. Au cours du TB, le périmètre a été recentré sur un connecteur WordPress afin de valider l’intégration complète sur Luxury Tribune, projet retenu pour le PoC. Ce changement a permis d’approfondir un cas réel plutôt que de produire deux intégrations partielles. Il réduit toutefois la démonstration empirique de l’agnosticité à un seul écosystème CMS.
+La pré-étude prévoyait deux connecteurs (Drupal, Next.js). Le projet Eldora (WordPress, PHP) a été retenu pour le PoC, car il permet une validation complète en un seul écosystème et s'aligne avec le stack de test du benchmark (également en PHP). Ce recentrage réduit la démonstration empirique de l'agnosticité, mais approfondit l'implémentation réelle.
+
+L'intégration repose sur la fonction imgproxy_url() exposée dans StarterSite.php (classe Timber/Bedrock) et accessible en Twig sous le nom imgproxy(). Les développeurs l'appellent manuellement dans les templates pour les images critiques (hero, featured images) en passant l'URL source et les opérations imgproxy souhaités (ex. rt:fit/q:75). 
+En parallèle, un filtre WordPress sur le hook #raw("the_content") traite automatiquement tout HTML rendu contenant des balises #raw("<img src>") ou #raw("<source src>") — notamment les blocs Gutenberg éditoriaux — et remplace les URLs d'images par leurs équivalents proxifiés, sans modifier le contenu stocké en base. La signature HMAC est générée au rendu, pas à l'upload, ce qui permet la flexibilité : si la clé imgproxy change, seules les URLs générées après ce changement utiliseront la nouvelle signature — aucune migration de données n'est nécessaire.
+
 == Choix d'implémentation
 
-Désactiver la signature ?
-La désactivation de la signature au profit d'une restriction réseau (allowlist d'adresses IP, cloisonnement entre le reverse proxy et imgproxy) n'a pas été retenue. La signature protège la ressource indépendamment du chemin réseau emprunté, alors qu'une allowlist protège une topologie donnée et doit être révisée à chaque changement d'environnement ou d'hébergeur — ce qui contredit l'objectif d'agnosticité du travail. Suivre la recommandation de l'éditeur limite en outre la dette technique liée à un contournement spécifique à l'agence. Cette approche a un coût : la rotation de la clé et du sel impose de les mettre à jour dans chaque projet consommateur, sans mécanisme de rotation automatisé dans le PoC actuel.
+*Sécurisation via signature HMAC*
+
+La signature HMAC a été retenue pour sécuriser l'accès à imgproxy. Contrairement à une restriction réseau (allowlist d'IP), elle protège la ressource indépendamment de la topologie — chaque requête porte sa preuve d'autorisation. Cela s'aligne avec l'objectif d'agnosticité : un changement d'hébergeur ou d'environnement n'impose pas de réviser les règles de filtrage. 
+La documentation d'imgproxy recommande cette approche, ce qui justifie son adoption plutôt que de la contourner avec des contrôles réseau ad hoc.
+Le coût : la rotation de la clé secrète impose de la mettre à jour dans chaque projet client. Le PoC n'automatise pas ce processus, ce qui est acceptable pour une première version mais mériterait une amélioration (service centralisé de versionning).
 
 == Validation
 
