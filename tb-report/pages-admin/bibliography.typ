@@ -59,5 +59,11 @@ include("../annexes/normalisation.typ"),
  kind: "annexe"
 )<annexe-normalisation-kpi>
 
+#pagebreak()
 
-
+#figure(
+  raw(read("../annexes/docker-compose.yaml"), block:true, lang: "yaml"),
+  caption: "Fichier de docker compose du PoC imgproxy",
+  supplement: [Annexe],
+  kind : "annexe"
+)<docker-compose.yaml>

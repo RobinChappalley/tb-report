@@ -37,7 +37,9 @@ caption:[Conteneurs et rôles dans le PoC imgproxy],
   kind:table
 )<roles-conteneurs>
 
-_nginxproxy/nginx-proxy_ est une image Docker spécialisée qui génère et recharge automatiquement la configuration Nginx en fonction des conteneurs actifs. Contrairement à l'image nginx:latest standard, elle n'expose pas un nginx.conf modifiable : sa configuration est entièrement dérivée des variables d'environnement (VIRTUAL_HOST, LETSENCRYPT_HOST, etc.) que déclarent les autres conteneurs. Cette approche élimine la maintenance manuelle de la configuration lors de l'ajout de nouveaux services.
+_nginxproxy/nginx-proxy_ est une image Docker spécialisée qui génère et recharge automatiquement la configuration Nginx en fonction des conteneurs actifs. Contrairement à l'image nginx:latest standard, elle n'expose pas un nginx.conf modifiable : sa configuration est entièrement dérivée des variables d'environnement (VIRTUAL_HOST, LETSENCRYPT_HOST, etc.) que déclarent les autres conteneurs. Cette approche élimine la maintenance manuelle de la configuration lors de l'ajout de nouveaux services. 
+
+Le fichier complet se trouve en annexe (@docker-compose.yaml).
 
 *SCHEMA A METTRE*
 
@@ -46,7 +48,7 @@ Le passage en HTTPS est une contrainte de la signature des URL : le secret HMAC 
 
 === Renouvellement automatique des certificats
 
-Let's Encrypt émet des certificats valides 90 jours. Le renouvellement est géré par acme-companion, qui reçoit les notifications de nginx-proxy et réeffectue la demande avant expiration. Le comportement n'a pas pu être vérifié en conditions réelles : la durée du PoC est inférieure au cycle de renouvellement. 
+Let's Encrypt émet des certificats valides 90 jours. Le renouvellement est géré par acme-companion, qui reçoit les notifications de nginx-proxy et réeffectue la demande avant expiration. 
 La documentation de l'image Docker indique que nginx-proxy recharge automatiquement sa configuration après un renouvellement. Cette affirmation reste à confirmer avant une mise en production (voir [4-6]).
 
 

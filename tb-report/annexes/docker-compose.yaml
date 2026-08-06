@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  # Le frontal qui reçoit le trafic 80/443 et gère le SSL
+  nginx-proxy:
+    image: nginxproxy/nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    labels:
+      - com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy
+
+  # Le compagnon qui demande et renouvelle les certificats SSL
+  ssl-companion:
+    image: nginxproxy/acme-companion
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - certs:/etc/nginx/certs
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+    depends_on:
+      - nginx-proxy
+
+  # Ton Nginx de cache (inchangé, sauf variables SSL)
+  nginx-cache:
+    image: nginx:latest
+    environment:
+      - VIRTUAL_HOST=resize.chapi.ch # <--- METS TON DOMAINE ICI
+      - LETSENCRYPT_HOST=resize.chapi.ch # <--- METS TON DOMAINE ICI
+      - LETSENCRYPT_EMAIL=robin@chapi.ch
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - cache_zone:/var/cache/nginx
+    depends_on:
+      - imgproxy
+
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    environment:
+      - IMGPROXY_KEY=place-your-key-here
+      - IMGPROXY_SALT=place-your-salt-here
+      - IMGPROXY_AUTO_WEBP=true
+      - IMGPROXY_AUTO_AVIF=true
+      - IMGPROXY_AUTO_JXL=true
+
+volumes:
+  cache_zone:
+  certs:
+  vhost:
+  html:
