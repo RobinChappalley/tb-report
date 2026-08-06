@@ -51,19 +51,20 @@ La documentation de l'image Docker indique que nginx-proxy recharge automatiquem
 
 
 === Secrets et variables d'environnement
-Les clés IMGPROXY_KEY et IMGPROXY_SALT sont injectées en variables d'environnement au démarrage du conteneur. Dans ce PoC, elles sont définies dans le docker-compose.yml à titre de démonstration. Une mise en production exige :
+Les clés #raw("IMGPROXY_KEY") et #raw("IMGPROXY_SALT") sont injectées en variables d'environnement au démarrage du conteneur. Dans ce PoC, elles sont définies dans le #raw("docker-compose.yml") à titre de démonstration. Une mise en production exige :
 
-- stockage des secrets dans un gestionnaire dédié (HashiCorp Vault, Docker Secrets, ou équivalent chez l'hébergeur) ;
-- injection au démarrage sans exposition dans le fichier de composition ;
-- rotation périodique (impact sur les URL signées existantes, voir [4-6]).
+- Stockage des secrets dans un gestionnaire dédié 
+- Injection au démarrage sans exposition dans le fichier de composition
+- Rotation périodique (impact sur les URL signées existantes, voir [4-6]).
 
 
 == Implémentation sur un projet existant
 
-La pré-étude prévoyait deux connecteurs (Drupal, Next.js). Le projet Eldora (WordPress, PHP) a été retenu pour le PoC, car il permet une validation complète en un seul écosystème et s'aligne avec le stack de test du benchmark (également en PHP). Ce recentrage réduit la démonstration empirique de l'agnosticité, mais approfondit l'implémentation réelle.
+La pré-étude prévoyait deux connecteurs (Drupal, Next.js). Le projet Eldora (WordPress) a été retenu pour le PoC, car il permet une validation complète en un seul écosystème et s'aligne avec le stack de test du benchmark (également en PHP). Ce recentrage réduit la démonstration empirique de l'agnosticité, mais approfondit l'implémentation réelle.
 
-L'intégration repose sur la fonction imgproxy_url() exposée dans StarterSite.php (classe Timber/Bedrock) et accessible en Twig sous le nom imgproxy(). Les développeurs l'appellent manuellement dans les templates pour les images critiques (hero, featured images) en passant l'URL source et les opérations imgproxy souhaités (ex. rt:fit/q:75). 
-En parallèle, un filtre WordPress sur le hook #raw("the_content") traite automatiquement tout HTML rendu contenant des balises #raw("<img src>") ou #raw("<source src>") — notamment les blocs Gutenberg éditoriaux — et remplace les URLs d'images par leurs équivalents proxifiés, sans modifier le contenu stocké en base. La signature HMAC est générée au rendu, pas à l'upload, ce qui permet la flexibilité : si la clé imgproxy change, seules les URLs générées après ce changement utiliseront la nouvelle signature — aucune migration de données n'est nécessaire.
+L'intégration repose sur la fonction #raw("imgproxy_url()") exposée dans StarterSite.php (classe Timber/Bedrock) et accessible en Twig sous le nom #raw("imgproxy()"). Les développeurs l'appellent manuellement dans les templates pour les images  (hero, featured images) en passant l'URL source et les opérations imgproxy souhaités (ex. rt:fit/q:75). 
+
+En parallèle, un filtre WordPress sur le hook #raw("the_content") traite automatiquement tout HTML rendu contenant des balises #raw("<img src>") ou #raw("<source src>") — notamment les blocs Gutenberg éditoriaux — et remplace les URLs d'images par leurs équivalents proxifiés, sans modifier le contenu stocké en base. La signature HMAC est générée au rendu, pas à l'upload, ce qui permet la flexibilité : si la clé imgproxy change, seules les URLs générées après ce changement utiliseront la nouvelle signature, aucune migration de données n'est nécessaire.
 
 == Choix d'implémentation
 
@@ -82,8 +83,45 @@ Le PoC ne couvre pas la gestion des erreurs lors de l'appel au service imgproxy.
 )<fallback-fail>
 Une logique de fallback vers l'image originale pourrait être implémentée en wrappant l'appel imgproxy dans un mécanisme try/catch et en retournant l'URL source en cas d'erreur. Cette implémentation n'a pas été validée sur le projet Eldora et reste en dehors du scope du PoC.
 == Validation
+Le déploiement sur le projet Eldora a permis de valider les points suivants :
+-  *Affichage des images* : les images optimisées s'affichent correctement dans le navigateur sans erreur de rendu.
+-  *Signature des URL* : les URLs générées contiennent bien le token HMAC, confirmant que la logique de signature fonctionne à la volée. (@poc-validation-1, encadrés en vert)
+
+#figure(
+  image("../assets/figures/poc-validation-1.png"),
+  caption:("Points de validation concernant les images et la signature des URL")
+)<poc-validation-1>
+
+-  *Cache nginx* : les requêtes répétées vers la même image optimisée sont servies depuis le cache (@poc-validation-2, encadré violet), réduisant la charge sur imgproxy.
+- *Format optimal* : les images sont servies dans le format le plus efficace supporté par le navigateur, en l'occurence l'AVIF (@poc-validation-2, encadré bleu) dans ce cas, confirmant que la négociation de contenu fonctionne correctement.
+
+#figure(
+  image("../assets/figures/poc-validation-2.png"),
+  caption:("Points de validation concernant le cache et le format des images")
+)<poc-validation-2>
+
 
 == Limites et pistes
+
+*Fallback en cas d'indisponibilité*
+
+Si imgproxy tombe, les images ne s'affichent pas. Un fallback vers l'image brute directement depuis l'origin est nécessaire pour respecter la réversibilité client — si un client quitte l'agence, ses images doivent rester accessibles sans modification de code. Cela implique de configurer le routeur pour servir l'origin en cas d'erreur 5xx d'imgproxy.
+
+*Test de charge*
+
+Le PoC a été validé sur un petit volume d'images. Avant de déployer imgproxy pour tous les clients, il faudrait tester sous charge réelle (milliers de requêtes simultanées) pour dimensionner correctement la VM et confirmer que les performances restent acceptables. Un protocole de test devrait être établi.
+
+*Renouvellement des certificats*
+
+#raw("acme-companion") gère automatiquement le renouvellement des certificats SSL avant expiration. Cette mécanique n'a pas pu être entièrement validée durant le PoC faute de temps pour observer un cycle complet.
+
+*Gestion centralisée des secrets*
+
+Actuellement, les clés de signature et les variables d'environnement imgproxy sont gérées directement sur l'infrastructure. Pour une agence gérant plusieurs clients, une solution décentralisée par repo comme Infisical (self-hosted) permettrait de versionner, auditer et modifier les secrets sans compromettre l'agnosticité de la solution.
+
+*Monitoring et alertes*
+
+Le service repose sur une analyse manuelle des logs. En production, une sonde health-check simple (requête périodique vers une image test) et des alertes basiques (latence, taux d'erreur) renforceraient la robustesse opérationnelle.
 
 regarder avec YG pour avoir les réponses à pk 
 ça marche pas avec next
