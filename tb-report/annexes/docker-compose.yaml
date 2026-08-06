@@ -30,9 +30,9 @@ services:
   nginx-cache:
     image: nginx:latest
     environment:
-      - VIRTUAL_HOST=resize.chapi.ch # <--- METS TON DOMAINE ICI
-      - LETSENCRYPT_HOST=resize.chapi.ch # <--- METS TON DOMAINE ICI
-      - LETSENCRYPT_EMAIL=robin@chapi.ch
+      - VIRTUAL_HOST= # <--- METS TON DOMAINE ICI
+      - LETSENCRYPT_HOST= # <--- METS TON DOMAINE ICI
+      - LETSENCRYPT_EMAIL= # <--- METS TON EMAIL ICI
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
       - cache_zone:/var/cache/nginx
