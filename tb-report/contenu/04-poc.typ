@@ -71,8 +71,16 @@ En parallèle, un filtre WordPress sur le hook #raw("the_content") traite automa
 
 La signature HMAC a été retenue pour sécuriser l'accès à imgproxy. Contrairement à une restriction réseau (allowlist d'IP), elle protège la ressource indépendamment de la topologie — chaque requête porte sa preuve d'autorisation. Cela s'aligne avec l'objectif d'agnosticité : un changement d'hébergeur ou d'environnement n'impose pas de réviser les règles de filtrage. 
 La documentation d'imgproxy recommande cette approche, ce qui justifie son adoption plutôt que de la contourner avec des contrôles réseau ad hoc.
-Le coût : la rotation de la clé secrète impose de la mettre à jour dans chaque projet client. Le PoC n'automatise pas ce processus, ce qui est acceptable pour une première version mais mériterait une amélioration (service centralisé de versionning).
+Cela a un coût : la rotation de la clé secrète impose de la mettre à jour dans chaque projet client. Le PoC n'automatise pas ce processus, ce qui est acceptable pour une première version mais mériterait une amélioration (service centralisé de versionning).
 
+*Absence de logique de fallback*
+
+Le PoC ne couvre pas la gestion des erreurs lors de l'appel au service imgproxy. Actuellement, si le service est indisponible ou rejette une requête (timeout, erreur de traitement), la fonction #raw("image_proxy_url") retourne une URL invalide, ce qui provoque un lien cassé dans le rendu HTML et donc pas d'image affichée (@fallback-fail). 
+#figure(
+  image("../assets/figures/fallback-fail.png"),
+  caption:("Exemple d'échec de fallback vers l'image originale")
+)<fallback-fail>
+Une logique de fallback vers l'image originale pourrait être implémentée en wrappant l'appel imgproxy dans un mécanisme try/catch et en retournant l'URL source en cas d'erreur. Cette implémentation n'a pas été validée sur le projet Eldora et reste en dehors du scope du PoC.
 == Validation
 
 == Limites et pistes
