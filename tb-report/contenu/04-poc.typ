@@ -3,9 +3,16 @@
 
 == Cadre initial
 
-preuve ? succès ? but ? état avant de commencer? 
+Le projet Luxury Tribune était un projet en production idéal sur lequel intégrer imgproxy. Il s'agit d'un projet découplé (Wordpress headless et Next.js) avec plusieurs miliers d'images. Le projet est hébergé sur Vercel et utilise Vercel Images pour le traitement des images. Le but du PoC était de remplacer Vercel Images par imgproxy, afin de valider la faisabilité technique. Le traitement des images est centralisé dans un unique composant Next.js, ce qui, sur le papier, simplifie grandement l'intégration d'imgproxy.
 
-un seul composant next-> monstre simple, projet idéal (coût en images, bcp d'image, idée de base du tb)
+Différents problèmes d'implémentation (détaillés en @blocage-technique) ont conduit a abandonner l'intégration sur Luxury Tribune et sur les projets Next.js en général. Le PoC a été recentré sur un projet WordPress (Eldora) pour valider l'intégration d'imgproxy.
+
+=== Blocage technique <blocage-technique>
+La signature HMAC des URLs imgproxy doit s'effectuer côté serveur, pour ne pas exposer la clé secrète au navigateur. Les React Server Components (RSC), introduits en Next.js 13, offrent cette capacité. Sauf que sur Luxury Tribune, comme sur la plupart des projets Next.js existants, les images étaient consommées dans des composants clients — une architecture courante pour la réactivité. Un composant serveur rendu à l'intérieur d'un composant client devient lui-même un composant client, ce qui rend impossible la signature sécurisée.
+J'ai passé plusieurs semaines à explorer cette limite sans la comprendre vraiment. Gilles et Marc suggéraient que c'était "assez simple". Benoît, en discutant de la frontière serveur/client, m'a aidé à identifier le vrai problème. J'ai ensuite testé sur Next.js 14 et 16, pensant que l'architecture des RSC s'était clarifiée, sans succès.
+Yann, développeur Next.js senior chez Antistatique, a proposé une piste alternative : utiliser les middlewares Next.js. Ces middlewares s'exécutent côté serveur avant le rendu et pourraient théoriquement intercepter et signer les URLs en transit. Cette approche n'a pas été explorée faute de temps, mais elle mérite investigation pour des projets futurs.
+Face à ce blocage et au risque de perte de temps, j'ai pivoté vers Eldora, un projet Drupal offrant un écosystème d'images plus accessible et une itération plus rapide sur la PoC.
+
 == Déploiement d'imgproxy
 === Choix d'une instance mutualisée
 
@@ -42,12 +49,11 @@ Le fichier complet se trouve en annexe (@docker-compose.yaml).
 
 *SCHEMA A METTRE*
 
-Le passage en HTTPS est une contrainte de la signature des URL : le secret HMAC ne doit pas circuler en clair.
 
 
 === Renouvellement automatique des certificats
 
-Let's Encrypt émet des certificats valides 90 jours @CertificateLifetimeRationale. Le renouvellement est géré par #raw("nginxproxy/acme-companion"), qui reçoit les notifications de #raw("nginxproxy/nginx-proxy") et réeffectue la demande avant expiration @NginxproxyAcmecompanionAutomated. Le comportement n'a pas pu être vérifié en conditions réelles : la durée du PoC est inférieure au cycle de renouvellement. 
+Let's Encrypt émet des certificats valides 90 jours @CertificateLifetimeRationale. Le renouvellement est géré par #raw("nginxproxy/acme-companion"), qui reçoit les notifications de #raw("nginxproxy/nginx-proxy") et réeffectue la demande avant expiration @NginxproxyAcmecompanionAutomated. Le comportement n'a pas pu être vérifié en conditions réelles : la durée du PoC est inférieure au cycle de renouvellement. Avant une mise en production, il faudrait valider que le renouvellement s'opère correctement et que Nginx recharge sa configuration sans interruption de service.
 
 === Secrets et variables d'environnement
 Les clés #raw("IMGPROXY_KEY") et #raw("IMGPROXY_SALT") sont injectées en dur au démarrage du conteneur. Dans ce PoC, elles sont définies dans le fichier #raw("docker-compose.yaml") à titre de démonstration. Cette approche expose les secrets dans le contrôle de version et ne respecte pas les bonnes pratiques de gestion des identifiants en production.
@@ -69,7 +75,9 @@ En parallèle, un filtre WordPress sur le hook #raw("the_content") traite automa
 
 La signature HMAC a été retenue pour sécuriser l'accès à imgproxy. Contrairement à une restriction réseau (allowlist d'IP), elle protège la ressource indépendamment de la topologie: chaque requête porte sa preuve d'autorisation. Cela s'aligne avec l'objectif d'agnosticité : un changement d'hébergeur ou d'environnement n'impose pas de réviser les règles de filtrage. 
 La documentation d'imgproxy recommande cette approche, ce qui justifie son adoption plutôt que de la contourner avec des contrôles réseau ad hoc.
-Cela a un coût : la rotation de la clé secrète impose de la mettre à jour dans chaque projet client. Le PoC n'automatise pas ce processus, ce qui est acceptable pour une première version mais mériterait une amélioration (service centralisé de versionning).
+Cela a un coût : la rotation de la clé secrète impose de la mettre à jour dans chaque projet client (voir limitations en 4-2-5).
+
+
 
 *Absence de logique de fallback*
 
@@ -102,7 +110,7 @@ Le déploiement sur le projet Eldora a permis de valider les points suivants :
 
 *Fallback en cas d'indisponibilité*
 
-Si imgproxy tombe, les images ne s'affichent pas. Un fallback vers l'image brute directement depuis l'origin est nécessaire pour respecter la réversibilité client — si un client quitte l'agence, ses images doivent rester accessibles sans modification de code. 
+Si imgproxy tombe, les images ne s'affichent pas. Un fallback vers l'image source est nécessaire pour garantir la continuité de service si imgproxy devient indisponible. Sans ce mécanisme, l'agence s'expose à un point de défaillance unique : toute interruption d'imgproxy rend invisibles les images du client. De plus, cela respecte le principe de réversibilité : si un client résilie son contrat, ses images doivent rester accessibles sans modification de code. 
 
 *Test de charge*
 
