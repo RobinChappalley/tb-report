@@ -1,5 +1,4 @@
- #include "../pages-admin/bibliography.typ"
- #pagebreak()
+
 
  #set text(lang: "fr", hyphenate: true)
 #set par(justify: true)
@@ -10,7 +9,9 @@
 
 == Cadre initial
 
-Le projet Luxury Tribune était un projet en production idéal sur lequel intégrer imgproxy. Il s'agit d'un projet découplé (Wordpress headless et Next.js) avec plusieurs miliers d'images. Le projet est hébergé sur Vercel et utilise Vercel Images pour le traitement des images. Le but du PoC était de remplacer Vercel Images par imgproxy, afin de valider la faisabilité technique. Dans ce projet, le traitement des images est centralisé dans un unique composant Next.js, ce qui, sur le papier, simplifie grandement l'intégration d'imgproxy.
+Luxury Tribune est un projet en production idéal sur lequel intégrer imgproxy. Il s'agit d'un site d'actualités sur le thème de luxe. Le site est utilisé par les abonnés payants pour lire des articles et s'informer sur les actualités du secteur. Les articles contiennent de nombreuses images et le milieu du luxe exige une qualité d'images optimale. 
+
+Techniquement, il s'agit d'un projet découplé (Wordpress headless et Next.js) avec plusieurs miliers d'images. Le projet est hébergé sur Vercel et utilise Vercel Images pour le traitement des images. Le but du PoC était de remplacer Vercel Images par imgproxy, afin de valider la faisabilité technique. Dans ce projet, le traitement des images est centralisé dans un unique composant Next.js, ce qui, sur le papier, simplifie grandement l'intégration d'imgproxy.
 
 Différents problèmes d'implémentation (détaillés en blocage technique) ont conduit a abandonner l'intégration sur Luxury Tribune et sur les projets Next.js en général. Le PoC a été recentré sur un projet WordPress (Eldora) pour valider l'intégration d'imgproxy.
 
@@ -31,7 +32,10 @@ Une fois la cause connue, une voie restait possible. La première consistait à 
 
 Yann, développeur Next.js senior de l'agence, a proposé une seconde voie : signer les URL dans un middleware Next.js, qui s'exécute côté serveur avant le rendu, indépendamment de la frontière serveur/client des composants. Cette piste évitait les limitations rencontrées avec les Server Components. Faute de temps, elle n'a pas été testée, mais elle constitue une piste crédible pour une future intégration Next.js.
 
-La preuve de concept a été réorientée en semaine 10, sur proposition de Marc, vers Eldora, un projet WordPress. Le rendu serveur d'un CMS satisfait nativement la contrainte de signature, ce qui a permis de valider la solution retenue.
+=== Pivot vers un projet WordPress
+La preuve de concept a été réorientée en semaine 10 vers Eldora, une entreprise de restauration collective basée à Rolle. Le site repose sur un CMS WordPress monolithique et comporte de nombreuses pages présentatives (identité, services, collaborateurs) intégrant un volume important de photographies.
+L'optimisation des images sur ce type de site vise à garantir une livraison fluide de photos culinaires et institutionnelles sans dégrader leur qualité visuelle. Le rendu serveur d'un CMS satisfait nativement la contrainte de signature, ce qui a permis de valider la solution retenue.
+
 == Déploiement d'imgproxy
 === Choix d'une instance mutualisée
 
