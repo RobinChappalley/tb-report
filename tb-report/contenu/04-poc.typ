@@ -1,18 +1,37 @@
+ #include "../pages-admin/bibliography.typ"
+ #pagebreak()
+
+ #set text(lang: "fr", hyphenate: true)
+#set par(justify: true)
+
+
 = Preuve de concept
 
 
 == Cadre initial
 
-Le projet Luxury Tribune était un projet en production idéal sur lequel intégrer imgproxy. Il s'agit d'un projet découplé (Wordpress headless et Next.js) avec plusieurs miliers d'images. Le projet est hébergé sur Vercel et utilise Vercel Images pour le traitement des images. Le but du PoC était de remplacer Vercel Images par imgproxy, afin de valider la faisabilité technique. Le traitement des images est centralisé dans un unique composant Next.js, ce qui, sur le papier, simplifie grandement l'intégration d'imgproxy.
+Le projet Luxury Tribune était un projet en production idéal sur lequel intégrer imgproxy. Il s'agit d'un projet découplé (Wordpress headless et Next.js) avec plusieurs miliers d'images. Le projet est hébergé sur Vercel et utilise Vercel Images pour le traitement des images. Le but du PoC était de remplacer Vercel Images par imgproxy, afin de valider la faisabilité technique. Dans ce projet, le traitement des images est centralisé dans un unique composant Next.js, ce qui, sur le papier, simplifie grandement l'intégration d'imgproxy.
 
-Différents problèmes d'implémentation (détaillés en @blocage-technique) ont conduit a abandonner l'intégration sur Luxury Tribune et sur les projets Next.js en général. Le PoC a été recentré sur un projet WordPress (Eldora) pour valider l'intégration d'imgproxy.
+Différents problèmes d'implémentation (détaillés en blocage technique) ont conduit a abandonner l'intégration sur Luxury Tribune et sur les projets Next.js en général. Le PoC a été recentré sur un projet WordPress (Eldora) pour valider l'intégration d'imgproxy.
 
 === Blocage technique <blocage-technique>
-La signature HMAC des URLs imgproxy doit s'effectuer côté serveur, pour ne pas exposer la clé secrète au navigateur. Les React Server Components (RSC), introduits en Next.js 13, offrent cette capacité. Sauf que sur Luxury Tribune, comme sur la plupart des projets Next.js existants, les images étaient consommées dans des composants clients — une architecture courante pour la réactivité. Un composant serveur rendu à l'intérieur d'un composant client devient lui-même un composant client, ce qui rend impossible la signature sécurisée.
-J'ai passé plusieurs semaines à explorer cette limite sans la comprendre vraiment. Gilles et Marc suggéraient que c'était "assez simple". Benoît, en discutant de la frontière serveur/client, m'a aidé à identifier le vrai problème. J'ai ensuite testé sur Next.js 14 et 16, pensant que l'architecture des RSC s'était clarifiée, sans succès.
-Yann, développeur Next.js senior chez Antistatique, a proposé une piste alternative : utiliser les middlewares Next.js. Ces middlewares s'exécutent côté serveur avant le rendu et pourraient théoriquement intercepter et signer les URLs en transit. Cette approche n'a pas été explorée faute de temps, mais elle mérite investigation pour des projets futurs.
-Face à ce blocage et au risque de perte de temps, j'ai pivoté vers Eldora, un projet Drupal offrant un écosystème d'images plus accessible et une itération plus rapide sur la PoC.
 
+
+
+Le projet Luxury Tribune a été retenu en semaine 8, sur suggestion de Marc (répondant chez Antistatique) et Gilles (CTO). Deux critères ont motivé ce choix : un volume d'images suffisant pour démontrer les bénéfices d'imgproxy, et une architecture apparemment favorable, puisque l'affichage des images passait par un composant unique.
+
+Cette évaluation n'a pas identifié une contrainte déterminante : imgproxy exige des URL signées. Sans signature, le service est exposé à n'importe qui, avec un risque de DDoS. Cette exigence n'est pas négociable. La clé de signature ne doit jamais être exposée au navigateur, ce qui impose de calculer la signature côté serveur.
+Or ce composant image unique était utilisé comme enfant de composants clients. Dans Next.js, un composant serveur rendu à l'intérieur d'un composant client devient lui-même client. La signature côté serveur y devient impossible. Cette règle est structurelle : elle ne se contourne ni avec plus de temps, ni avec plus de compétences.
+
+Le blocage rencontré ensuite n'a donc pas été un problème de compétence à combler : c'est un défaut de diagnostic d'architecture, en amont de l'intégration, qui n'a été détecté qu'après plusieurs jours de tentatives. Des essais ont été menés sur Next.js 13, 14 et 16, en espérant qu'une version plus récente clarifierait le modèle mais aucun n'a abouti. La difficulté principale a été de ne pas comprendre ce qui n'était pas compris : sans repères précis, les recherches documentaires restaient inefficaces.
+
+Un échange avec Benoît (développeur, spécialiste de Next.js) a permis de sortir de cette impasse. Il a expliqué la frontière entre composants serveur et composants client, et pourquoi un composant serveur perd ce statut dès qu'il est rendu à l'intérieur d'un composant client. Cette explication a permis d'identifier la cause exacte du blocage.
+
+Une fois la cause connue, une voie restait possible. La première consistait à créer une route API qui signe les URL à la demande. Elle doublait le nombre de requêtes par image, ce qui allait à l'encontre de l'objectif de performance du projet. 
+
+Yann, développeur Next.js senior de l'agence, a proposé une seconde voie : signer les URL dans un middleware Next.js, qui s'exécute côté serveur avant le rendu, indépendamment de la frontière serveur/client des composants. Cette piste évitait les limitations rencontrées avec les Server Components. Faute de temps, elle n'a pas été testée, mais elle constitue une piste crédible pour une future intégration Next.js.
+
+La preuve de concept a été réorientée en semaine 10, sur proposition de Marc, vers Eldora, un projet WordPress. Le rendu serveur d'un CMS satisfait nativement la contrainte de signature, ce qui a permis de valider la solution retenue.
 == Déploiement d'imgproxy
 === Choix d'une instance mutualisée
 
@@ -47,13 +66,21 @@ caption:[Conteneurs et rôles dans le PoC imgproxy],
 #raw("nginxproxy/nginx-proxy") est une image Docker spécialisée qui génère et recharge automatiquement la configuration Nginx en fonction des conteneurs actifs @NginxproxyREADMEmd58469cab4e7476a04ce3028a5f4df7a860db6e6f. Contrairement à l'image #raw("nginx:latest") standard, elle n'expose pas un fichier #raw("nginx.conf") modifiable : sa configuration est entièrement dérivée des variables d'environnement (#raw("VIRTUAL_HOST"), #raw("LETSENCRYPT_HOST"), etc.) que déclarent les autres conteneurs. Cette approche élimine la maintenance manuelle de la configuration lors de l'ajout de nouveaux services. 
 Le fichier complet se trouve en annexe (@docker-compose.yaml).
 
-*SCHEMA A METTRE*
+#figure(
+  image("../assets/figures/schema-imgproxy-cache.png"),
+  caption:("Architecture du PoC imgproxy"),
+)<architecture-poc>
 
 
 
 === Renouvellement automatique des certificats
 
 Let's Encrypt émet des certificats valides 90 jours @CertificateLifetimeRationale. Le renouvellement est géré par #raw("nginxproxy/acme-companion"), qui reçoit les notifications de #raw("nginxproxy/nginx-proxy") et réeffectue la demande avant expiration @NginxproxyAcmecompanionAutomated. Le comportement n'a pas pu être vérifié en conditions réelles : la durée du PoC est inférieure au cycle de renouvellement. Avant une mise en production, il faudrait valider que le renouvellement s'opère correctement et que Nginx recharge sa configuration sans interruption de service.
+
+#figure(
+  image("../assets/figures/sequence-diagram-acme.png"),
+  caption:("Schéma du renouvellement automatique des certificats Let's Encrypt via acme-companion")
+)
 
 === Secrets et variables d'environnement
 Les clés #raw("IMGPROXY_KEY") et #raw("IMGPROXY_SALT") sont injectées en dur au démarrage du conteneur. Dans ce PoC, elles sont définies dans le fichier #raw("docker-compose.yaml") à titre de démonstration. Cette approche expose les secrets dans le contrôle de version et ne respecte pas les bonnes pratiques de gestion des identifiants en production.
