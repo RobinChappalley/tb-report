@@ -11,7 +11,8 @@
   ("Gemini 3.1 Pro", "2", "Découpage de l'intégration à un projet existant"),
   ("GPT 5.6 Luna", "2","Structure du rapport"),
   ("Kimi K3", "2","Structure du rapport"),
-  ("Gemini 3.1 Pro", "2","Structure du rapport")
+  ("Gemini 3.1 Pro", "2","Structure du rapport"),
+  ("Claude Sonnet 5", "6","Création de diagramme Mermaid")
 
 
   // ajoute tes lignes ici au fil du TB
