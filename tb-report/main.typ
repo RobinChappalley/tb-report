@@ -62,7 +62,7 @@
     ],
     ..page-base,
   )
-#set heading(numbering: "1-1")
+#set heading(numbering: "1.1")
 #include "contenu/00-table-of-contents.typ"
 #include "contenu/01-introduction.typ"
 #include "contenu/02-contexte.typ"
