@@ -11,7 +11,7 @@
 Afin de choisir un service qui répond au besoin d'Antistatique, 3 formats de solutions ont été envisagés :
 1. Un service SaaS
 2. Un service edge
-3. Un service self-host
+3. Un service auto-hébergé (self-hosted)
 
 Ces différentes solutions amènement différents avantages, expliqués dans le tableau ci-dessous (@avantages-inconvenients).
 
