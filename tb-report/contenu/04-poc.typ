@@ -17,20 +17,20 @@ Différents problèmes d'implémentation (détaillés en blocage technique) ont 
 
 === Blocage technique <blocage-technique>
 
+Le projet Luxury Tribune a été retenu en semaine 8, sur suggestion de Marc (répondant) et du  Gilles (CTO d'Antistatique) . Deux critères ont motivé ce choix : un volume d'images suffisant pour démontrer les bénéfices d'imgproxy et une architecture apparemment favorable reposant sur un composant d'affichage d'images centralisé.
+L'évaluation initiale n'a toutefois pas identifié une contrainte structurelle déterminante. Pour prévenir les attaques par déni de service (DDoS) et la génération d'URL arbitraires, imgproxy impose la signature HMAC des URL au moyen d'une clé secrète. Cette clé doit impérativement rester hébergée côté serveur et ne jamais être exposée dans le navigateur
 
+La cause réelle du blocage n'était ni un dysfonctionnement d'imgproxy, ni une impossibilité technique fondamentale du framework Next.js, mais résidait dans l'architecture propre du projet Luxury Tribune combinée aux règles d'exécution de Next.js (App Router). Sur ce site, le composant d'image était importé et rendu à l'intérieur de composants clients (marqués par la directive 'use client'). Dans ce modèle, tout composant imbriqué dans un composant client est exécuté dans l'environnement du navigateur. La signature côté serveur y devenait donc impossible sans exposer publiquement la clé secrète.
+Ce problème d'intégration a été accentué par deux facteurs méthodologiques :
 
-Le projet Luxury Tribune a été retenu en semaine 8, sur suggestion de Marc (répondant chez Antistatique) et Gilles (CTO). Deux critères ont motivé ce choix : un volume d'images suffisant pour démontrer les bénéfices d'imgproxy, et une architecture apparemment favorable, puisque l'affichage des images passait par un composant unique.
+ 1. Une méconnaissance initiale des spécificités d'exécution et de la frontière client/serveur de Next.js, qui a empêché d'identifier d'emblée la cause racine du comportement observé.
+2. L'absence temporaire du développeur spécialiste Next.js de l'agence au moment des essais, rendant impossible la formulation des bonnes questions techniques ou la validation rapide de l'architecture.
 
-Cette évaluation n'a pas identifié une contrainte déterminante : imgproxy exige des URL signées. Sans signature, le service est exposé à n'importe qui, avec un risque de DDoS. Cette exigence n'est pas négociable. La clé de signature ne doit jamais être exposée au navigateur, ce qui impose de calculer la signature côté serveur.
-Or ce composant image unique était utilisé comme enfant de composants clients. Dans Next.js, un composant serveur rendu à l'intérieur d'un composant client devient lui-même client. La signature côté serveur y devient impossible. Cette règle est structurelle : elle ne se contourne ni avec plus de temps, ni avec plus de compétences.
+Les tentatives initiales de déblocage se sont ainsi orientées à tort vers une hypothèse d'incompatibilité de version du framework (tests menés sur Next.js 13, 14 et 16). Le déblocage est intervenu lors du retour de l'expert de l'agence, dont l'explication de la hiérarchie des composants a permis de poser le diagnostic exact.
 
-Le blocage rencontré ensuite n'a donc pas été un problème de compétence à combler : c'est un défaut de diagnostic d'architecture, en amont de l'intégration, qui n'a été détecté qu'après plusieurs jours de tentatives. Des essais ont été menés sur Next.js 13, 14 et 16, en espérant qu'une version plus récente clarifierait le modèle mais aucun n'a abouti. La difficulté principale a été de ne pas comprendre ce qui n'était pas compris : sans repères précis, les recherches documentaires restaient inefficaces.
+Le blocage ne traduisait pas une infaisabilité globale, mais indiquait qu'une intégration sur Luxury Tribune exigeait soit une restructuration lourde de la hiérarchie des composants du site (hors périmètre du temps imparti pour la preuve de concept), soit le déport de la signature dans un middleware Next.js.
 
-Un échange avec Benoît (développeur, spécialiste de Next.js) a permis de sortir de cette impasse. Il a expliqué la frontière entre composants serveur et composants client, et pourquoi un composant serveur perd ce statut dès qu'il est rendu à l'intérieur d'un composant client. Cette explication a permis d'identifier la cause exacte du blocage.
-
-Une fois la cause connue, une voie restait possible. La première consistait à créer une route API qui signe les URL à la demande. Elle doublait le nombre de requêtes par image, ce qui allait à l'encontre de l'objectif de performance du projet. 
-
-Yann, développeur Next.js senior de l'agence, a proposé une seconde voie : signer les URL dans un middleware Next.js, qui s'exécute côté serveur avant le rendu, indépendamment de la frontière serveur/client des composants. Cette piste évitait les limitations rencontrées avec les Server Components. Faute de temps, elle n'a pas été testée, mais elle constitue une piste crédible pour une future intégration Next.js.
+Cette seconde approche consiste à laisser le composant React générer une URL interne non signée, puis à faire intercepter la requête HTTP par le middleware sur le serveur afin d'y appliquer la signature HMAC avant de rediriger vers imgproxy. Faute de temps et en raison d'une prise en main encore trop récente du framework, cette solution n'a pas pu être testée dans le cadre de ce travail. Elle constitue néanmoins la piste théorique la plus prometteuse pour les futures intégrations de l'agence, sous réserve d'une validation technique approfondie sur un projet dédié.
 
 === Pivot vers un projet WordPress
 La preuve de concept a été réorientée en semaine 10 vers Eldora, une entreprise de restauration collective basée à Rolle. Le site repose sur un CMS WordPress monolithique et comporte de nombreuses pages présentatives (identité, services, collaborateurs) intégrant un volume important de photographies.
@@ -75,9 +75,7 @@ Le fichier complet se trouve en annexe (@docker-compose.yaml).
   caption:("Architecture du PoC imgproxy"),
 )<architecture-poc>
 
-
-
-=== Renouvellement automatique des certificats
+=== Renouvellement automatique des certificats TLS
 
 Let's Encrypt émet des certificats valides 90 jours @CertificateLifetimeRationale. Le renouvellement est géré par #raw("nginxproxy/acme-companion"), qui reçoit les notifications de #raw("nginxproxy/nginx-proxy") et réeffectue la demande avant expiration @NginxproxyAcmecompanionAutomated. Le comportement n'a pas pu être vérifié en conditions réelles : la durée du PoC est inférieure au cycle de renouvellement. Avant une mise en production, il faudrait valider que le renouvellement s'opère correctement et que Nginx recharge sa configuration sans interruption de service.
 
@@ -101,6 +99,8 @@ Les clés #raw("IMGPROXY_KEY") et #raw("IMGPROXY_SALT") sont injectées en dur a
 Une mise en production exige un gestionnaire de secrets dédié @AreSecretsManagers2025 (par ex. Infisical) qui permet de versionner, auditer et distribuer les identifiants sans les exposer dans les fichiers de configuration. De plus, la rotation périodique des clés doit être automatisée : actuellement, chaque rotation impose une intervention manuelle sur l'infrastructure et invalide toutes les URLs signées antérieures, ce qui complique la maintenabilité. Une solution auto-hébergée comme Infisical permettrait de centraliser la gestion des secrets et d'automatiser la rotation, tout en conservant l'agnosticité du service.
 
 
+
+
 == Implémentation sur un projet existant
 
 La pré-étude prévoyait deux connecteurs (Drupal, Next.js). Le projet Eldora (WordPress) a été retenu pour le PoC, car il permet une validation complète en un seul écosystème (PHP) et s'aligne avec le stack de test du benchmark (également en PHP). Ce recentrage réduit la démonstration empirique de l'agnosticité, mais approfondit l'implémentation réelle.
@@ -116,6 +116,7 @@ En parallèle, un filtre WordPress sur le hook #raw("the_content") traite automa
 La signature HMAC a été retenue pour sécuriser l'accès à imgproxy. Contrairement à une restriction réseau (allowlist d'IP), elle protège la ressource indépendamment de la topologie: chaque requête porte sa preuve d'autorisation. Cela s'aligne avec l'objectif d'agnosticité : un changement d'hébergeur ou d'environnement n'impose pas de réviser les règles de filtrage. 
 La documentation d'imgproxy recommande cette approche, ce qui justifie son adoption plutôt que de la contourner avec des contrôles réseau ad hoc.
 Cela a un coût : la rotation de la clé secrète impose de la mettre à jour dans chaque projet client (voir limitations en 4-2-5).
+
 
 
 
