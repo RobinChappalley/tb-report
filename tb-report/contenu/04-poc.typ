@@ -86,6 +86,15 @@ Let's Encrypt émet des certificats valides 90 jours @CertificateLifetimeRationa
   caption:("Schéma du renouvellement automatique des certificats Let's Encrypt via acme-companion")
 )
 
+=== Signature des URLs
+La génération d'une signature d'URL nécessite l'utilisation d'une clé secrète, partagée exclusivement entre le système d'information (le CMS) et le service de traitement d'images. 
+Il est impératif que cette signature soit calculée côté serveur. Si cette opération était déléguée au client (par exemple en JavaScript), la clé secrète devrait lui être transmise et serait visible dans le navigateur. La compromission de ce secret permettrait à un tiers de contourner la vérification et de générer ses propres URL valides. En effectuant ce calcul dans l'environnement sécurisé du serveur, le client ne reçoit que le résultat final de l'opération (le _hash_). La nature unidirectionnelle de la fonction de hachage garantit l'impossibilité de déduire la clé secrète à partir de la signature exposée dans l'URL.
+#figure(
+  image("../assets/figures/signature-explanation.png"),
+  caption:("Schéma du fonctionnement des URLS signées avec HMAC"),
+)<signature-explanation>
+
+
 === Secrets et variables d'environnement
 Les clés #raw("IMGPROXY_KEY") et #raw("IMGPROXY_SALT") sont injectées en dur au démarrage du conteneur. Dans ce PoC, elles sont définies dans le fichier #raw("docker-compose.yaml") à titre de démonstration. Cette approche expose les secrets dans le contrôle de version et ne respecte pas les bonnes pratiques de gestion des identifiants en production.
 
