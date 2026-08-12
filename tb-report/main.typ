@@ -12,6 +12,7 @@
   },
   margin: (top: 3cm),
   number-align: center,
+  
 )
 #set page(
   ..page-base,
@@ -21,7 +22,7 @@
     #h(1fr) // rien à droite
   ],
   )
-
+#set par(leading: 1em,)
 
 #set document(
   title: "Travail de Bachelor",
