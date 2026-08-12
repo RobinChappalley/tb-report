@@ -7,5 +7,5 @@ Je tiens à remercier Antistatique pour m'avoir proposé ce projet, de m'avoir a
 
 Je tiens également à remercier Loris Gavillet, mon professeur responsable à la HEIG-VD, pour son soutien, sa disponibilité et ses conseils avisés. Le chemin pour arriver à l'issue de ce projet n'a pas toujours été simple, mais il m'a aidé à me concentrer sur l'essentiel et à avancer lorsque j'étais bloqué.
 
-Merci à Cédrine, Agathe et Greg pour m'avoir écouté et m'avoir suggéré des idées pour faire avancer le projet.
+Merci à Cédrine Tille, Agathe Makumbi et Gregory Daguerre pour m'avoir écouté et m'avoir suggéré des idées pour faire avancer le projet.
 ]
