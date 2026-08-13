@@ -194,7 +194,14 @@ L'échantillon comprend douze images provenant de cas comparables aux contenus m
 
 Une instance WordPress hébergée chez Infomaniak a servi uniquement de serveur d'origine. Les images ont été déposées par FTP afin d'éviter la génération automatique de variantes par WordPress @Big_image_size_thresholdHookDeveloperWordPressorg2020. Les trois services ont ainsi reçu les mêmes fichiers sources.
 
-Le script a été exécuté depuis quatre emplacements : un ordinateur à Lausanne, une VM Infomaniak à Genève et deux VM DigitalOcean situées à New York et à Singapour. Cette répartition permet d'observer l'effet de la distance entre le client, le service de traitement et le serveur d'origine.
+Le script a été exécuté depuis quatre emplacements : un ordinateur à Lausanne, une VM Infomaniak à Genève et deux VM DigitalOcean situées à New York et à Singapour. Cette répartition permet d'observer l'effet de la distance entre le client, le service de traitement et le serveur d'origine. @environnements-benchmark
+
+#figure(
+  image(
+    "../assets/figures/benchmark-geographic-env.png",
+  ),
+caption :"Environnements géographiques et flux de requêtes du benchmark."
+)<environnements-benchmark>
 
 Avant chaque série géographique, le chemin de l'image source a été renouvelé au moyen d'un horodatage. Les URL signées d'imgproxy ont également été régénérées. Une variante qui n'avait pas été demandée auparavant était donc utilisée dans chaque lieu de test.
 
@@ -236,6 +243,15 @@ Le script Bash présenté en annexe (@test-script-procedure) utilise #raw("curl"
 Pour chaque image et chaque lieu, onze requêtes séquentielles ont été effectuées. La première réponse HTTP 200 représente la première transformation d'une variante encore absente du cache. Les réponses suivantes mesurent le comportement lors de requêtes répétées. L'ordre des trois solutions était mélangé à chaque itération et une pause de 0,5 seconde séparait deux requêtes.
 
 Le même en-tête #raw("Accept: image/avif,image/webp,image/apng,*/*;q=0.8") a été transmis aux trois services. Le mode automatique propre à chaque solution a été utilisé : #raw("f_auto") et #raw("q_auto") pour Cloudinary, #raw("f=auto") et #raw("q=auto") pour Cloudflare, puis la négociation de format activée par variables d'environnement pour imgproxy. Le test reproduit ainsi une utilisation par défaut réaliste. Il ne compare pas les encodeurs à qualité visuelle constante, car la notion de qualité automatique diffère d'un fournisseur à l'autre.
+
+Le déroulement d’une série de mesures est synthétisé dans la @dispositif-benchmark.
+#figure(
+  image(
+    "../assets/figures/benchmark-order.png",
+  ),
+  caption:"Déroulement d’une série de mesures"
+)<dispositif-benchmark>
+
 
 === Coûts, exploitation et intégration
 
