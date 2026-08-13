@@ -1,22 +1,18 @@
 = Contexte
 == Fragmentation du traitement d'images
-Antistatique développe et maintient une vingtaine de projets web par an, reposant sur des piles technologiques hétérogènes : CMS traditionnels et headless (Drupal, WordPress), frameworks JavaScript modernes (Next.js) ou frameworks PHP (Symfony). Cette diversité découle directement des contraintes imposées par chaque mandant — hébergement institutionnel, exigences de sécurité, préférences techniques héritées de projets antérieurs.
+Antistatique développe et maintient une vingtaine de projets web par an. Pour chaque mandat, l'agence analyse le besoin du client et sélectionne la stack technique la plus adapté: CMS traditionnels et headless (Drupal, WordPress), frameworks JavaScript modernes (Next.js). Cette démarche se traduit par une hétérogénéité technique  : la stack varie d'un projet à l'autre, par choix, selon le contexte de chaque mandat.
 Dans cet environnement, chaque stack traite le sujet des images de manière autonome et cloisonnée :
 
- - Écosystème Next.js : Le composant natif #raw("next/image") fournit une expérience développeur efficace pour l'optimisation à la volée (redimensionnement, changement de format). Son fonctionnement optimal repose toutefois par défaut sur l'infrastructure serveur propriétaire de Vercel . Lorsqu'un projet Next.js est déployé en dehors de cette plateforme — situation fréquente chez Antistatique pour des raisons d'hébergement imposées par le client —, ce mécanisme perd son efficacité native.
-- Écosystèmes CMS (Drupal, WordPress) : Le traitement des images (redimensionnement, formats, jeux d'images réactives) est délégué à des modules internes ou des extensions tierces, dont la configuration et les capacités varient d'un CMS à l'autre.
+ - Écosystème Next.js : Le composant natif #raw("next/image") fournit une expérience développeur efficace pour l'optimisation à la volée (redimensionnement, changement de format). Son fonctionnement optimal repose toutefois par défaut sur l'infrastructure serveur propriétaire de Vercel.
+- Écosystèmes CMS (Drupal, WordPress) : Le traitement des images (redimensionnement, formats, jeux d'images réactives) est délégué à des modules internes. Antistatique a développé un module Drupal, Image Styles Builder, pour résoudre ce problème dans l'écosystème Drupal. Ce module répond à un besoin exprimé par les équipes frontend, qui peuvent déclarer les styles nécessaires et les transmettre aux développeurs backend pour génération des variantes d'images. Il démontre une volonté déjà existante chez Antistatique de standardiser la gestion des images mais dans ce cas limitée à un seul écosystème. @ImageStylesBuilder2022
 
-Cette fragmentation a une conséquence directe sur le fonctionnement de l'agence : à chaque nouveau projet, les équipes de développement redéfinissent — souvent depuis zéro — les règles de redimensionnement, les ratios d'images, les formats cibles et les stratégies de mise en cache. La documentation interne actuelle d'Antistatique se limite à recommander l'usage de la balise <picture> (voir Annexe 3), sans définir comment les variantes d'images qu'elle référence doivent être générées. Ce vide documentaire laisse chaque développeur libre de définir sa propre approche.
-[ FIGURE 2.1 — À réaliser ]
-Titre : Fragmentation actuelle des pipelines de traitement d'images chez Antistatique
 
-Contenu suggéré :
-Colonne 1 (Next.js) — icône Vercel — flèche vers "Optimisation native (dépendante de l'hébergement)"
-Colonne 2 (Drupal) — icône Drupal — flèche vers "Module de traitement interne"
-Colonne 3 (WordPress) — icône WordPress — flèche vers "Plugin tiers"
-Colonne 4 (Symfony / sur mesure) — flèche vers "Script ad hoc"
+#figure(
+  image("../assets/figures/fragmentation.png"),
+  caption:"Fragmentation du traitement d'images selon la stack technique"
+)
 
-Sous chaque colonne : "Configuration propre, non réutilisable"
+
 == Problème d'indépendance technologique
 Sur les projets Next.js, #raw("next/image") atteint sa pleine efficacité lorsqu'il est couplé à l'infrastructure Vercel @GettingStartedImage. Ce couplage pose une question d'indépendance technologique pour l'agence : la capacité à maintenir, faire évoluer ou migrer un projet ne devrait pas dépendre d'un unique fournisseur d'infrastructure.
 
