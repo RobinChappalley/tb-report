@@ -156,7 +156,7 @@ Cette révision évite d'associer artificiellement une mesure à chaque besoin. 
 
 === Pondération des critères de choix
 
-Deux collaborateurs d'Antistatique ont réparti indépendamment 40 points entre les sept KPI. La pondération finale correspond à la moyenne de leurs deux propositions (@ponderation-kpi). Cette méthode réduit l'influence d'un jugement individuel et rend explicites les priorités de l'agence.
+Deux collaborateurs dirigeants d'Antistatique ont réparti indépendamment 40 points entre les sept KPI. La pondération finale correspond à la moyenne de leurs deux propositions (@ponderation-kpi). Cette méthode réduit l'influence d'un jugement individuel et rend explicites les priorités de l'agence.
 
 #figure(
   {
@@ -192,19 +192,6 @@ La performance représente ainsi 21,25 % du score, les coûts et l'exploitation 
 
 L'échantillon comprend douze images provenant de cas comparables aux contenus manipulés par l'agence : huit fichiers JPEG et quatre fichiers PNG, dont la taille varie de 1,5 à 16,6 Mo. Il s'agit d'un échantillon de convenance destiné à couvrir plusieurs formats et volumes, et non d'un échantillon statistiquement représentatif. La galerie des images est présentée ci-dessous (@fig-echantillon-benchmark). et le détail des fichiers figure en annexe (@taille-images-benchmark).
 
-Une instance WordPress hébergée chez Infomaniak a servi uniquement de serveur d'origine. Les images ont été déposées par FTP afin d'éviter la génération automatique de variantes par WordPress @Big_image_size_thresholdHookDeveloperWordPressorg2020. Les trois services ont ainsi reçu les mêmes fichiers sources.
-
-Le script a été exécuté depuis quatre emplacements : un ordinateur à Lausanne, une VM Infomaniak à Genève et deux VM DigitalOcean situées à New York et à Singapour. Cette répartition permet d'observer l'effet de la distance entre le client, le service de traitement et le serveur d'origine. @environnements-benchmark
-
-#figure(
-  image(
-    "../assets/figures/benchmark-geographic-env.png",
-  ),
-caption :"Environnements géographiques et flux de requêtes du benchmark."
-)<environnements-benchmark>
-
-Avant chaque série géographique, le chemin de l'image source a été renouvelé au moyen d'un horodatage. Les URL signées d'imgproxy ont également été régénérées. Une variante qui n'avait pas été demandée auparavant était donc utilisée dans chaque lieu de test.
-
 #figure(
   {
     // Helper pour afficher une image avec son nom de fichier dessous
@@ -236,6 +223,22 @@ Avant chaque série géographique, le chemin de l'image source a été renouvel�
   },
   caption: [Échantillon des douze images sources utilisées pour le benchmark. Les fichiers couvrent deux formats et des tailles comprises entre 1,5 et 16,6 Mo.],
 ) <fig-echantillon-benchmark>
+
+
+Une instance WordPress hébergée chez Infomaniak a servi uniquement de serveur d'origine. Les images ont été déposées par FTP afin d'éviter la génération automatique de variantes par WordPress @Big_image_size_thresholdHookDeveloperWordPressorg2020. Les trois services ont ainsi reçu les mêmes fichiers sources.
+
+Le script a été exécuté depuis quatre emplacements : un ordinateur à Lausanne, une VM Infomaniak à Genève et deux VM DigitalOcean situées à New York et à Singapour. Cette répartition permet d'observer l'effet de la distance entre le client, le service de traitement et le serveur d'origine. @benchmark-environnements
+
+#figure(
+  image(
+    "../assets/figures/benchmark-geographic-env.png",
+  ),
+caption :"Environnements géographiques et flux de requêtes du benchmark."
+)<benchmark-environnements>
+
+Avant chaque série géographique, le chemin de l'image source a été renouvelé au moyen d'un horodatage. Les URL signées d'imgproxy ont également été régénérées. Une variante qui n'avait pas été demandée auparavant était donc utilisée dans chaque lieu de test.
+
+
 === Mesures techniques
 
 Le script Bash présenté en annexe (@test-script-procedure) utilise #raw("curl") pour envoyer les requêtes et enregistrer le code HTTP, le type de contenu, la taille téléchargée, le temps jusqu'au premier octet et le temps total. L'option #raw("time_starttransfer") de #raw("curl") fournit la mesure utilisée pour le Time to First Byte (TTFB) @WriteOutEverything. Le TTFB mesure le délai entre le début de la requête et la réception du premier octet de la réponse @TimeFirstByte.
