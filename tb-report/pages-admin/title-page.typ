@@ -56,7 +56,7 @@ align(center)[
   #v(.5em)
   #text(size: 16pt)[#vars.doc-type]\
   #v(1em)
-  #text(size: 24pt, weight: "bold")[#vars.title]\
+  #text(size: 24pt, weight: "bold", hyphenate: false)[#vars.title]\
   #v(0.5em)
   #text(size: 14pt)[#smallcaps[#vars.subtitle]]
   #v(.5em)
@@ -84,6 +84,6 @@ align(center)[
   )
   #v(1fr)
 
-  #text(size: 12pt)[#vars.city, le #vars.date.display("[day]-[month]-[year]")]
+  #text(size: 12pt)[#vars.city, le #vars.date.display("[day].[month].[year]")]
 ]
 )
