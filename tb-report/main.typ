@@ -22,7 +22,7 @@
     #h(1fr) // rien à droite
   ],
   )
-#set par(leading: 1em,)
+#set par(leading: 0.9em,)
 
 #set document(
   title: "Travail de Bachelor",
@@ -66,7 +66,6 @@
     ..page-base,
   )
 #set heading(numbering: "1.1")
-#include "contenu/00-table-of-contents.typ"
 #include "contenu/01-introduction.typ"
 #include "contenu/02-contexte.typ"
 #include "contenu/02-5-ben.typ"
