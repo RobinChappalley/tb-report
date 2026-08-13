@@ -3,10 +3,12 @@
   inset: 6pt,
 )[#strong(text)]
 
+#set align(left + horizon)
+
 Cette annexe décrit les règles utilisées pour convertir les différents KPI sur une échelle commune allant de 1 à 10. La note 10 représente toujours la situation la plus favorable et la note 1 la moins favorable. La méthode de normalisation varie selon la nature du KPI : certains sont évalués par rapport à des seuils fixes, tandis que d’autres sont comparés relativement aux valeurs obtenues pendant le benchmark.
 
 #{
-  set text(size: 8pt)
+  set text(size: 8pt,)
 
   table(
     columns: (1.25fr, 1.45fr, 1fr),
