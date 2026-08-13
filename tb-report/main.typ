@@ -47,7 +47,9 @@
 
 #set par(justify: true)
 // ─── Pages liminaires ─────────────────────────────────────────
+
 #include "pages-admin/title-page.typ"
+#include "contenu/00-table-of-contents.typ"
 #include "pages-admin/foreword.typ"
 #include "pages-admin/thanks.typ"
 #include "pages-admin/authenticity.typ"
