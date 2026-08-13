@@ -13,7 +13,7 @@
 *Signature*
   #v(2cm)
 #line(length: 50%, stroke: 0.1mm)
-* #vars.city, le  #vars.date.display("[day]-[month]-[year]")*
+* #vars.city, le  #vars.date.display("[day].[month].[year]")*
   #v(2cm)
 #line(length: 50%, stroke: 0.1mm)
 

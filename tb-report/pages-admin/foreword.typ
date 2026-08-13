@@ -13,7 +13,7 @@ HEIG-VD
 
 Le Chef du Département
 
-#vars.city, le #vars.date.display("[day]-[month]-[year]")
+#vars.city, le #vars.date.display("[day].[month].[year]")
 
 
 

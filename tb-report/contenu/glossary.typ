@@ -10,3 +10,7 @@
 / Saas : Software as a Service, logiciel en tant que service. Modèle de distribution de logiciels où l'application est hébergée par un fournisseur et accessible via Internet, généralement sur abonnement.
 
 / Edge computing : informatique en périphérie. Modèle de traitement des données où le calcul est effectué à proximité de la source de données, plutôt que dans un centre de données centralisé, pour réduire la latence et améliorer les performances.
+
+/ TCO : Total Cost of Ownership, coût total de possession. Métrique qui évalue le coût global d'un produit ou d'un service sur toute sa durée de vie, incluant les coûts d'acquisition, d'exploitation et de maintenance 
+
+/KPI : Key Performance Indicator, indicateur clé de performance. Mesure utilisée pour évaluer l'efficacité d'une action ou d'un processus par rapport à des objectifs prédéfinis.
