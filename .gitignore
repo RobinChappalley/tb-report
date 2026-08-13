@@ -3,3 +3,4 @@
 node_modules
 dist
 /tb_template_latex
+*.zip
