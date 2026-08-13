@@ -12,7 +12,11 @@
   ("GPT 5.6 Luna", "2","Structure du rapport"),
   ("Kimi K3", "2","Structure du rapport"),
   ("Gemini 3.1 Pro", "2","Structure du rapport"),
-  ("Claude Sonnet 5", "6","Création de diagramme Mermaid")
+  ("Claude Sonnet 5", "6","Création de diagramme Mermaid"),
+  ("ChatGPT 5.6 Sol", "1", "Reformulation"),
+  ("ChatGPT 5.6 Sol", "2", "Soutien méthodologique"),
+  ("ChatGPT 5.6 Sol", "3", "Outil de réflexion")
+  
 
 
   // ajoute tes lignes ici au fil du TB
