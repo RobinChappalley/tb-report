@@ -1,331 +1,481 @@
-// !set document root: ../main.typ
-
-#set text(
-  lang: "fr"
-)
-= Benchmark
-
-
-== Cadre initial
-=== Besoins et matrice MoSCoW
-Afin de choisir un service qui répond au besoin d'Antistatique, 3 formats de solutions ont été envisagés :
-1. Un service SaaS
-2. Un service edge
-3. Un service auto-hébergé (self-hosted)
-
-Ces différentes solutions amènement différents avantages, expliqués dans le tableau ci-dessous (@avantages-inconvenients).
-
-#figure(
-  table(columns: 3, 
-  [Type de solution],[Avantage], [Inconvénient] , 
-  [SaaS],[- Simplicité de mise en place
-  - SDK existants],[ - Dépendance forte à un service externe
-  - Coût élevé],
-  [Edge],[Faible latence grâce à l'exécution sur des noeuds proches de l'utilisateur final],[ - Dépendance forte à un service externe
-  - Besoin d'un accès important à l'hébergement du client],
-  [Self-host],[
-    - Contrôle total sur le service
-    - Coût faible
-    - Indépendance complète],[ - Complexité de mise en place
-  - Maintenance du service], 
-  align: (center,left, left),
-  ),
-  caption: [Avantages et inconvénients des différentes solutions envisagées],
-
-  kind: table,
-) <avantages-inconvenients>
-
-Les trois architectures retenues — SaaS, Edge CDN, self-hosted — ont été sélectionnées car *aucune ne présente de limitation incompatible* avec les besoins d'Antistatique. La comparaison porte donc sur des critères de compromis (coûts, indépendance, maintenabilité) plutôt que sur une élimination préalable.
-
-
-=== Matrice MoSCoW et KPI initiaux
-Pour comparer les avantages et les inconvénients de chaque service, une matrice MoSCoW reprenant les besoins d'Antistatique a été créée. Des indicateurs de performance clé (KPI) ont été définis pour chaque besoin. (@moscow-matrix-v1). Suite à la définition de ces KPI, le but du benchmark était d'attribuer une valeur à chaque indicateur pour chaque service, de sorte à pouvoir comparer les services sur la base de critères objectifs.
-
 
 
 #let table-header(text) = {
   strong(text)
 }
 
-#let priority-cell(label) = {
-  let color = if label == "Must have" {
-    (red.lighten(40%), red.darken(20%))
-  } else if label == "Should have" {
-    (orange.lighten(50%), orange.darken(10%))
-  } else if label == "Could have" {
-    (yellow.lighten(40%), orange.darken(30%))
-  } else {
-    (green.lighten(50%), green.darken(20%))
-  }
-  
-  rect(
-    fill: color.at(0),
-    radius: 4pt,
-    text(fill: color.at(1), weight: "medium", size: 9pt)[#label]
-  )
-}
+= Benchmark
 
+Ce chapitre compare trois familles d'architectures capables de centraliser le traitement et la livraison des images : un service SaaS, un service exécuté à la périphérie d'un réseau de diffusion de contenu (edge CDN) et un service auto-hébergé. Le benchmark poursuit deux objectifs. Il doit d'abord rendre visibles les compromis propres à chaque architecture, puis fournir une aide à la décision pour sélectionner la solution à approfondir dans la preuve de concept du chapitre suivant.
 
-#set text(size: 10pt)
+La comparaison ne constitue pas une étude exhaustive du marché. Chaque famille est représentée par un service concret afin de pouvoir réaliser des mesures reproductibles. Les conclusions portent donc sur les architectures telles qu'elles sont représentées par ces trois services, et non sur l'ensemble des produits disponibles dans chaque catégorie.
 
+== Construction du modèle de comparaison
 
-#let kpi-style(cell) = {
-  text(size: 8pt)[#cell] 
-}
+=== Architectures et services représentatifs
+
+Les trois architectures retenues répondent toutes au principe de base du travail : recevoir l'URL d'une image source et retourner une version optimisée sans dépendre du CMS ou du framework qui l'appelle. Elles se distinguent surtout par l'emplacement du traitement, le degré de maîtrise laissé à Antistatique et la charge d'exploitation qui en découle (@architectures-benchmark).
+
 #figure(
+    table(
+      columns: (0.8fr, 0.9fr, 1.8fr, 1.8fr),
+      inset: 5pt,
+      align: left + horizon,
 
-table(
-  columns: (auto,  1fr, 1fr, 1fr, auto),
-  inset: 6pt,
-  align: (left,  horizon, horizon, horizon, center),
-  
-  // Header row
-  table-header([Nom]),
-  table-header([KPI 1]),
-  table-header([KPI 2]),
-  table-header([KPI 3]),
-  table-header([Priorité]),
-  
-  // Row 1: Interopérabilité
-  [Interopérabilité avec les stacks existantes et futures],
-  kpi-style[Nombre de dépendances requises (nombre)],
-  kpi-style[Type d'intégration: standard (url http) / propriétaire (SDK)],
-  [],
-  priority-cell("Must have"),
-  
-  // Row 2: Standardisation
-  [Standardisation de la logique d'optimisation],
-  kpi-style[Possibilité de modifier les paramètres d'image globalement (sans code source)],
-  kpi-style[Distribution adaptative du format],
-  [],
-  priority-cell("Must have"),
-  
-  // Row 3: Maîtrise du déploiement
-  [Maîtrise du déploiement et des coûts],
-  kpi-style[TCO (CHF/an): coût fixe + variable],
-  kpi-style[Niveau de gestion Antistatique (1–4)],
-  [],
-  priority-cell("Must have"),
-  
-  // Row 4: Disponibilité
-  [Disponibilité et robustesse],
-  kpi-style[SLA (%) — données fournisseur],
-  kpi-style[Présence d'un mécanisme de fallback (oui/non)],
-  [],
-  priority-cell("Must have"),
 
-    
-  // Row 5: Temps de chargement
-  [Garantie des temps de chargement optimisés],
-  kpi-style[TTFB (cache hit) — ms],
-  kpi-style[TTFB (cache miss) — ms],
-  kpi-style[Ratio de compression (%)],
-  priority-cell("Should have"),
-
-  
-  // Row 6: Faible charge d'intégration
-  [Faible charge d'intégration pour les développeurs],
-  kpi-style[Friction d'intégration (1–4)],
-  [],
-  [],
-  priority-cell("Could have"),
-  
-  // Row 7: Réversibilité
-  [Réversibilité pour les sites clients],
-  [],
-  [],
-  [],
-  priority-cell("Could have"),
-),
-  caption: [Matrice MoSCoW, 1ère version],
+      table-header([Nom]),
+      table-header([Service testé]),
+      table-header([Principe]),
+      table-header([Compromis principal]),
+      [SaaS],
+      [Cloudinary],
+      [Traitement et diffusion entièrement pris en charge par un fournisseur externe.],
+      [Faible charge d'exploitation, mais dépendance au fournisseur et coût récurrent.],
+      [Edge CDN],
+      [Cloudflare Images],
+      [Transformation au sein du réseau Cloudflare, à proximité des utilisateurs.],
+      [Bonne couverture géographique, mais couplage à l'infrastructure Cloudflare.],
+      [Auto-hébergée],
+      [imgproxy],
+      [Service déployé et administré par Antistatique, complété par un cache HTTP.],
+      [Maîtrise de l'infrastructure et du coût, au prix d'une maintenance interne.],
+    )
+  ,
+  caption: [Architectures représentées dans le benchmark],
   kind: table,
-) <moscow-matrix-v1>
+) <architectures-benchmark>
 
-=== Choix des solutions
-Une fois que les architectures à tester ont été définies, il a été nécessaire de sélectionner les services à tester pour chaque type de solution. Pour sélectionner un service, 3 critères ont été pris en compte :
-1. L'existence d'un plan gratuit, pour pouvoir tester le service sans engager de frais
-2. Le fonctionnement du service, avec des paramètres dans l'URL pour répondre au prérequis d'agnosticité avancé dans la pré-étude
-3. La maturité de la documentation et l'adoption par la communauté (DX) pour une mise en place rapide respectant le temps prévu par le planning (3 semaines)
-
-Plutôt que de comparer exhaustivement tous les acteurs d'une même catégorie (comme Imgix, Uploadcare Image CDN et Cloudinary pour le SaaS), un seul service représentatif répondant à ces 3 critères a été sélectionné pour chaque architecture. *Cloudinary* a été sélectionné pour le SaaS, *Cloudflare Images* pour l'edge et *Imgproxy* pour le self-host. Ce choix est justfié par leur position dominante sur le marché : Cloudinary est l'un des leaders de ce marché @datainteloImageOptimizationSoftware, tandis que Cloudflare absorbe plus de la moitié (58%) des des requêtes HTTP à travers le monde. @figure-top-cdns-html. 
-#figure(
-  image("../assets/figures/top-cdns-html.png"),
-  caption:[Top CDN pour le HTML en 2025, @viggiano2025WebAlmanac2026]
-  )<figure-top-cdns-html>
-
-
-Concernant le choix d'imgproxy comme solution auto-hébergée, il est expliqué par sa popularité, sa communauté active (10K stars sur GitHub) et ses mises à jour fréquentes. Une mise à jour majeure est sortie au début du mois de mai 2026, preuve de la vitalité du projet. Aussi, imgproxy repose sur un modèle "Open Core", ce qui signifie que la plupart des fonctionnalités sont disponibles gratuitement, mais que certaines fonctionnalités avancées sont payantes. Cela permet de tester le service sans frais, tout en ayant la possibilité d'accéder à des fonctionnalités avancées si nécessaire. Cela permet aussi de garantir une viabilité économique à l'entreprise derrière le projet, ce qui est un gage de pérennité pour le service. À l'origine, le service a été développé par Evil Martians une société qui crée des outils pour les développeurs. Puis, une société dédiée uniquement à ce service a été créée @ImgproxyGoesSolo2023, grâce au succès important. Cette transition vers une entreprise spécialisée indique une viabilité économique suffisante pour assurer la continuité du service.
+Un service a été choisi dans chaque catégorie selon trois conditions : 
+1. La possibilité de l'évaluer sans investissement initial important 
+2. L'existence d'une interface fondée sur des URL 
+3. Une documentation suffisamment développée pour réaliser le benchmark dans les trois semaines prévues.
  
- Pour le cas concerné, seules les fonctionnalités de base sont nécessaires: Redimensionnement, optimisation de format, et modification de la qualité. Toutes ces fonctionnalités sont disponibles gratuitement. @ImgproxyDocumentation
+Ces conditions ont conduit à retenir un service représentatif de chaque famille d’architecture. Cloudinary a été sélectionné pour représenter le modèle SaaS, car il permet de récupérer des images distantes, de leur appliquer des transformations décrites dans l’URL, puis de les diffuser à travers son propre CDN, sans qu’Antistatique doive exploiter l’infrastructure correspondante @CloudinaryImageOptimization2026.
+
+Cloudflare Images a été retenu pour représenter l’architecture edge CDN. Le service accepte également une image distante et des paramètres de transformation dans l’URL, mais son utilisation reste liée à une zone et à l’infrastructure Cloudflare. Il permet ainsi d’évaluer à la fois les avantages d’un traitement distribué géographiquement et le couplage propre à cette famille d’architecture @CloudflareImagesFeatures2026.
+
+Enfin, imgproxy a été choisi pour représenter l’architecture auto-hébergée. Il fonctionne comme un serveur HTTP autonome, peut être déployé avec Docker et reçoit l’image source ainsi que les paramètres de traitement au moyen d’une URL. Il permet donc d’évaluer une solution dans laquelle Antistatique maîtrise le déploiement et les coûts, tout en assumant directement l’exploitation du service @ImgproxyDocumentation.
+
+Cette sélection ne cherche pas à désigner le meilleur produit disponible dans chaque catégorie. Elle vise à disposer de trois implémentations suffisamment représentatives, documentées et accessibles pour comparer concrètement les compromis entre les architectures dans le temps imparti.
+
+=== Premier modèle : un besoin associé à un KPI
+
+La pré-étude avait identifié sept besoins, puis les avait priorisés au moyen d'une matrice MoSCoW. La première méthode envisagée consistait à traduire chaque besoin en un ou plusieurs indicateurs de performance clé (KPI). Une valeur aurait ensuite été attribuée à chaque service pour chaque KPI, avant d'additionner les notes afin d'identifier la meilleure solution (@modele-initial-benchmark).
+
+#figure(
+  {
+    set text(size: 8.2pt)
+    table(
+      columns: (1.4fr, 2.4fr, 0.8fr),
+      inset: 5pt,
+      align: left + horizon,
+      table-header([Besoin issu de la pré-étude]),
+      table-header([Indicateurs initialement envisagés]),
+      table-header([Priorité]),
+      [Interopérabilité avec les stacks existantes et futures],
+      [Nombre de dépendances ; intégration standard par URL ou intégration propriétaire.],
+      [Must],
+      [Centralisation de la logique d'optimisation],
+      [Modification globale des paramètres ; distribution adaptative du format.],
+      [Must],
+      [Maîtrise du déploiement et des coûts],
+      [Coût total de propriété ; niveau de gestion demandé à Antistatique.],
+      [Must],
+      [Disponibilité et robustesse],
+      [SLA annoncé ; présence d'un mécanisme de fallback.],
+      [Must],
+      [Performance de livraison],
+      [TTFB à cache froid ; TTFB à cache chaud ; ratio entre taille finale et taille originale.],
+      [Should],
+      [Faible charge d'intégration],
+      [Friction d'intégration.],
+      [Could],
+      [Réversibilité pour les sites clients],
+      [Aucun indicateur arrêté.],
+      [Could],
+    )
+  },
+  caption: [Première traduction des besoins en KPI],
+  kind: table,
+) <modele-initial-benchmark>
+
+Ce premier modèle a servi de cadre exploratoire pour préparer les tests. Il reposait toutefois sur une hypothèse trop générale : tout besoin devait pouvoir être traduit en un KPI et contribuer au classement. Lors de la préparation du benchmark et de l'analyse des premiers résultats, plusieurs indicateurs se sont révélés peu discriminants ou inadaptés à la question posée.
+
+L'agnosticité vis-à-vis des stacks et la centralisation, par exemple, ne décrivent pas un avantage relatif : elles définissent le type d'architecture recherché. Une solution qui ne les respecte pas se situe hors du périmètre plutôt qu'en bas d'un classement. Cette condition n'impose pas une indépendance totale vis-à-vis de tout fournisseur : le couplage propre aux architectures SaaS et edge reste évalué par les critères de coût, de gestion et d'intégration. À l'inverse, la disponibilité et la réversibilité dépendent en partie du mécanisme de fallback développé lors de l'intégration. Elles doivent être traitées comme des contraintes d'implémentation, car aucune des trois architectures n'empêche par principe de revenir à l'image originale.
+
+=== Modèle finalement retenu
+
+Le modèle a donc été révisé sans supprimer les besoins de la pré-étude. Leur rôle dans la décision a été clarifié en les répartissant en trois catégories (@modele-final-benchmark) :
+
+- les besoins qui définissent le périmètre de la solution ;
+- les contraintes qui devront être respectées lors de l'implémentation ;
+- les critères de choix qui permettent effectivement de départager les architectures et auxquels sont associés des KPI.
+
+#figure(
+  {
+    set text(size: 8.4pt)
+    table(
+      columns: (1fr, 1.35fr, 1.5fr, 2fr),
+      inset: 5pt,
+      align: left + horizon,
+      table-header([Catégorie]),
+      table-header([Besoin]),
+      table-header([Rôle dans l'évaluation]),
+      table-header([KPI retenus]),
+      table.cell(rowspan: 2)[Périmètre],
+      [Centralisation de la logique],
+      [Objectif commun aux architectures comparées.],
+      [Aucun : condition d'inclusion.],
+      [Indépendance vis-à-vis de la stack],
+      [Condition nécessaire pour entrer dans la comparaison.],
+      [Aucun : condition d'inclusion.],
+      table.cell(rowspan: 2)[Contrainte d'implémentation],
+      [Disponibilité et robustesse],
+      [À traiter par la stratégie de fallback et l'exploitation.],
+      [Aucun dans le score du benchmark.],
+      [Réversibilité],
+      [À garantir en conservant l'accès à l'image originale.],
+      [Aucun dans le score du benchmark.],
+      table.cell(rowspan: 3)[Critère de choix],
+      [Performance],
+      [Comparer le comportement observé.],
+      [TTFB de la première requête ; TTFB des requêtes répétées ; ratio de taille.],
+      [Maîtrise du déploiement et des coûts],
+      [Comparer la dépense directe et la charge d'exploitation.],
+      [Coût direct annuel estimé ; niveau de gestion nécessaire.],
+      [Charge d'intégration et DX],
+      [Comparer l'effort et le confort d'intégration.],
+      [Friction d'intégration ; qualité de la documentation et de la DX.],
+    )
+  },
+  caption: [Répartition finale des besoins d'Antistatique],
+  kind: table,
+) <modele-final-benchmark>
+
+Cette révision évite d'associer artificiellement une mesure à chaque besoin. Elle sépare aussi le choix de l'architecture de sa validation : le benchmark compare les critères discriminants, tandis que la preuve de concept vérifie ensuite qu'une implémentation réelle satisfait le périmètre et met en évidence les contraintes non résolues.
+
+=== Pondération des critères de choix
+
+Deux collaborateurs dirigeants d'Antistatique ont réparti indépendamment 40 points entre les sept KPI. La pondération finale correspond à la moyenne de leurs deux propositions (@ponderation-kpi). Cette méthode réduit l'influence d'un jugement individuel et rend explicites les priorités de l'agence.
+
+#figure(
+  {
+    set text(size: 8.5pt)
+    table(
+      columns: (2.2fr, 0.8fr, 0.8fr, 0.9fr, 0.8fr),
+      inset: 5pt,
+      align: (left, center, center, center, center),
+      table-header([KPI]),
+      table-header([Gilles]),
+      table-header([Marc]),
+      table-header([Poids final]),
+      table-header([Part]),
+      [TTFB de la première requête], [5], [2], [3,5], [8,75 %],
+      [TTFB des requêtes répétées], [2], [1], [1,5], [3,75 %],
+      [Ratio de taille], [5], [2], [3,5], [8,75 %],
+      [Coût direct annuel estimé], [6], [12], [9], [22,5 %],
+      [Niveau de gestion nécessaire], [8], [10], [9], [22,5 %],
+      [Friction d'intégration], [5], [8], [6,5], [16,25 %],
+      [Documentation et DX], [9], [5], [7], [17,5 %],
+      [*Total*], [*40*], [*40*], [*40*], [*100 %*],
+    )
+  },
+  caption: [Pondération des KPI par deux collaborateurs d'Antistatique],
+  kind: table,
+) <ponderation-kpi>
+
+La performance représente ainsi 21,25 % du score, les coûts et l'exploitation 45 %, puis l'intégration et la DX 33,75 %. La pondération traduit le fait qu'Antistatique cherche d'abord une solution exploitable durablement, plutôt qu'un gain de quelques millisecondes obtenu au prix d'une charge de maintenance disproportionnée.
+
+== Protocole d'évaluation
+
+=== Échantillon et environnements de test
+
+L'échantillon comprend douze images provenant de cas comparables aux contenus manipulés par l'agence : huit fichiers JPEG et quatre fichiers PNG, dont la taille varie de 1,5 à 16,6 Mo. Il s'agit d'un échantillon de convenance destiné à couvrir plusieurs formats et volumes, et non d'un échantillon statistiquement représentatif. La galerie des images est présentée ci-dessous (@fig-echantillon-benchmark). et le détail des fichiers figure en annexe (@taille-images-benchmark).
+
+#figure(
+  {
+    // Helper pour afficher une image avec son nom de fichier dessous
+    let img-card(path, name) = block(width: 100%)[
+      #image(path, width: 100%, height: 65pt, fit: "cover")
+    #v(-10pt)
+      #align(center)[#text(size: 7.5pt)[#raw(name)]]
+    ]
+
+    grid(
+      columns: (1fr, 1fr, 1fr, 1fr),
+      gutter: 8pt,
+      // Ligne 1
+      img-card("../assets/figures/image-gallery/image-test-1.jpg", "image-test-1.jpg"),
+      img-card("../assets/figures/image-gallery/image-test-2.jpg", "image-test-2.jpg"),
+      img-card("../assets/figures/image-gallery/image-test-3.jpg", "image-test-3.jpg"),
+      img-card("../assets/figures/image-gallery/image-test-4.jpg", "image-test-4.jpg"),
+      // Ligne 2
+      img-card("../assets/figures/image-gallery/image-test-5.jpg", "image-test-5.jpg"),
+      img-card("../assets/figures/image-gallery/image-test-6.jpg", "image-test-6.jpg"),
+      img-card("../assets/figures/image-gallery/image-test-7.jpg", "image-test-7.jpg"),
+      img-card("../assets/figures/image-gallery/image-test-8.jpg", "image-test-8.jpg"),
+      // Ligne 3
+      img-card("../assets/figures/image-gallery/image-test-9.png", "image-test-9.png"),
+      img-card("../assets/figures/image-gallery/image-test-10.png", "image-test-10.png"),
+      img-card("../assets/figures/image-gallery/image-test-11.png", "image-test-11.png"),
+      img-card("../assets/figures/image-gallery/image-test-12.png", "image-test-12.png"),
+    )
+  },
+  caption: [Échantillon des douze images sources utilisées pour le benchmark. Les fichiers couvrent deux formats et des tailles comprises entre 1,5 et 16,6 Mo.],
+) <fig-echantillon-benchmark>
 
 
+Une instance WordPress hébergée chez Infomaniak a servi uniquement de serveur d'origine. Les images ont été déposées par FTP afin d'éviter la génération automatique de variantes par WordPress @Big_image_size_thresholdHookDeveloperWordPressorg2020. Les trois services ont ainsi reçu les mêmes fichiers sources.
+
+Le script a été exécuté depuis quatre emplacements : un ordinateur à Lausanne, une VM Infomaniak à Genève et deux VM DigitalOcean situées à New York et à Singapour. Cette répartition permet d'observer l'effet de la distance entre le client, le service de traitement et le serveur d'origine. @benchmark-environnements
+
+#figure(
+  image(
+    "../assets/figures/benchmark-geographic-env.png",
+  ),
+caption :"Environnements géographiques et flux de requêtes du benchmark."
+)<benchmark-environnements>
+
+Avant chaque lancement de script depuis un nouveau lieu géographique, le chemin de l'image source a été renouvelé au moyen d'un horodatage. Les URL signées d'imgproxy ont également été régénérées. La variante demandée n'avait donc pas été utilisée auparavant.
 
 
-=== Procédure de test
-
-La procédure de test a été divisée en 2 parties: Une partie technique, pour tester les performances des services et une seconde partie pour tester le critère "charge d'intégration" et "maîtrise du déploiement et des coûts". Le but était de créer une procédure de test reproductible. La marche à suivre se trouve en annexe (@annexe-test-procedure). 
-
-Pour avoir des images à tester, une instance de WordPress a été déployée sur l'hébergement mutualisé d'infomaniak. Il s'agissait surtout de profiter d'un serveur web ("inclus" dans une instance de WordPress) pour servir les images de test. Toutes les extensions de base Wordpress ont été déasctivées, pour se mettre dans la situation la plus facile à reproduire. Les images ont été ajoutées en FTP pour éviter que Wordpress n'applique son redimensionnement de base @Big_image_size_thresholdHookDeveloperWordPressorg2020 .  12 images ont été utilsées pour les tests. Le détail des poids et des formats se trouve en annexe (@taille-images-benchmark), mais le but était d'avoir un échantillon représentatif des contenus téléchargés par les clients d'Antistatique
-
-La partie technique a été réalisée en utilisant un script bash et l'outil curl (@test-script-procedure) qui envoie des requêtes HTTP aux différentes URL à tester. Le script mesure le temps de réponse et la taille de l'image retournée. Il a été lancé 4 fois, depuis 4 endroits différents : un ordinateur portable à Lausanne, un petit serveur d'infomaniak à Genève, un petit serveur Digital Ocean à New York et un petit serveur Digital Ocean à Singapour. Le but en lançant le script depuis différents endroits était de mesurer l'impact de la localisation géographique sur les performances des services. Les résultats ont été enregistrés dans un fichier CSV pour être analysés par la suite. Pour avoir des valeurs représentatives, le script est lancé 11 fois pour chaque image: la première exécution sert à mesurer l'efficacité du service de redimensionnement et d'optimisation, tandis que les 10 exécutions suivantes servent à mesurer la performance du service de cache. Le but est de voir si le service est capable de mettre en cache les images redimensionnées et optimisées pour les servir plus rapidement lors des requêtes suivantes.
-
-Concernant les formats testés, le choix a été fait de laisser les services dans leur mode "par défaut" (en précisant par exemple "format=auto") afin de voir quel format serait choisi pour chaque image. Le but était de valider le fait que les services choisissent le format le plus approprié pour chaque image. 
-
-Le choix de l'outil curl pour réaliser ce test de performance se base sur deux raisons principales; premièrement, il s'agit d'un outil très répandu (>20 miliards d'installations @UsersCurlEverything) , très probablement installé sur les machines de test et peu gourmand en ressources. Deuxièmement, il permet de mesurer le temps de réponse d'une requête HTTP et la taille de la réponse @WriteOutEverything, ce qui est exactement ce qui est nécessaire pour ce benchmark.
+=== Mesures techniques
 
 
-En ce qui concerne les critères "charge d'intégration/DX" et "maîtrise du déploiement et des coûts",..
+Les services étudiés réalisent les transformations à la demande, puis réutilisent généralement le résultat lors des requêtes suivantes. Le protocole doit donc distinguer deux situations : la première transformation d’une variante encore absente du cache et sa livraison une fois celle-ci déjà générée.
+
+Le temps jusqu’au premier octet, ou TTFB, a été retenu pour mesurer le délai observable par le client avant le début de la réponse. Cette valeur ne représente pas uniquement le temps de calcul de l’image : elle inclut également les échanges réseau et les opérations nécessaires pour obtenir la réponse. Elle permet néanmoins de comparer les trois services dans les conditions réelles d’utilisation prévues par Antistatique.
+
+Le script Bash présenté en annexe (@test-script-procedure) utilise `curl` pour envoyer les requêtes. Cet outil a été choisi afin d’exécuter exactement le même protocole dans les quatre environnements, avec peu de dépendances et sans introduire les traitements propres à un navigateur. Pour chaque requête, le script enregistre le code HTTP, le type de contenu, la taille téléchargée, le TTFB et le temps total. Le TTFB correspond à la valeur `time_starttransfer` fournie par `curl` @WriteOutEverything.
+
+Pour chaque image et chaque lieu, onze requêtes séquentielles ont été effectuées. La première réponse HTTP 200 représente la première transformation. Les dix réponses suivantes permettent d’observer la livraison répétée de la même variante et de limiter l’influence d’une fluctuation ponctuelle sur le résultat. Ce nombre constitue un compromis entre la stabilité des mesures, la durée de la campagne et le volume de requêtes généré.
+
+Avant chaque série géographique, le chemin de l’image source a été renouvelé au moyen d’un horodatage. Les URL signées d’imgproxy ont également été régénérées. Cette opération réduit le risque qu’une variante créée lors d’une série précédente soit déjà présente dans le cache. L’ordre des trois solutions a par ailleurs été mélangé à chaque itération afin qu’une variation temporaire du réseau ou de la charge ne favorise pas systématiquement le même service. Une pause de 0,5 seconde entre les requêtes évite que le protocole se transforme involontairement en test de charge.
+
+Le même en-tête `Accept: image/avif,image/webp,image/apng,*/*;q=0.8` a été transmis aux trois services afin de leur indiquer les mêmes formats acceptés par le client. Le mode automatique propre à chaque solution a ensuite été utilisé : `f_auto` et `q_auto` pour Cloudinary, `f=auto` et `q=auto` pour Cloudflare, puis la négociation de format configurée dans imgproxy. Ce choix reproduit l’utilisation envisagée, dans laquelle chaque service détermine lui-même le format et le niveau de compression. Il ne permet toutefois pas de comparer les encodeurs à qualité visuelle constante, puisque les réglages automatiques ne sont pas équivalents d’un fournisseur à l’autre.
+
+Ces mesures décrivent le comportement technique observable des trois services, mais elles ne suffisent pas à déterminer leur adéquation au contexte d’Antistatique. Le coût réel du cas d’usage, la charge d’exploitation et l’effort d’intégration doivent également être pris en compte.
 
 
-La partie plus théorique a été réalisée en lisant la documentation de chaque service et en analysant comment les services fonctionnent. Le but était de voir si la documentation était claire et si l'intégration était facile à réaliser. (WTF qu veut dire cett phr'ase?)
+Le déroulement d’une série de mesures est synthétisé dans la @dispositif-benchmark.
+#figure(
+  image(
+    "../assets/figures/benchmark-order.png",
+  ),
+  caption:"Déroulement d’une série de mesures"
+)<dispositif-benchmark>
 
 
-=== Méthode de calcul
+=== Coûts, exploitation et intégration
 
-Afin de pouvoir comparer les architectures entre elles, il est nécessaire de pouvoir comparer chaque point sur une échelle identique. Le choix de l'échelle a été fait de 1 à 10, où 10 est la meilleure note. Pour convertir les différentes valeurs de KPI en une note sur 10, chaque indicateur a été normalisé, au cas par cas selon le KPI. Cette normalisation se trouve en annexe (@annexe-normalisation-kpi).
+L’évaluation des aspects non techniques s’appuie sur Luxury Tribune, le projet pour lequel l’intégration d’imgproxy était initialement envisagée. Ce site repose sur un WordPress headless consommé par une application Next.js. Il constitue donc un cas d’usage concret et directement lié à la décision étudiée dans ce travail.
 
-Le coût total de propriété (Total Cost of Ownership, TCO) a été calculé en prenant le projet sur lequel la solution choisie allait être implémentée. Il s'agit du site luxury-tribune.com, qui est composé d'un Wordpress Headless, consommé par un frontend en Next.js. 
+Luxury Tribune a généré 950 000 transformations d’images au cours de l’année précédant l’étude. Ce volume observé, et non une hypothèse de trafic, a été utilisé comme référence commune pour calculer le coût annuel des trois solutions. Les montants obtenus restent néanmoins des estimations, car ils dépendent de la manière dont chaque fournisseur comptabilise les transformations, du plan tarifaire retenu et du taux de change appliqué.
 
-Pour estimer le nombre d'images contenues dans le site sans accès direct au serveur, l'analyse s'est basée sur l'API et le code source. L'API REST de WordPress recense 10 962 médias originaux. Du côté du code, le thème désactive les formats natifs du CMS pour imposer cinq recadrages sur mesure. L'ajout d'une image entraîne donc la création de six fichiers physiques (l'original et ses cinq déclinaisons), et porte le total stocké sur le serveur à près de 65 772 fichiers.
+Le KPI financier est limité au coût direct annuel estimé. Il ne s’agit pas d’un coût total de propriété complet : le temps humain n’est pas converti en francs, puisque la facilité d’exploitation et la facilité d’intégration sont déjà évaluées par deux KPI distincts. Ajouter ces heures au coût reviendrait à pénaliser deux fois une partie du même effort.
 
-Pour évaluer les données obtenues de manière cohérente, une note a été attribuée à chaque service pour chaque KPI, en fonction du résultat obtenu. Cette note est comprise en 1 et 10 (10 est la meilleure note)
+Les temps de mise en place et d’intégration ont été estimés à partir des opérations réalisées pendant le benchmark. Ils n’ont pas été chronométrés et servent uniquement à documenter l’ordre de grandeur de l’effort nécessaire.
+
+Les critères qualitatifs utilisent une échelle allant de 1 à 4 pour la facilité d’exploitation et la facilité d’intégration, puis de 1 à 6 pour la documentation et l’expérience développeur. Dans les trois cas, une valeur élevée représente une situation favorable. Les notes reposent sur la configuration effectivement réalisée et sur l’examen de la documentation officielle ; elles ne constituent pas une enquête auprès des développeurs d’Antistatique.
+
+=== Traitement des données
 
 
+Les fichiers CSV produits pendant la campagne de mesures ont servi de base à l’analyse. Ils regroupent les observations enregistrées pour chaque requête ainsi que plusieurs valeurs calculées lors d’une première analyse.
+
+Deux images ont systématiquement échoué chez Cloudinary. Afin d’éviter que ces échecs soient interprétés comme des fichiers de taille nulle et de comparer les trois solutions sur une base identique, les KPI techniques ont été calculés sur les dix images traitées avec succès par les trois services. La médiane a été retenue pour le TTFB, car elle est moins sensible aux valeurs extrêmes. Le ratio de compression a été calculé pour chaque image, puis moyenné sans pondération afin que chaque fichier contribue de manière égale.
+
+=== Calcul des scores
 
 
-== Exécution des tests
-=== Test de la solution Cloudinary
-=== Test de la solution Cloudflare images
-=== Test de la solution Imgproxy
+Les KPI étant exprimés dans des unités différentes, leurs résultats ont été convertis sur une échelle commune allant de 1 à 10. Quelle que soit la nature du KPI, une note élevée représente toujours une situation favorable.
 
-=== Qualité des images redimensionnées
-== Analyse des résultats et révision du modèle
+Le TTFB est évalué à partir de seuils fixes. Une valeur inférieure ou égale à 400 ms reçoit la note de 10. Au-delà, la note diminue d’un point par tranche de 200 ms, jusqu’à un minimum de 1. La même règle est appliquée aux premières requêtes et aux requêtes répétées.
 
-=== Analyse des résultats bruts
+Le ratio de compression est également évalué sur une échelle absolue. Une valeur de 100 %, correspondant à un fichier aussi lourd que l’original, reçoit la note de 1. Plus le fichier retourné est léger, plus la note augmente. 
 
-=== Révision du modèle
+Le coût direct annuel utilise le volume réellement observé sur Luxury Tribune (950'000 transformations). Ce volume permet d’estimer les dépenses correspondant au cas d’usage, mais il ne définit pas à lui seul ce qu’Antistatique considère comme un coût favorable ou défavorable. Aucun barème budgétaire n’ayant été fixé avant le benchmark, le coût est normalisé relativement aux solutions comparées. La solution la moins chère sert de référence et reçoit 10 ; une solution deux fois plus chère reçoit 5. Cette note exprime donc un avantage économique relatif et ne signifie pas que le montant de référence est nécessairement faible dans l’absolu.
 
-Lors de cette analyse, il est apparu que les KPI définis plus tôt n'étaient pas toujours pertinents pour évaluer l'agnosticité ou comparer les services entre eux. Le cas où toutes les solutions obtiennent le même résultat à un KPI est aussi apparu, ce qui le rend inutile pour décider du choix d'une solution. La première version des KPI avait le but de comparer des *services*, mais le but de ce benchmark est de comparer des *architectures* et d'identifier la plus adaptée pour Antistatique.
+Les critères qualitatifs utilisent une échelle allant de 1 à 4 pour la facilité d’exploitation et la facilité d’intégration, puis de 1 à 6 pour la documentation et l’expérience développeur. Une valeur élevée représente déjà une situation favorable. Ces évaluations sont ensuite converties linéairement sur l’échelle commune de 1 à 10.
 
-Le modèle besoin/KPI associé s'est donc révélé inadapté tel quel : une partie des besoins relève de propriétés d'architecture non quantifiables, qu'aucun indicateur chiffré ne peut traduire fidèlement. Certains besoins sont également indispensables et élimineraient une solution d'office s'ils n'étaient pas respectés. La modèle a donc été révisé comme suit (@criteres-evaluation)
+Enfin, chaque note normalisée est multipliée par le poids du KPI correspondant. Les résultats pondérés sont additionnés, puis divisés par la somme des poids afin d’obtenir une moyenne sur 10. Celle-ci est multipliée par 10 pour produire le score global sur 100. Les formules, les bornes, les grilles qualitatives et les valeurs intermédiaires sont présentées en annexe (@annexe-normalisation-kpi).
 
-/* L'évaluation distingue donc 
-Il a donc été décidé de redéfinir des KPIs, plus pertinents et plus adaptés à la comparaison des architectures (@moscow-matrix-v2) et d'utiliser les 3 services precédemment cités pour pouvoir comparer.
- */
+
+== Résultats
+
+=== Contrôle des données
+
+Le protocole a produit 1 584 observations, soit 12 images, 11 requêtes, 3 solutions et 4 lieux. imgproxy a retourné une réponse HTTP 200 pour toutes les observations. Cloudflare a retourné 527 réponses HTTP 200 et une redirection HTTP 307 ; la requête suivante vers la même image a fourni la première réponse 200. Cloudinary a renvoyé 88 erreurs HTTP 400, correspondant aux onze requêtes des deux images les plus lourdes, répétées dans les quatre lieux. La cause exacte de ces erreurs n'a pas été déterminée.
+
+Les réponses en erreur ne sont pas incluses dans les calculs de temps ni dans les ratios de taille. Afin de conserver une base identique, les performances des trois services sont calculées sur les dix images traitées avec succès par chacun d’eux. Le score obtenu par Cloudinary décrit donc son comportement sur ces dix images, mais ne valide pas sa capacité à traiter l’ensemble de l’échantillon. Une éventuelle adoption de cette solution nécessiterait d’identifier la cause des erreurs HTTP 400, puis de répéter le test sur les deux fichiers concernés.
+
+
+Conformément au modèle finalement retenu, le taux de succès n’est pas transformé en un KPI supplémentaire, puisque la disponibilité et la robustesse ont été classées parmi les contraintes d’implémentation. Les erreurs observées chez Cloudinary restent néanmoins un résultat important du benchmark et doiventx être prises en compte dans l’interprétation du classement.
+
+
+=== Performances selon la localisation
+
+La localisation influence surtout le comportement des requêtes répétées d'imgproxy (@ttfb-chaud-localisation). Le service auto-hébergé est le plus rapide depuis Lausanne et Genève, proches de la VM, mais son TTFB augmente à New York et à Singapour. Cloudinary et Cloudflare présentent une hausse plus limitée grâce à leur infrastructure distribuée. Les valeurs du tableau correspondent aux médianes calculées sur les dix images communes.
+
+#figure(
+  {
+    set text(size: 8.7pt)
+    table(
+      columns: (1.2fr, 1fr, 1fr, 1fr),
+      inset: 5pt,
+      align: (left, center, center, center),
+      table-header([Lieu]),
+      table-header([Cloudinary]),
+      table-header([Cloudflare]),
+      table-header([imgproxy]),
+      [Lausanne], [59 ms], [63 ms], [39 ms],
+      [Genève], [64 ms], [65 ms], [32 ms],
+      [New York], [95 ms], [90 ms], [303 ms],
+      [Singapour], [122 ms], [108 ms], [479 ms],
+    )
+  },
+  caption: [TTFB médian des requêtes répétées selon le lieu],
+  kind: table,
+) <ttfb-chaud-localisation>
+
+=== Résultats agrégés
+
+Sur les dix images communes, Cloudflare présente le TTFB médian le plus faible lors de la première requête, avec 1,38 seconde (@resultats-performance). Cloudinary présente la médiane la plus faible sur les requêtes répétées, avec 75 ms, suivi de Cloudflare à 83 ms. imgproxy atteint 219 ms lorsque les quatre lieux sont agrégés ; ce résultat reflète l'écart géographique observé précédemment.
+
+imgproxy retourne les fichiers les plus légers, avec une taille moyenne égale à 23,00 % de l'original. Cloudinary atteint 35,84 % et Cloudflare 48,70 %. Cette mesure décrit la sortie produite par les réglages automatiques de chaque service. Elle ne démontre pas que les images ont une qualité visuelle équivalente.
+
+#figure(
+  {
+    set text(size: 8.5pt)
+    table(
+      columns: (1.1fr, 1.3fr, 1.25fr, 1.1fr, 0.9fr),
+      inset: 5pt,
+      align: (left, center, center, center, center),
+      table-header([Solution]),
+      table-header([Première requête]),
+      table-header([Requêtes répétées]),
+      table-header([Ratio de taille]),
+      table-header([Succès]),
+      [Cloudinary], [4,21 s], [75 ms], [35,84 %], [10/12],
+      [Cloudflare], [1,38 s], [83 ms], [48,70 %], [12/12],
+      [imgproxy], [2,29 s], [219 ms], [23,00 %], [12/12],
+    )
+  },
+  caption: [Résultats techniques agrégés du benchmark],
+  kind: table,
+) <resultats-performance>
+
+Les trois mesures ne désignent donc pas un vainqueur unique. Cloudflare présente la plus faible médiane lors de la première transformation, Cloudinary lors des requêtes répétées et imgproxy produit les fichiers les plus petits. Le choix dépend nécessairement du poids accordé à ces avantages et aux critères non techniques.
+
+=== Coût direct et effort estimé
+
+Le plan Cloudinary retenu pour l'estimation coûte 89 USD par mois avec une facturation annuelle, soit 1 068 USD par an @CloudinaryPricing2026. Pour Cloudflare, le volume de référence de 950 000 transformations annuelles conduit au calcul suivant, sur la base de 5 000 transformations incluses chaque mois puis de 0,50 USD par millier @CloudflareImagesPricing2026 :
+
+$ (950000 - 5000 times 12) / 1000 times 0.50 = 445 " USD/an" $
+
+Les montants en dollars ont été convertis au cours de 1 USD = 0,8128 CHF publié par la Banque nationale suisse le 13 août 2026 @SwissNationalBankExchange2026. La VM utilisée pour imgproxy coûte 13,50 CHF par mois, soit 162 CHF par an.
+
+#figure(
+  {
+    set text(size: 8.5pt)
+    table(
+      columns: (1fr, 1.7fr, 1.15fr, 0.9fr, 1fr),
+      inset: 5pt,
+      align: (left, left, center, center, center),
+      table-header([Solution]),
+      table-header([Base de calcul]),
+      table-header([Coût direct annuel]),
+      table-header([Mise en place]),
+      table-header([Intégration d'un projet]),
+      [Cloudinary], [1 068 USD/an], [868,07 CHF], [1 h], [2 h],
+      [Cloudflare], [445 USD/an], [361,70 CHF], [2 h], [3 h],
+      [imgproxy], [13,50 CHF/mois], [162,00 CHF], [8 h], [4 h],
+    )
+  },
+  caption: [Coûts directs et efforts d'intégration estimés sur une année],
+  kind: table,
+) <resultats-couts>
+
+L'estimation Cloudflare suppose que les 950 000 opérations correspondent à des transformations uniques facturables et que l'allocation gratuite est utilisée chaque mois. Pour Cloudinary, elle suppose que le plan retenu couvre le volume considéré. Ces hypothèses rendent les montants comparables, mais ne remplacent pas un devis contractuel.
+
+=== Critères qualitatifs
+
+Cloudinary et Cloudflare reçoivent la note brute maximale de 4 pour la facilité d’exploitation, car l’infrastructure testée est exploitée par le fournisseur. imgproxy reçoit la note 1 : Antistatique doit maintenir la VM, les conteneurs, le cache, les mises à jour de sécurité et la supervision.
+
+La facilité d’intégration ne représente pas uniquement le nombre d’heures nécessaires. Cloudflare reçoit la note 1 en raison du couplage à une zone et à une configuration d’infrastructure Cloudflare. Cloudinary reçoit la note 2, car la construction des URL et les mécanismes utilisés restent propres au fournisseur. imgproxy reçoit la note 3 : l’intégration nécessite un helper, une variable d’environnement et la distribution de secrets HMAC.
+
+Enfin, Cloudinary reçoit la note maximale de 6 pour la documentation et l’expérience développeur. Cloudflare et imgproxy reçoivent chacun 5 : leurs documentations sont complètes, mais demandent davantage d’assemblage pour couvrir précisément le cas étudié. Les niveaux correspondant à chacune de ces échelles sont définis en annexe (@annexe-normalisation-kpi).
 
 
 #figure(
-  table(
-    columns: (1fr, 1fr, 1fr, 1fr, 1fr),
-    inset: 6pt,
-    align: (center+ horizon),
-
-    // Header row
-    table-header([Nom]),
-    table-header([Catégorie]),
-    table-header([KPI 1]),
-    table-header([KPI 2]),
-    table-header([KPI 3]),
-
-    // Row 1: Périmètre
-    [Centralisation de la logique d'optimisation],
-    [Périmètre],
-    table.cell(colspan: 3)[N/A],
-
-    // Row 2: Prérequis
-    [Agnosticité (indépendance vis-à-vis de la stack)],
-    [Prérequis],
-    table.cell(colspan: 3)[N/A],
-
-    // Row 3: Critère 1
-    [Performance],
-    [Critère de choix],
-    [*TTFB (cas du cache MISS)*[ms]], [*TTFB (cas du cache HIT)*[ms]], [*Ratio de compression* [%]],
-
-    // Row 4: Critère 2
-    [Maîtrise du déploiement et des coûts],
-    [Critère de choix],
-    [*TCO (coût total de propriété)*[CHF/an]], [*Niveau de gestion nécessaire de la part d’Antistatique* [1-4]], [],
-
-    // Row 5: Critère 3
-    [Charge d'intégration / DX],
-    [Critère de choix],
-    [*Friction d’intégration* [1-4]], [*Qualité de la documentation et de l'expérience développeur* [1-6]], [],
-
-    // Row 6: Contrainte / Implémentation
-    [Fiabilité, robustesse (Fallback)],
-    [Contrainte d'implémentation],
- table.cell(colspan: 3)[N/A],
-
-    [Réversibilité (Fallback)],
-    [Contrainte d'implémentation],
- table.cell(colspan: 3)[N/A],
-
-  ),
-  caption: [Répartition des besoins d'Antistatique],
+  {
+    set text(size: 8.7pt)
+    table(
+      columns: (1fr, 1.3fr, 1.3fr, 1.3fr),
+      inset: 5pt,
+      align: (left, center, center, center),
+      table-header([Solution]),
+      table-header([Facilité d’exploitation (1–4)]),
+table-header([Facilité d’intégration (1–4)]),
+table-header([Documentation/DX (1–6)]),
+      [Cloudinary], [4], [2], [6],
+      [Cloudflare], [4], [1], [5],
+      [imgproxy], [1], [3], [5],
+    )
+  },
+  caption: [Notes qualitatives attribuées aux trois solutions],
   kind: table,
-) <criteres-evaluation>
+) <notes-qualitatives>
 
-Concernant le besoin de centraliser la logique, il représente le but originel de ce travail, à savoir se séparer d'un modèle ou chaque projet réimplémente ses règles d'optimisation d'images. Il définit donc le cadre dans lequel les différentes architectures sont comparées, en étant le socle commun à chaque architecture. 
+== Décision
 
-Le besoin d'agnosticité est un prérequis indispensable pour qu'une architecture soit évaluable dans ce benchmark. Il n'est pas envisageable pour Antistatique de s'enfermer dans un écosystème propriétaire, pour des raisons de flexibilité et d'indépendance. Il est donc nécessaire que l'architecture choisie soit agnostique vis-à-vis de la stack utilisée par les clients d'Antistatique.
+=== Matrice pondérée
 
-Les besoins de performance, de maîtrise du déploiement et des coûts et de la charge d'intégration, sont eux des critères mesurables pour chaque type de solution. Ils permettent de comparer les architectures entre elles et de choisir la plus adaptée pour l'agence.
-
-Les différents niveaux des critères "Niveau de gestion nécessaire de la part d’Antistatique","Friction d’intégration" et "Qualité de la documentation et de l'expérience développeur" sont détaillés dans le tableau ci-dessous. (@details-criteres-evaluation)
+Après normalisation, les notes et les poids définis avec Antistatique produisent la matrice de décision présentée dans le @matrice-decision. Les KPI techniques utilisent les dix images communes aux trois solutions.
 
 #figure(
-  table(
-
-    columns: (1.5fr, auto, 3.5fr),
-    align: (col, row) => (
-      if col == 1 { center + horizon }
-      else { left + horizon }
-    ),
-    stroke: 0.5pt + luma(150),
-    fill: (col, row) => if row == 0 { luma(240) } else { none },
-    
-    // En-tête du tableau
-    [*KPI*], [*Score*], [*Correspondance / Critère d'évaluation*],
-    
-    // 1. Niveau de gestion
-    table.cell(rowspan: 4)[
-      *Niveau de gestion nécessaire* \
-      (de la part d'Antistatique)
-    ],
-    [1], [Maintenance complète (OS, Docker, failles de sécurité, monitoring des ressources CPU/RAM).],
-    [2], [Maintenance d'infrastructure Serverless/Edge (mise à jour des workers, gestion des limites de requêtes).],
-    [3], [Maintenance applicative légère (mises à jour de dépendances NPM/Composer pour les connecteurs).],
-    [4], [Entièrement géré (SaaS pur, aucune action technique requise post-déploiement).],
-    
-    // 2. Friction d'intégration
-    table.cell(rowspan: 4)[
-      *Friction d'intégration*
-    ],
-    [1], [Couplage d'infrastructure requis (CNAME, reverse proxy dédié, configuration Edge complexe qui sort du code).],
-    [2], [Dépendance logicielle forte (SDK lourd, couplage au framework, vendor lock-in potentiel au niveau du code).],
-    [3], [Dépendance logicielle légère (variable d'environnement, helper générique, petit SDK agnostique).],
-    [4], [Standards web purs (URL rewriting, attributs HTML natifs). Zéro dépendance, réversibilité totale.],
-
-    
-    // 3. Qualité de la doc / DX
-    table.cell(rowspan: 5)[
-      *Qualité de la documentation et de l'expérience développeur (DX)*
-    ],
-    [1--2], [Documentation absente ou de très mauvaise qualité.],
-    [3], [Documentation lacunaire, exemples rares, peu de support.],
-    [4], [Documentation acceptable, exemples partiels, support inégal.],
-    [5], [Documentation complète et claire, quelques exemples, communauté présente.],
-    [6], [Documentation exhaustive, exemples de code, tutoriels étape par étape, support actif.]
-
-  ),
-  caption: [Détails des échelles de notation pour les critères de choix],
+  {
+    set text(size: 8.4pt)
+    table(
+      columns: (2fr, 0.75fr, 1fr, 1fr, 1fr),
+      inset: 5pt,
+      align: (left, center, center, center, center),
+      table-header([KPI normalisé sur 10]),
+      table-header([Poids]),
+      table-header([Cloudinary]),
+      table-header([Cloudflare]),
+      table-header([imgproxy]),
+   [Première requête], [3,5], [1,00], [5,11], [1,00],
+[Requêtes répétées], [1,5], [10,00], [10,00], [10,00],
+[Ratio de taille], [3,5], [6,77], [5,62], [7,93],
+[Coût direct annuel], [9], [1,87], [4,48], [10,00],
+[Facilité d’exploitation], [9], [10,00], [10,00], [1,00],
+[Facilité d’intégration], [6,5], [4,00], [1,00], [7,00],
+[Documentation et DX], [7], [10,00], [8,20], [8,20],
+[*Score pondéré sur 100*], [*40*], [*61,3*], [*61,7*], [*62,0*],
+    )
+  },
+  caption: [Matrice de décision normalisée et pondérée],
   kind: table,
-) <details-criteres-evaluation>
+) <matrice-decision>
 
-Enfin, il a été décidé que le point sur les besoins de fiabilité et de réversibilité seraient traités grâce à un fallback vers l'image originale. Ces points ne sont donc pas des critères de choix (aucune architecure n'empêche ce fonctionnement) mais des contraintes d'implémentation qui devront être respectées lors de l'intégration.
+imgproxy obtient le score le plus élevé, avec 62,0 points sur 100, devant Cloudflare à 61,7 et Cloudinary à 61,3. Seuls 0,7 point séparent les trois solutions, et l’écart entre imgproxy et Cloudflare n’est que de 0,3 point. La matrice indique donc que le choix d’imgproxy reste compatible avec les priorités définies par Antistatique, mais elle ne met pas en évidence un vainqueur incontestable. Une modification des poids ou des seuils pourrait facilement changer l’ordre obtenu.
 
+=== Interprétation du choix
 
-== Décision finale
+Le calendrier du projet imposait de commencer l’implémentation avant que le benchmark et son modèle de notation soient entièrement finalisés. imgproxy avait donc été retenu provisoirement en raison de son faible coût direct, de la maîtrise qu’il laisse à Antistatique et de son interface générique par URL. La matrice recalculée le place légèrement en tête et montre que cette décision reste défendable, sans permettre d’affirmer que le classement était connu au moment du choix initial.
 
+Le résultat met surtout en évidence le compromis de l’architecture auto-hébergée. imgproxy est favorisé par son coût direct et par la faible taille des fichiers produits, mais pénalisé par sa charge d’exploitation et par le TTFB de la première requête. Les trois solutions satisfont en revanche le seuil retenu pour les requêtes répétées. La preuve de concept doit dès lors vérifier la déployabilité d’imgproxy, son intégration dans un projet existant et le fonctionnement du cache. Les questions de charge, de supervision et de fallback restent à traiter avant une adoption en production.
 
+=== Limites du benchmark
+
+Les résultats doivent être interprétés dans les limites suivantes :
+
+- un seul service représente chaque famille d'architecture ;
+- l'échantillon comprend douze images et les mesures ont été réalisées lors d'une seule campagne par lieu, sans test de charge ni requêtes concurrentes ;
+- le ratio de taille compare les modes automatiques des fournisseurs sans mesure formalisée de la qualité visuelle ;
+- les notes d'intégration et de documentation reposent sur l'expérience du benchmark, sans mesure de temps ni évaluation par un panel de développeurs ;
+- les coûts dépendent des tarifs, du taux de change et du volume annuel retenus au moment de l'étude ;
+- le modèle de décision a évolué pendant le travail au lieu d'être entièrement figé avant la collecte des données.
+
+Le benchmark doit donc être lu comme une aide structurée à la décision dans le contexte d'Antistatique. Il fournit une justification traçable du choix approfondi dans la preuve de concept, mais pas une évaluation générale et définitive des trois architectures.

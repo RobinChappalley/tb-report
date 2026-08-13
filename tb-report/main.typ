@@ -68,7 +68,6 @@
 #set heading(numbering: "1.1")
 #include "contenu/01-introduction.typ"
 #include "contenu/02-contexte.typ"
-#include "contenu/02-5-ben.typ"
 #include "contenu/03-benchmark.typ"
 #include "contenu/04-poc.typ"
 #include "contenu/conclusion.typ"
