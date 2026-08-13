@@ -67,3 +67,13 @@ include("../annexes/normalisation.typ"),
   supplement: [Annexe],
   kind : "annexe"
 )<docker-compose.yaml>
+
+#pagebreak()
+
+#figure(
+  raw(read("../annexes/nginx.conf"), block:true, lang: "nginx"),
+  caption: "Fichier de configuration nginx du PoC imgproxy",
+  supplement: [Annexe],
+  kind : "annexe"
+)<nginx.conf>
+
