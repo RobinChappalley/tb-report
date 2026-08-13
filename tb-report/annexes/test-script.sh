@@ -68,7 +68,7 @@ for i in {1..12}; do
                     target_url="${cloudflare_url}"
                     ;;
             esac
-            metrics=$(curl -s -H "${ACCEPT_HEADER}" -o /dev/null -w '%{http_code},%{content_type},%{size_download},%{time_starttransfer},%{time_total},%{header_cf-cache-status}' "${target_url}")
+            metrics=$(curl -s -H "${ACCEPT_HEADER}" -o /dev/null -w '%{http_code},%{content_type},%{size_download},%{time_starttransfer},%{time_total}' "${target_url}")
             echo "${sol},${image_name},${run},${metrics}" >> "${OUTPUT_CSV}"    
             sleep 0.5
         done
