@@ -18,9 +18,19 @@
 )
 #outline(title: [Liste des figures], target: figure.where(kind: image))
 #outline(title: [Liste des tableaux], target: figure.where(kind: table))
-#show figure.where(kind: "annexe"): set figure(numbering: "1.1")
-#outline(title: [Annexes], target: figure.where(kind: "annexe"))
+#include "../contenu/glossary.typ"
 
+
+#heading(
+  level: 1,
+  numbering: none,
+  outlined: true,
+)[Annexes]
+
+#outline(
+  title: none,
+  target: figure.where(kind: "annexe"),
+)
 #pagebreak()
 
 
