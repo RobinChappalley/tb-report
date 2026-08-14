@@ -62,7 +62,7 @@ J’ai aujourd’hui l’impression que le rapport peut être compris sans expli
 
 #figure(
   image("../assets/figures/marc-robin.png", height:15%),
-  caption:"Robin discutant avec Marc lors d'un meeting hebdomadaire"
+  caption:"Discussion entre Robin et Marc lors d'un meeting hebdomadaire"
 )
 
 La remise en question du modèle de benchmark représente un autre apprentissage important. J’étais initialement parti d’un modèle associant chaque besoin à un KPI. Cette structure me semblait rigoureuse, mais je l’avais adoptée sans avoir suffisamment vérifié si elle correspondait réellement à la décision à prendre. En avançant, j’ai constaté que certains besoins définissaient le périmètre de la solution ou des contraintes d’implémentation et ne pouvaient pas être transformés de manière pertinente en notes.
