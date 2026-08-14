@@ -71,15 +71,23 @@
 #include "contenu/03-benchmark.typ"
 #include "contenu/04-poc.typ"
 #include "contenu/conclusion.typ"
-#include "contenu/09-linkedin-post.typ"
 
+#pagebreak()
 #include "pages-admin/bibliography.typ"
+
+
+
 #set heading(numbering: none)
-#include "contenu/glossary.typ"
+
 
 // ─── Pages officielles (style Arial obligatoire) ────────────
 #show: page-officielle
 #include "pages-admin/bachelor-thesis-conduct.typ"
 #include "pages-admin/ai-usage-declaration.typ"
+
+#include "contenu/07-A4-Poster.typ"
+#include "contenu/08-A0-Poster.typ"
+#include "contenu/09-linkedin-post.typ"
+
 #include "pages-admin/confidentiality-declaration.typ"
 #include "pages-admin/bilan-inter.typ"
