@@ -15,7 +15,8 @@
   ("Claude Sonnet 5", "6","Création de diagramme Mermaid"),
   ("ChatGPT 5.6 Sol", "1", "Reformulation"),
   ("ChatGPT 5.6 Sol", "2", "Soutien méthodologique"),
-  ("ChatGPT 5.6 Sol", "3", "Outil de réflexion")
+  ("ChatGPT 5.6 Sol", "3", "Outil de réflexion"), 
+  ("ChatGPT 5.6 Sol", "5", "Transcription du texte dicté")
   
 
 
