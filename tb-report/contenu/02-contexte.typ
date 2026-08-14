@@ -1,6 +1,8 @@
 = Contexte
 
-== Un traitement d’images propre à chaque environnement technique
+Pour comprendre pourquoi la standardisation du traitement des images constitue un enjeu pour Antistatique, cette section présente les différents environnements techniques utilisés par l’agence et les mécanismes actuellement associés à chacun d’eux. Elle précise ensuite le périmètre de la standardisation recherchée, l’enjeu de maîtrise lié aux projets Next.js et l’origine du besoin, avant de formuler la problématique du travail.
+
+== Traitement d’images lié à un environnement technique
 
 Antistatique développe et maintient une vingtaine de projets web par an. Pour chaque mandat, l’agence choisit les technologies en fonction des besoins du client. Ses projets reposent notamment sur Drupal, WordPress ou Next.js. Cette diversité résulte donc des choix effectués pour chaque mandat.
 
