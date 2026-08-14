@@ -194,6 +194,8 @@ L’environnement local d’Eldora n’étant pas accessible depuis la VM imgpro
 
 Le fonctionnement des deux mécanismes est vérifié dans la section suivante.. Le filtre ne couvre toutefois que le HTML passant par #raw("the_content"). Les images définies dans des feuilles de style, produites en JavaScript ou stockées dans des champs rendus par d’autres mécanismes nécessiteraient une intégration complémentaire.
 
+Le code produit pour le déploiement et les intégrations est disponible dans le dépôt associé au travail. La version de référence correspond au commit 5b3f53 @ChappalleyImgproxyPoc2026
+
 
 
 == Validation

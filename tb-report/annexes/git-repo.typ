@@ -1,10 +1,8 @@
-*Dépôt :* #link("https://github.com/organisation/depot/tree/SHA_COMPLET")
+*Dépôt :* #link("https://github.com/RobinChappalley/tb-report/releases/tag/rendu-tb")
 
-*Version de référence :* #raw("tb-final-2026")
-
-*Commit :* #raw("SHA_COMPLET")
+*Commit :* #raw("102601641460197d8f69895c80bff0983b79cdc5")
 
 *Contenu :* scripts du benchmark, configuration Docker et Nginx,
 mécanismes d’intégration WordPress et documentation d’exécution.
 
-*Accès :* dépôt public / dépôt privé accessible au jury et au mandant.
+*Accès :* Dépôt public 
