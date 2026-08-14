@@ -69,3 +69,11 @@ include("../annexes/normalisation.typ"),
   kind : "annexe"
 )<nginx.conf>
 
+#pagebreak()
+#figure(
+  include("../annexes/git-repo.typ"),
+  caption : "Dépôt Git et version de référence du PoC",
+  supplement :[Annexe],
+  kind: "annexe"
+)
+
