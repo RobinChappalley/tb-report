@@ -23,14 +23,6 @@
 
 #pagebreak()
 
-#figure(
-include("../annexes/test-procedure.typ"),
- caption: "Super procédure de test pour benchmarker les services d'optimisation d'images",
- supplement: [Annexe], 
- kind: "annexe"
-)<annexe-test-procedure>
-
-#pagebreak()
 
 #let imagesizestable = csv("../annexes/taille-images.csv", delimiter:";")
 #figure(
