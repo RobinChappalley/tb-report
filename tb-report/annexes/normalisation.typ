@@ -140,6 +140,7 @@ Cette méthode rend les solutions comparables entre elles, mais elle ne signifie
 *Échelles d’attribution des notes qualitatives*
 
 #figure(
+  outlined: false,
   table(
 
     columns: (1.5fr, auto, 3.5fr),
