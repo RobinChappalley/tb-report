@@ -13,4 +13,4 @@
 
 / TCO : Total Cost of Ownership, coût total de possession. Métrique qui évalue le coût global d'un produit ou d'un service sur toute sa durée de vie, incluant les coûts d'acquisition, d'exploitation et de maintenance 
 
-/KPI : Key Performance Indicator, indicateur clé de performance. Mesure utilisée pour évaluer l'efficacité d'une action ou d'un processus par rapport à des objectifs prédéfinis.
+/ KPI : Key Performance Indicator, indicateur clé de performance. Mesure utilisée pour évaluer l'efficacité d'une action ou d'un processus par rapport à des objectifs prédéfinis.
